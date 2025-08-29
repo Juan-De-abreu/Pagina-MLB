@@ -1,0 +1,11 @@
+# .htaccess
+
+# Habilitar el motor de reescritura
+RewriteEngine On
+
+# No aplicar reglas si el archivo o carpeta existe (para CSS, JS, etc.)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirigir todas las solicitudes a index.php
+RewriteRule ^(.*)$ index.php [QSA,L]

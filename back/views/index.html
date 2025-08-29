@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title> ⚾ API de Jugadores MLB - Documentación</title>
+ <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #1e1e1e;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      border: 1px solid #333;
+    }
+
+    h1 {
+      color: #4db6ac;
+      text-align: center;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    p.subtitle {
+      text-align: center;
+      color: #9e9e9e;
+      font-style: italic;
+      margin-bottom: 30px;
+    }
+
+    .status {
+      text-align: center;
+      padding: 12px;
+      background: #2e7d32;
+      color: #ffffff;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      font-size: 1.1em;
+    }
+
+    .section {
+      margin-bottom: 35px;
+      border-left: 4px solid #03a9f4;
+      padding-left: 16px;
+    }
+
+    .section-title {
+      color: #64b5f6;
+      font-size: 1.4em;
+      margin: 10px 0;
+      display: inline-block;
+      background: #2a2a2a;
+      padding: 8px 16px;
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #2a2a2a;
+      margin: 8px 0;
+      padding: 14px 18px;
+      border-left: 5px solid #03a9f4;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      transition: background 0.2s;
+    }
+
+    li:hover {
+      background: #333;
+      transform: scale(1.01);
+    }
+
+    code {
+      background: #333;
+      color: #80deea;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.95em;
+      border: 1px solid #424242;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #03a9f4;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.85em;
+      font-weight: bold;
+      margin-right: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .info-box {
+      background: #262626;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 20px 0;
+      border: 1px solid #424242;
+      font-size: 0.95em;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #757575;
+      font-size: 0.9em;
+      padding-top: 20px;
+      border-top: 1px solid #424242;
+    }
+
+    .container {
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+
+</head>
+<body>
+  <div class="container">
+    <h1> ⚾ API de Jugadores MLB</h1>
+    <p class="subtitle">Sistema de gestión estadística de jugadores de béisbol profesional con PHP + PDO + MySQL</p>
+
+    <!-- Estado del servidor -->
+    <div class="status">✅ Servidor activo en el puerto <span id="port">CARGANDO</span></div>
+
+    <!-- Sección: Jugadores -->
+    <div class="section">
+      <h2 class="section-title">👨‍Jugadores</h2>
+      <ul>
+        <li>
+          <span class="badge">GET</span> <strong>/api/jugadores</strong>
+          <br><small>Obtiene todos los jugadores registrados con sus estadísticas completas</small>
+        </li>
+        <li>
+          <span class="badge">GET</span> <strong>/api/jugadores/:id</strong>
+          <br><small>Obtiene un jugador específico por su ID</small>
+        </li>
+        <li>
+          <span class="badge">POST</span> <strong>/api/jugadores</strong>
+          <br><small>Crea un nuevo jugador. Envía un JSON con al menos <code>nombre</code>.</small>
+          <br><code>{
+  "nombre": "Mike Trout",
+  "año_debut": 2011,
+  "home_runs": 379,
+  "war": 102.2,
+  "fecha_nacimiento": "1993-08-07",
+  "lugar_nacimiento": "Vineland, NJ, USA",
+  "posiciones": "CF"
+}</code>
+        </li>
+        <li>
+          <span class="badge">PUT</span> <strong>/api/jugadores/:id</strong>
+          <br><small>Actualiza los datos de un jugador existente. Solo se actualizan los campos enviados.</small>
+        </li>
+        <li>
+          <span class="badge">DELETE</span> <strong>/api/jugadores/:id</strong>
+          <br><small>Elimina permanentemente un jugador por su ID</small>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Campos disponibles -->
+    <h2>📋 Campos Disponibles</h2>
+    <div class="info-box">
+      <p><strong>Campos principales:</strong></p>
+      <ul style="padding-left: 15px;">
+        <li><code>nombre</code> (string, obligatorio)</li>
+        <li><code>años_en_mlb</code>, <code>año_debut</code>, <code>año_retiro</code> (int)</li>
+        <li><code>all_star_appearances</code>, <code>home_runs</code>, <code>hits</code> (int)</li>
+        <li><code>promedio_bateo</code>, <code>ops</code>, <code>war</code> (decimal)</li>
+        <li><code>fecha_nacimiento</code>, <code>fecha_debut</code> (date, formato <code>YYYY-MM-DD</code>)</li>
+        <li><code>lugar_nacimiento</code>, <code>posiciones</code> (varchar)</li>
+      </ul>
+    </div>
+
+    <!-- Base de datos -->
+    <h2>🔌 Base de Datos</h2>
+    <div class="info-box">
+      <p>Conexión a MySQL usando <code>PDO</code>. Tabla: <code>jugadores</code>.</p>
+      <p>El campo <code>nombre</code> es único (insensible a mayúsculas).</p>
+    </div>
+
+    <!-- Características -->
+    <h2>🛠️ Características de la API</h2>
+    <div class="info-box">
+      <ul style="padding-left: 0;">
+        <li><strong>Validaciones:</strong> Nombre obligatorio, fechas válidas, números no negativos</li>
+        <li><strong>Errores claros:</strong> Mensajes detallados con códigos HTTP (400, 404, 500)</li>
+        <li><strong>Seguridad:</strong> Consultas preparadas (PDO), sin inyecciones SQL</li>
+        <li><strong>Logs:</strong> Errores registrados con <code>error_log()</code></li>
+        <li><strong>API RESTful:</strong> Métodos HTTP estándar (GET, POST, PUT, DELETE)</li>
+      </ul>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      API desarrollada con PHP 8 + PDO • <em>Actualizado: <span id="fecha"></span></em>
+      <p>Desarrollado por <a href="https://www.arsistema.com" target="_blank">Ar Sistema</a></p>
+    </div>
+  </div>
+
+  <script>
+    // Mostrar fecha actual
+    document.getElementById('fecha').textContent = new Date().toLocaleString('es-ES');
+
+    // Intentar detectar el puerto (desde la URL)
+    const port = window.location.port || (window.location.protocol === 'https:' ? '443' : '80');
+    document.getElementById('port').textContent = port;
+  </script>
+</body>
+</html>
