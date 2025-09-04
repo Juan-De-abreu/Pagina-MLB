@@ -35,13 +35,13 @@ cd Pagina-MLB/back
 
 ¡Las contribuciones son bienvenidas! Abre un issue o envía un pull request para mejorar el proyecto.
 
-# 4/9/2025
+## 4/9/2025
 - metodo create realizado con sus validaciones logicas correspondientes
 - readme vizualmente atractivo
 ## Correcciones:
 ---
 
-# 4/9/2025
+## 4/9/2025
 
 la tabla de jugadores el id no era autoincrementable
 
