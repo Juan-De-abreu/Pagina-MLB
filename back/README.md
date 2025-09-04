@@ -30,14 +30,16 @@ cd Pagina-MLB/back
 - Integración de autenticación de usuarios.
 - Estadísticas históricas y comparativas.
 - Dashboard personalizado.
-
+---
 ## 📄 Contribuciones
-
+---
 ¡Las contribuciones son bienvenidas! Abre un issue o envía un pull request para mejorar el proyecto.
 
 ## 4/9/2025
 - metodo create realizado con sus validaciones logicas correspondientes
 - readme vizualmente atractivo
+  
+---
 ## Correcciones:
 ---
 
