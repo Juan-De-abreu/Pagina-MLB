@@ -85,16 +85,68 @@ public function create($data) {
         'posiciones' => ''
     ];
 
-    // Ajustar datos para tener claves sin tildes
+    // Completar datos con valores por defecto si faltan
     $dataCorregido = [];
     foreach ($campos as $key => $default) {
-        if (isset($data[$key])) {
-            $dataCorregido[$key] = $data[$key];
-        } else {
-            $dataCorregido[$key] = $default;
+        $dataCorregido[$key] = $data[$key] ?? $default;
+    }
+
+    // Validaciones lógicas importantes
+
+    // Validar que sin partidos jugados no haya estadísticas de juego con valores > 0
+    if ($dataCorregido['partidos_jugados'] == 0) {
+        $statsFields = [
+            'turnos_bateo', 'veces_al_bate', 'carreras', 'hits', 'dobles', 'triples',
+            'home_runs', 'carreras_impulsadas', 'bases_robadas', 'atrapado_robando',
+            'bases_por_bola', 'ponches', 'promedio_bateo', 'porcentaje_embase',
+            'porcentaje_slugging', 'ops', 'war'
+        ];
+
+        foreach ($statsFields as $field) {
+            if (!empty($dataCorregido[$field]) && $dataCorregido[$field] != 0) {
+                http_response_code(400);
+                echo json_encode(['error' => "No puede haber estadísticas en '$field' si no tiene ningún partido jugado."]);
+                return;
+            }
         }
     }
 
+    // Validar coherencia de fechas
+    if (!is_null($dataCorregido['ano_debut']) && !is_null($dataCorregido['ano_retiro']) &&
+        $dataCorregido['ano_debut'] > $dataCorregido['ano_retiro']) {
+        http_response_code(400);
+        echo json_encode(['error' => 'El año de debut no puede ser mayor que el año de retiro']);
+        return;
+    }
+
+    if (!is_null($dataCorregido['fecha_nacimiento']) && !is_null($dataCorregido['fecha_debut']) &&
+        strtotime($dataCorregido['fecha_nacimiento']) > strtotime($dataCorregido['fecha_debut'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'La fecha de nacimiento no puede ser posterior a la fecha de debut']);
+        return;
+    }
+
+    if (!is_null($dataCorregido['fecha_debut']) &&
+        strtotime($dataCorregido['fecha_debut']) > time()) {
+        http_response_code(400);
+        echo json_encode(['error' => 'La fecha de debut no puede ser en el futuro']);
+        return;
+    }
+
+    // Validar consistencia básica de estadísticas
+    if ($dataCorregido['turnos_bateo'] < $dataCorregido['veces_al_bate']) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Los turnos al bate no pueden ser menores que las veces al bate']);
+        return;
+    }
+
+    if ($dataCorregido['carreras'] > $dataCorregido['veces_al_bate'] || $dataCorregido['hits'] > $dataCorregido['veces_al_bate']) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Carreras y hits no pueden ser mayores que las veces al bate']);
+        return;
+    }
+
+    // Inserción en base de datos
     try {
         $stmt = $pdo->prepare("
             INSERT INTO jugadores (
@@ -145,6 +197,7 @@ public function create($data) {
         echo json_encode(['error' => 'Error al crear jugador: ' . $e->getMessage()]);
     }
 }
+
 
 
 

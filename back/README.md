@@ -1,12 +1,11 @@
 # ⚾ MLB Stats Web App backend
 
-Bienvenido al repositorio del proyecto **MLB Stats Web App**. Aquí encontrarás una aplicación web interactiva para consultar estadísticas de la Major League Baseball (MLB).
+Bienvenido al repositorio del proyecto **MLB Stats Web App backend**. Aquí encontrarás una aplicación web interactiva para consultar estadísticas de la Major League Baseball (MLB).
 
 ## 🚀 Características
 
-- Consulta de estadísticas de jugadores y equipos.
-- Visualización de datos en tiempo real.
-- Interfaz intuitiva y atractiva.
+- Consulta de estadísticas de jugadores.
+- Interfaz intuitiva y atractiva para ver el acceso al api.
 - Filtros avanzados para personalizar la búsqueda.
 
 ## 🛠️ Tecnologías utilizadas
