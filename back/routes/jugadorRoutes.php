@@ -32,12 +32,14 @@ switch ($method) {
     case 'GET':
         if ($id) {
             $controller->getById($id);
-        } else {
+        }
+        else {
             $controller->getAll();
         }
         break;
 
     case 'POST':
+        //crear un nuevo jugador
         $controller->create($data);
         break;
 
