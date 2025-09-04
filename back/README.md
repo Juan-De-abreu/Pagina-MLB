@@ -49,4 +49,4 @@ la tabla de jugadores el id no era autoincrementable
 
 ---
 
-**Desarrollado por [tu nombre o usuario de GitHub]**
+**Desarrollado por [https://github.com/Juan-De-abreu]**
