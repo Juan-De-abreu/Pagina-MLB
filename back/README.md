@@ -32,7 +32,7 @@ cd Pagina-MLB/back
 - Dashboard personalizado.
 ---
 ## 📄 Contribuciones
----
+
 ¡Las contribuciones son bienvenidas! Abre un issue o envía un pull request para mejorar el proyecto.
 
 ## 4/9/2025
@@ -41,7 +41,7 @@ cd Pagina-MLB/back
   
 ---
 ## Correcciones:
----
+
 
 ## 4/9/2025
 
