@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Página MLB
 
 Este proyecto es una aplicación web para gestionar y visualizar estadísticas de jugadores de béisbol de las Grandes Ligas (MLB), con enfoque especial en jugadores venezolanos, incluyendo funcionalidades backend y frontend.
@@ -43,3 +44,6 @@ La aplicación permite crear, consultar y mantener información detallada de jug
 - Trabajar en ramas separadas (`back` para backend, `front` para frontend).
 - Antes de hacer push, siempre realizar pull para evitar conflictos.
 - Hacer push a ramas correspondientes usando:
+=======
+
+b21c7c9a11b53eadd127ee1c5769c6635456d52b>>>>>>> 

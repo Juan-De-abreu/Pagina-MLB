@@ -26,21 +26,31 @@ cd Pagina-MLB/back
 ```
 
 ## ✨ Próximas mejoras
--finalizacion de actualizacion de datos de jugadores
-- Integración de autenticación de usuarios.
+
+
 - Estadísticas históricas y comparativas.
 - Dashboard personalizado.
-
+---
 ## 📄 Contribuciones
 
 ¡Las contribuciones son bienvenidas! Abre un issue o envía un pull request para mejorar el proyecto.
 
-## Correcciones:
+## 4/9/2025
+- metodo create realizado con sus validaciones logicas correspondientes
+- readme vizualmente atractivo
+  
+##7/9/2025
+- Integración de autenticación de usuarios.
+- finalizacion de actualizacion de datos de jugadores
+- ajuste de error en nombres de var en create != var sql
 ---
+## Correcciones:
+
 
 ## 4/9/2025
+
 la tabla de jugadores el id no era autoincrementable
 
 ---
 
-**Desarrollado por [tu nombre o usuario de GitHub]**
+**Desarrollado por [https://github.com/Juan-De-abreu]**

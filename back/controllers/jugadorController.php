@@ -57,9 +57,9 @@ public function create($data) {
     $campos = [
         'nombre' => '',
         'pos' => '',
-        'anos_en_mlb' => 0,
-        'ano_debut' => null,
-        'ano_retiro' => null,
+        'años_en_mlb' => 0,
+        'año_debut' => null,
+        'año_retiro' => null,
         'all_star_appearances' => 0,
         'partidos_jugados' => 0,
         'turnos_bateo' => 0,
@@ -112,8 +112,8 @@ public function create($data) {
     }
 
     // Validar coherencia de fechas
-    if (!is_null($dataCorregido['ano_debut']) && !is_null($dataCorregido['ano_retiro']) &&
-        $dataCorregido['ano_debut'] > $dataCorregido['ano_retiro']) {
+    if (!is_null($dataCorregido['año_debut']) && !is_null($dataCorregido['año_retiro']) &&
+        $dataCorregido['año_debut'] > $dataCorregido['año_retiro']) {
         http_response_code(400);
         echo json_encode(['error' => 'El año de debut no puede ser mayor que el año de retiro']);
         return;
@@ -152,16 +152,16 @@ public function create($data) {
             INSERT INTO jugadores (
                 nombre, pos, años_en_mlb, año_debut, año_retiro, all_star_appearances, partidos_jugados, turnos_bateo, veces_al_bate, carreras, hits, dobles, triples, home_runs, carreras_impulsadas, bases_robadas, atrapado_robando, bases_por_bola, ponches, promedio_bateo, porcentaje_embase, porcentaje_slugging, ops, war, fecha_nacimiento, fecha_debut, lugar_nacimiento, posiciones
             ) VALUES (
-                :nombre, :pos, :anos_en_mlb, :ano_debut, :ano_retiro, :all_star_appearances, :partidos_jugados, :turnos_bateo, :veces_al_bate, :carreras, :hits, :dobles, :triples, :home_runs, :carreras_impulsadas, :bases_robadas, :atrapado_robando, :bases_por_bola, :ponches, :promedio_bateo, :porcentaje_embase, :porcentaje_slugging, :ops, :war, :fecha_nacimiento, :fecha_debut, :lugar_nacimiento, :posiciones
+                :nombre, :pos, :años_en_mlb, :año_debut, :año_retiro, :all_star_appearances, :partidos_jugados, :turnos_bateo, :veces_al_bate, :carreras, :hits, :dobles, :triples, :home_runs, :carreras_impulsadas, :bases_robadas, :atrapado_robando, :bases_por_bola, :ponches, :promedio_bateo, :porcentaje_embase, :porcentaje_slugging, :ops, :war, :fecha_nacimiento, :fecha_debut, :lugar_nacimiento, :posiciones
             )
         ");
 
         $stmt->execute([
             ':nombre' => $dataCorregido['nombre'],
             ':pos' => $dataCorregido['pos'],
-            ':anos_en_mlb' => $dataCorregido['anos_en_mlb'],
-            ':ano_debut' => $dataCorregido['ano_debut'],
-            ':ano_retiro' => $dataCorregido['ano_retiro'],
+            ':años_en_mlb' => $dataCorregido['años_en_mlb'],
+            ':año_debut' => $dataCorregido['año_debut'],
+            ':año_retiro' => $dataCorregido['año_retiro'],
             ':all_star_appearances' => $dataCorregido['all_star_appearances'],
             ':partidos_jugados' => $dataCorregido['partidos_jugados'],
             ':turnos_bateo' => $dataCorregido['turnos_bateo'],
@@ -203,9 +203,97 @@ public function create($data) {
 
     // PUT /api/jugadores/:id - Actualizar un jugador
     public function update($id, $data) {
-        
+        global $pdo;
+
+        if (!$id) {
+            http_response_code(400);
+            echo json_encode(['error' => 'ID de jugador no especificado']);
+            return;
+        }
+
+        if (empty($data)) {
+            http_response_code(400);
+            echo json_encode(['error' => 'No se enviaron datos para actualizar']);
+            return;
+        }
+
+        // Obtener datos actuales para comparar
+        $stmtSelect = $pdo->prepare("SELECT * FROM jugadores WHERE id = :id");
+        $stmtSelect->execute([':id' => $id]);
+        $actual = $stmtSelect->fetch(PDO::FETCH_ASSOC);
+
+        if (!$actual) {
+            http_response_code(404);
+            echo json_encode(['error' => 'Jugador no encontrado']);
+            return;
+        }
+
+        // Quitar campos no actualizables o hacer manejo especial si quieres
+        unset($actual['id']); // No actualizamos el ID
+
+        // Campos permitidos para actualizar
+        $camposPermitidos = [
+            'nombre', 'pos', 'años_en_mlb', 'año_debut', 'año_retiro', 'all_star_appearances',
+            'partidos_jugados', 'turnos_bateo', 'veces_al_bate', 'carreras', 'hits', 'dobles',
+            'triples', 'home_runs', 'carreras_impulsadas', 'bases_robadas', 'atrapado_robando',
+            'bases_por_bola', 'ponches', 'promedio_bateo', 'porcentaje_embase', 'porcentaje_slugging',
+            'ops', 'war', 'fecha_nacimiento', 'fecha_debut', 'lugar_nacimiento', 'posiciones'
+        ];
+
+        // Filtrar solo campos recibidos que estén permitidos
+        $datosNuevos = array_intersect_key($data, array_flip($camposPermitidos));
+
+        // Generar campos a actualizar solo si hay cambio
+        $camposActualizar = [];
+        $parametros = [':id' => $id];
+
+        foreach ($datosNuevos as $campo => $valorNuevo) {
+            $valorActual = $actual[$campo] ?? null;
+
+            // Para comparar fechas y valores nulos con más seguridad, convertir a string
+            $valorActualStr = is_null($valorActual) ? '' : (string)$valorActual;
+            $valorNuevoStr = is_null($valorNuevo) ? '' : (string)$valorNuevo;
+
+            if ($valorNuevoStr !== $valorActualStr) {
+                // Cambió el campo, se incluye para actualizar
+                $parametro = ':' . str_replace('ñ', 'n', $campo); // parámetro sin ñ para PDO
+                $camposActualizar[] = "`$campo` = $parametro";
+                $parametros[$parametro] = $valorNuevo;
+            }
+        }
+
+        if (count($camposActualizar) === 0) {
+            http_response_code(200);
+            echo json_encode(['message' => 'No hubo cambios para actualizar']);
+            return;
+        }
+
+        // Validaciones similares a create solo para los campos que se actualizarán (puedes agregar según necesites)
+        if (array_key_exists('nombre', $datosNuevos) && empty($datosNuevos['nombre'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'El campo nombre no puede estar vacío']);
+            return;
+        }
+        // Otros validaciones que requieras aquí...
+
+        // Construir la consulta UPDATE dinámica
+        $sql = "UPDATE jugadores SET " . implode(', ', $camposActualizar) . " WHERE id = :id";
+
+        try {
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($parametros);
+
+            http_response_code(200);
+            echo json_encode(['message' => 'Jugador actualizado con éxito']);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['error' => 'Error al actualizar jugador: ' . $e->getMessage()]);
+        }
     }
 
+
+
+    
     // DELETE /api/jugadores/:id - Eliminar un jugador
     public function delete($id) {
         global $pdo;
