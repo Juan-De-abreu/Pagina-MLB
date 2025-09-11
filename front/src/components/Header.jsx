@@ -20,8 +20,9 @@ const Header = () => {
       {/* Botón hamburguesa solo en menores a lg */}
       <div className="flex justify-center items-center lg:hidden md:items-center">
         <button
+        id='menuopenid'
           onClick={() => setMenuOpen(!menuOpen)}
-          className="focus:outline-none p-2"
+          className={`focus:outline-none p-2 ${menuOpen? 'hidden':'visible'}`}
           aria-label="Toggle menu"
         >
           <svg
@@ -45,24 +46,25 @@ const Header = () => {
           mx-4
         `}
       >
-        <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl lg:hover:scale-120 transition-all duration-150 text-center">
-          partidos
+        <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">
+          Partidos
         </a>
 
-        <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl lg:hover:scale-120 transition-all duration-150 text-center">
-          jugadores
+        <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl hover:scale-120 transition-all duration-150 text-center">
+          Jugadores
         </a>
 
-        <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-5xl md:text-4xl lg:hover:scale-120 transition-all duration-150 text-center">
+        <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-5xl md:text-4xl hover:scale-120 transition-all duration-150 text-center">
           Inicio
         </a>
 
-        <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl lg:hover:scale-120 transition-all duration-150 text-center">
+        <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl hover:scale-120 transition-all duration-150 text-center">
           Estadisticas
         </a>
-        <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl lg:hover:scale-120 transition-all duration-150 text-center">
-          noticias
+        <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">
+          Noticias
         </a>
+        <label htmlFor="menuopenid" className={`hover:scale-120 transition-all duration-150 text-center py-1 md:text-2xl text-1xl ${menuOpen? 'visibl':'hidden'}`}>Cerrar</label>
       </div>
 
       {/* Tercer div: logo derecho oculto en lg y visible más grande en 2xl */}
