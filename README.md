@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+<<<<<<<
 # Página MLB
 
 Este proyecto es una aplicación web para gestionar y visualizar estadísticas de jugadores de béisbol de las Grandes Ligas (MLB), con enfoque especial en jugadores venezolanos, incluyendo funcionalidades backend y frontend.
