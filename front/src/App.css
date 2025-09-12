@@ -1,6 +1,15 @@
 @import "tailwindcss";
+
+
 .app {
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
+}
+:root {
+  --primario-vi: #800020;
+  --premiun: #D4AF37;
+  --primario-fondos: #2E2E2E;
+  --primario-text: #F5F5F5;
+  --pramario-atencion: #0077FF;
 }

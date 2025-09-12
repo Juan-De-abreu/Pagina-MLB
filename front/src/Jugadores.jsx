@@ -100,7 +100,7 @@ const Jugadores = () => {
     <div className="bg-[#5e2129] py-4 min-h-screen">
       <div className="container mx-auto px-4">
         <h3 className="text-center py-2 text-2xl font-semibold">📋 Jugadores Venezolanos en el MLB</h3>
-        <p className="text-center text-gray-600 mb-6">
+        <p className="text-center text-gray-200 mb-6">
           {datos.length} jugadores que han representado a la Vinotinto
         </p>
 
@@ -120,7 +120,7 @@ const Jugadores = () => {
           >
             <option value="">Seleccione una posición</option>
             {posiciones.map((item, index) => (
-              <option key={index} value={item.value}>
+              <option className="bg-[#2E2E2E]" key={index} value={item.value}>
                 {item.label}
               </option>
             ))}
@@ -142,7 +142,7 @@ const Jugadores = () => {
             No se encontraron jugadores con esos filtros.
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2">
             {filteredJugadores.map((item) => (
               <CardJugadores
                 key={item.id}

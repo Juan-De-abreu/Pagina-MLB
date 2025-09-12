@@ -11,7 +11,7 @@ const images = [
 
 return (
     <div>
-        <Carrusel images={images} />
+        <Carrusel images={images}  />
         <Top5war/>
     </div>
 )
