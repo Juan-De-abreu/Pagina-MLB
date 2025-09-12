@@ -1,4 +1,4 @@
-import Carrusel from "../components/Carrusel";
+import Carrusel from "./Home/Carrusel";
 
 const Home = () => {
 const images = [

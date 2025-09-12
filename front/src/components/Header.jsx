@@ -1,11 +1,30 @@
 import React, { useState } from 'react';
+import { useRef } from 'react';
+import { useEffect } from 'react';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+   const menuRef = useRef(null);
+
+   useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    }
+    if (menuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuOpen]);
+
 
   return (
-    <div className="navbar flex justify-between items-center h-auto py-auto lg:px-8 m-0">
-
+    <div className="navbar flex justify-between items-center h-30 py-auto lg:px-8 m-0 py-0 border-b-1 border-[#494a0c]">
       {/* Primer div: logo, oculto en pantallas menores a lg */}
       <div className="hidden lg:flex items-center">
         <a href="">
@@ -37,13 +56,18 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Menú principal (segundo div), visible a partir de lg, centrado */}
+      {/* Menú principal y desplegable*/}
       <div
+      ref={menuRef}
         className={`
+           fixed top-0 left-0 right-0 z-50
           flex-1
-          ${menuOpen ? 'flex flex-col items-center gap-4 py-2 md:py-4' : 'hidden'}
+          ${menuOpen ? 
+            'flex flex-col items-center gap-4 py-2 pt-16 md:py-4 bg-linear-to-t to-[#00000083] from-[#00000059] rounded-lg' 
+            :
+            'hidden'}
           lg:flex lg:justify-center lg:items-center lg:gap-14
-          mx-4
+          mx-4 divide-y-1 lg:py-6 divide-[#ddff0053]
         `}
       >
         <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">
@@ -59,7 +83,7 @@ const Header = () => {
         </a>
 
         <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl hover:scale-120 transition-all duration-150 text-center">
-          Estadisticas
+          Equipos
         </a>
         <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">
           Noticias
@@ -71,7 +95,7 @@ const Header = () => {
       <div className={`hidden lg:flex justify-end items-center lg:col-span-1 2xl:flex`}>
         <div href="" className="justify-center flex py-auto">
           <img
-            className="w-50 sm:justify-center lg:hover:scale-120 transition-all duration-200 lg:hover:-translate-y-0.5"
+            className="w-50 md:hidden 2xl:block lg:w-50 sm:justify-center lg:hover:scale-120 transition-all duration-200 lg:hover:-translate-y-0.5"
             src="/public/logovenezuela-removebg-preview.png"
             alt=""
           />
