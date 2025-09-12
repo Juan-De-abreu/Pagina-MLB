@@ -3,6 +3,8 @@ import Footer from "./components/Footer"
 import Header from "./components/Header"
 import Home from "./pages/Home"
 import Estadisticas from "./pages/Estadisticas"
+import Jugadores from "./Jugadores"
+import Detalle from "./pages/Detalle"
 
 const App = () => {
   return (
@@ -13,6 +15,10 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="*" element={<Home/>}/>
+            <Route path="/inicio" element={<Home/>}/>
+            <Route path="/jugadores" element={<Jugadores/>}/>
+            <Route path="/detalle/:id/:nom" element={<Detalle/>} />
+
             <Route path="/estadisticas" element={<Estadisticas/>}/>
           </Routes>
         <Footer/>

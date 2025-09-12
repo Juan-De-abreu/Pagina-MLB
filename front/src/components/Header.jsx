@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
+import { Link } from 'react-router';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -71,28 +72,28 @@ const Header = () => {
           mx-4 divide-y-1 lg:py-6 divide-[#ddff0053]
         `}
       >
-        <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">
+        <Link to={"/"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">
           Partidos
-        </a>
+        </Link>
 
-        <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl hover:scale-120 transition-all duration-150 text-center">
+        <Link to={"/jugadores"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl hover:scale-120 transition-all duration-150 text-center">
           Jugadores
-        </a>
+        </Link>
 
-        <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-5xl md:text-4xl hover:scale-120 transition-all duration-150 text-center">
+        <Link to={"/inicio"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-5xl md:text-4xl hover:scale-120 transition-all duration-150 text-center">
           Inicio
-        </a>
+        </Link>
 
-        <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl hover:scale-120 transition-all duration-150 text-center">
+        <Link to={"/"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl hover:scale-120 transition-all duration-150 text-center">
           Equipos
-        </a>
-        <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">
+        </Link>
+        <Link to={'/estadisticas'} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">
           Estadisticas
-        </a>
+        </Link>
         <label htmlFor="menuopenid" className={`hover:scale-120 transition-all duration-150 text-center py-1 md:text-2xl text-1xl ${menuOpen? 'visibl':'hidden'}`}>Cerrar</label>
       </div>
 
-      {/* Tercer div: logo derecho oculto en lg y visible más grande en 2xl */}
+      {/* Tercer div: logo derecho oculto en <lg */}
       <div className={`hidden lg:flex justify-end items-center lg:col-span-1 2xl:flex`}>
         <div className="justify-center flex py-auto">
           <img
