@@ -30,7 +30,7 @@ const Top5war = () => {
     return (
       <div className="text-center py-5">
         <div role="status" aria-label="loading" className="inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-        <p className="mt-2">Cargando Personajes...</p>
+        <p className="mt-2">Cargando Jugadores...</p>
       </div>
     );
   }
@@ -38,16 +38,16 @@ const Top5war = () => {
   if (error) {
     return (
       <div className="text-center py-5 text-red-600">
-        <h4 className="text-xl font-semibold mb-2">Error al cargar los Personajes</h4>
+        <h4 className="text-xl font-semibold mb-2">Error al cargar los Jugadores</h4>
         <p>{error}</p>
       </div>
     );
   }
 
   return (
-    <section className="bg-[#1a0805] min-h-screen">
+    <section className="bg-[#1a0805] min-h-screen py-4">
       <div className="max-w-5xl mx-auto px-4">
-        <h2 className="text-center py-0 text-3xl font-bold text-yellow-400">🏆 Top 5 en WAR</h2>
+        <h2 className="text-center pb-2 text-3xl font-bold text-yellow-400">🏆 Top 5 en WAR</h2>
         <div className="flex justify-center">
           <div className="w-full lg:w-4/5 bg-gray-800 rounded-lg shadow-lg">
             <div className="overflow-x-auto">
