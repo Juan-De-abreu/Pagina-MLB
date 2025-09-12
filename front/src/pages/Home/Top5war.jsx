@@ -45,9 +45,9 @@ const Top5war = () => {
   }
 
   return (
-    <section className="bg-gray-900 min-h-screen">
+    <section className="bg-[#1a0805] min-h-screen">
       <div className="max-w-5xl mx-auto px-4">
-        <h2 className="text-center py-5 text-3xl font-bold text-yellow-400">🏆 Top 5 en WAR</h2>
+        <h2 className="text-center py-0 text-3xl font-bold text-yellow-400">🏆 Top 5 en WAR</h2>
         <div className="flex justify-center">
           <div className="w-full lg:w-4/5 bg-gray-800 rounded-lg shadow-lg">
             <div className="overflow-x-auto">

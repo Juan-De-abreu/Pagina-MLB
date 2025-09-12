@@ -1,4 +1,5 @@
 import Carrusel from "./Home/Carrusel";
+import Top5war from "./Home/Top5war";
 
 const Home = () => {
 const images = [
@@ -11,6 +12,7 @@ const images = [
 return (
     <div>
         <Carrusel images={images} />
+        <Top5war/>
     </div>
 )
 }

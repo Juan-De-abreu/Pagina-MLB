@@ -24,7 +24,7 @@ const Header = () => {
 
 
   return (
-    <div className="navbar flex justify-between items-center h-30 py-auto lg:px-8 m-0 py-0 border-b-1 border-[#494a0c]">
+    <div className="navbar flex justify-between items-center h-20 lg:h-30 py-auto lg:px-8 m-0 py-0 border-b-1 border-[#494a0c]">
       {/* Primer div: logo, oculto en pantallas menores a lg */}
       <div className="hidden lg:flex items-center">
         <a href="">
@@ -60,7 +60,8 @@ const Header = () => {
       <div
       ref={menuRef}
         className={`
-           fixed top-0 left-0 right-0 z-50
+          fixed top-0 left-0 right-0 z-50
+          lg:static
           flex-1
           ${menuOpen ? 
             'flex flex-col items-center gap-4 py-2 pt-16 md:py-4 bg-linear-to-t to-[#00000083] from-[#00000059] rounded-lg' 
@@ -86,14 +87,14 @@ const Header = () => {
           Equipos
         </a>
         <a href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">
-          Noticias
+          Estadisticas
         </a>
         <label htmlFor="menuopenid" className={`hover:scale-120 transition-all duration-150 text-center py-1 md:text-2xl text-1xl ${menuOpen? 'visibl':'hidden'}`}>Cerrar</label>
       </div>
 
       {/* Tercer div: logo derecho oculto en lg y visible más grande en 2xl */}
       <div className={`hidden lg:flex justify-end items-center lg:col-span-1 2xl:flex`}>
-        <div href="" className="justify-center flex py-auto">
+        <div className="justify-center flex py-auto">
           <img
             className="w-50 md:hidden 2xl:block lg:w-50 sm:justify-center lg:hover:scale-120 transition-all duration-200 lg:hover:-translate-y-0.5"
             src="/public/logovenezuela-removebg-preview.png"
