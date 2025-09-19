@@ -54,23 +54,23 @@ const Top5war = () => {
               <table className="table-auto w-full text-gray-100 divide-y divide-gray-700">
                 <thead>
                   <tr className="bg-gray-700">
-                    <th className="px-4 py-3 text-left">#</th>
-                    <th className="px-4 py-3 text-left">Jugador</th>
-                    <th className="px-4 py-3 text-left">Lugar de Nacimiento</th>
-                    <th className="px-4 py-3 text-left">WAR</th>
+                    <th className="px-4 py-3 text-left border-l-1 border-l-gray-900 border-b-1 border-b-gray-900">#</th>
+                    <th className="px-4 py-3 text-left border-l-1 border-l-gray-900 border-b-1 border-b-gray-900">Jugador</th>
+                    <th className="px-4 py-3 text-left border-l-1 border-l-gray-900 border-b-1 border-b-gray-900">Lugar de Nacimiento</th>
+                    <th className="px-4 py-3 text-left border-l-1 border-l-gray-900 border-b-1 border-b-gray-900">WAR</th>
                   </tr>
                 </thead>
                 <tbody>
                   {datos.slice(0, 5).map((item, index) => (
                     <tr key={index} className="hover:bg-gray-700">
-                      <td className="px-4 py-2">
-                        <span className="inline-block px-2 py-1 text-yellow-900 bg-yellow-400 rounded-lg font-semibold">
+                      <td className="px-4 py-2 border-l-1 border-l-gray-900 border-b-1 border-b-gray-900">
+                        <span className="inline-block px-3 py-1 mx-auto text-white bg-red-600 rounded-4xl font-semibold ">
                           {index + 1}
                         </span>
                       </td>
-                      <td className="px-4 py-2 font-semibold">{item.nombre}</td>
-                      <td className="px-4 py-2">{item.lugar_nacimiento}</td>
-                      <td className="px-4 py-2">{item.war}</td>
+                      <td className="px-4 py-2 font-semibold border-l-1 border-l-gray-900 border-b-1 border-b-gray-900">{item.nombre}</td>
+                      <td className="px-4 py-2 border-l-1 border-l-gray-900 border-b-1 border-b-gray-900">{item.lugar_nacimiento}</td>
+                      <td className="px-4 py-2 border-l-1 border-l-gray-900 border-b-1 border-b-gray-900 border-b-1 border-b-gray-900">{item.war}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -78,13 +78,15 @@ const Top5war = () => {
             </div>
           </div>
         </div>
-        <div className="text-center my-6">
+        <div className="text-center my-6 mx-auto">
+
           <Link
             to={'/estadisticas'}
-            className="inline-block px-6 py-2 border-2 border-green-500 text-green-500 rounded hover:bg-green-500 hover:text-white transition-colors duration-300"
+            className="inline-block px-16 py-3 border-2 border-red-500 text-red-500 rounded hover:bg-red-500 hover:text-white transition-colors duration-300"
           >
             Ver todos los rankings
           </Link>
+
         </div>
       </div>
     </section>

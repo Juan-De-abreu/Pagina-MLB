@@ -5,6 +5,8 @@ import Home from "./pages/Home"
 import Estadisticas from "./pages/Estadisticas"
 import Detalle from "./pages/Detalle"
 import Jugadores from "./pages/Jugadores"
+import Comparador from "./pages/Comparador"
+import Mapa from "./pages/Home/Mapa"
 
 const App = () => {
   return (
@@ -18,8 +20,10 @@ const App = () => {
             <Route path="/inicio" element={<Home/>}/>
             <Route path="/jugadores" element={<Jugadores/>}/>
             <Route path="/detalle/:id/:nom" element={<Detalle/>} />
-
+            <Route path="/comparador" element={<Comparador/>} />
             <Route path="/estadisticas" element={<Estadisticas/>}/>
+            <Route path="/mapa" element={<Mapa/>}/>
+
           </Routes>
         <Footer/>
       </div>

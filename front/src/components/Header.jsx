@@ -72,25 +72,25 @@ const Header = () => {
           mx-4 divide-y-1 lg:py-6 divide-[#ddff0053]
         `}
       >
-        <Link to={"/"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">
+        <Link onClick={menuOpen} to={"/"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">
           Partidos
         </Link>
 
-        <Link to={"/jugadores"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl hover:scale-120 transition-all duration-150 text-center">
+        <Link onClick={menuOpen} to={"/jugadores"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl hover:scale-120 transition-all duration-150 text-center">
           Jugadores
         </Link>
 
-        <Link to={"/inicio"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-5xl md:text-4xl hover:scale-120 transition-all duration-150 text-center">
+        <Link onClick={menuOpen} to={"/inicio"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-5xl md:text-4xl hover:scale-120 transition-all duration-150 text-center">
           Inicio
         </Link>
 
-        <Link to={"/"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl hover:scale-120 transition-all duration-150 text-center">
+        <Link onClick={menuOpen} to={"/"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl hover:scale-120 transition-all duration-150 text-center">
           Equipos
         </Link>
-        <Link to={'/estadisticas'} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">
+        <Link onClick={menuOpen} to={'/estadisticas'} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">
           Estadisticas
         </Link>
-        <label htmlFor="menuopenid" className={`hover:scale-120 transition-all duration-150 text-center py-1 md:text-2xl text-1xl ${menuOpen? 'visibl':'hidden'}`}>Cerrar</label>
+        <label htmlFor="menuopenid" className={`hover:scale-120 transition-all duration-150 text-center py-1 md:text-2xl text-1xl ${menuOpen? 'visible':'hidden'}`}>Cerrar</label>
       </div>
 
       {/* Tercer div: logo derecho oculto en <lg */}

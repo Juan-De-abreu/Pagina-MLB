@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import CardJugadores from "../components/CardJugadores";
+import { Link } from "react-router";
 
 
 const API = "http://localhost:8081/api/jugadores";
@@ -105,6 +106,12 @@ const Jugadores = () => {
         </p>
 
         <div className="flex flex-col md:flex-row md:items-center md:justify-center gap-4 mb-6">
+
+          <Link to={"/comparador"}
+            className="text-center lg:text-left bg-transparent border border-red-600 text-red-600 px-4 py-2 rounded hover:bg-red-600 hover:text-white transition w-full md:w-auto">
+            Comparar jugadores
+          </Link>
+
           <input
             type="text"
             className="border border-gray-300 rounded px-4 py-2 w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-red-500"
