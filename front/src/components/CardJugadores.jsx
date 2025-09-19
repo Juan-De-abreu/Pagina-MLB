@@ -3,7 +3,7 @@ import { formatNumberEs } from '../util/funciones';
 
 const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3 }) => {
   return (
-    <div className="w-40 md:w-40 xl:w-70 my-10 animate-slide-top px-2">
+    <div className="w-70 md:w-55 xl:w-70 my-4 animate-slide-top px-2 mx-auto sm:mx-0">
       <div className="bg-[#60090e] rounded shadow-lg h-full flex flex-col shadow-black border-[#9b1818] border-1">
         <div className="overflow-hidden rounded-t border-[#3b0808] border-1">
           <img

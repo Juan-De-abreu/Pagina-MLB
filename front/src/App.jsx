@@ -3,8 +3,8 @@ import Footer from "./components/Footer"
 import Header from "./components/Header"
 import Home from "./pages/Home"
 import Estadisticas from "./pages/Estadisticas"
-import Jugadores from "./Jugadores"
 import Detalle from "./pages/Detalle"
+import Jugadores from "./pages/Jugadores"
 
 const App = () => {
   return (

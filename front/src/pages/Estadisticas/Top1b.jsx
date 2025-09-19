@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CardJugadores from "../../components/CardJugadores";
 
-const API = "http://localhost:8081/api/estadisticas/top-1b";
+const API = "http://localhost:8081/api/estadisticas/top-hits";
 
 const Top1b = () => {
   const [datos, setDatos] = useState([]);

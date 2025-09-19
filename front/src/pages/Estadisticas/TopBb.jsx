@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import CardJugadores from "../../components/CardJugadores";
 
-const API = "http://localhost:8081/api/estadisticas/top-avg";
+const API = "http://localhost:8081/api/estadisticas/top-porcentajebb";
 
-const TopAvg = () => {
+const TopBb = () => {
   const [datos, setDatos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -35,7 +35,7 @@ const TopAvg = () => {
           aria-label="loading"
           className="w-10 h-10 border-4 border-red-500 border-t-transparent rounded-full animate-spin"
         ></div>
-        <p className="mt-4 text-red-600">Cargando Top AVG...</p>
+        <p className="mt-4 text-red-600">Cargando Top de porcentaje Base por bola...</p>
       </div>
     );
   }
@@ -43,7 +43,7 @@ const TopAvg = () => {
   if (error) {
     return (
       <div className="text-center py-10 text-red-600">
-        <h4 className="text-xl font-semibold mb-2">Error al cargar los Top AVG</h4>
+        <h4 className="text-xl font-semibold mb-2">Error al cargar los Top de porcentaje Base por bola</h4>
         <p>{error}</p>
       </div>
     );
@@ -51,8 +51,8 @@ const TopAvg = () => {
 
   return (
     <>
-      <h4 className="text-center py-4 text-2xl font-semibold">🏆 Top en AVG</h4>
-      <p className="text-center">Total de AVG en toda su carrera</p>
+      <h4 className="text-center py-4 text-2xl font-semibold">🏆 Top en BB%</h4>
+      <p className="text-center">Total de BB% en toda su carrera</p>
       <p className="text-center text-gray-500">
         
       </p>
@@ -74,4 +74,4 @@ const TopAvg = () => {
   );
 };
 
-export default TopAvg;
+export default TopBb;

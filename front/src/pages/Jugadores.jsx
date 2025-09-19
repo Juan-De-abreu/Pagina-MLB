@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import CardJugadores from "./components/CardJugadores";
+import CardJugadores from "../components/CardJugadores";
 
 
 const API = "http://localhost:8081/api/jugadores";
