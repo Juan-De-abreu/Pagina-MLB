@@ -298,20 +298,36 @@ class EstadisticasController
 
     // GET /api/mapa/ciudades
 
-    public function topCity()
+    public function Topcity()
     {
         global $pdo;
         try {
             $stmt = $pdo->query("
-                SELECT *
+               SELECT 
+                j1.lugar_nacimiento,
+                j2.total_jugadores,  
+                j1.id,
+                j1.nombre as jugador_destacado,
+                j1.war as war_del_destacado
+            FROM jugadores j1
+            INNER JOIN (
+                SELECT 
+                    lugar_nacimiento,
+                    MAX(war) as max_war,
+                    COUNT(*) as total_jugadores  
                 FROM jugadores
-                ORDER BY lugar_nacimiento ASC;
+                WHERE lugar_nacimiento IS NOT NULL
+                GROUP BY lugar_nacimiento
+            ) j2 
+            ON j1.lugar_nacimiento = j2.lugar_nacimiento 
+            AND j1.war = j2.max_war
+            ORDER BY j2.total_jugadores DESC, j1.nombre;
             ");
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
             echo json_encode($rows);
         } catch (Exception $e) {
             http_response_code(500);
-            echo json_encode(['error' => 'Error al obtener top AVG: ' . $e->getMessage()]);
+            echo json_encode(['error' => 'Error al obtener top 1B: ' . $e->getMessage()]);
         }
     }
 
