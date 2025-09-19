@@ -173,7 +173,7 @@ class EstadisticasController
         }
     }
 
-    // GET /api/estadisticas/top-bb (Walk Percentage)
+    // GET /api/estadisticas/top-porcentajebb (Walk Percentage)
 
     public function topPorbb()
     {
