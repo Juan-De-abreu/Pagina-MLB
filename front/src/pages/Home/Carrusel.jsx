@@ -80,18 +80,18 @@ const Carrusel = (images) => {
               <img
                 src={imagesArray[current]}
                 alt={`Slide ${current + 1}`}
-                className="w-full h-110 sm:h-160 lg:h-180 mask-contain"
+                className="w-full h-110 sm:h-160 lg:h-105 2xl:h-145 mask-contain"
               />
               <div
                 key={datos.id}
-                className="w-100 h-auto lg:w-auto z-50 text-center absolute -bottom-20 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl text-[#fff] bg-[#000000a2]  mx-auto py-3 rounded-lg"
+                className="w-100 h-60 xl:h-auto lg:w-auto z-50 text-center absolute -bottom-20 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl text-[#fff] bg-[#000000a2]  mx-auto py-3 rounded-lg"
               >
                 {datos.slice(current, current + 1).map((item) => (
-                  <div key={item.id} className="px-0 md:px-5 xl:px-40 2xl:px-50">
-                    <p className="text-red-500 text-4xl">
+                  <div key={item.id} className="px-0 md:px-15 xl:px-40 2xl:px-50">
+                    <p className="text-red-500   text-4xl">
                       Top {current + 1} War
                     </p>
-                    <p className="text-5xl py-3">
+                    <p className="text-4xl 2xl:text-5xl py-3">
                       {item.nombre}
                     </p>
                     <p>
@@ -99,7 +99,7 @@ const Carrusel = (images) => {
                     </p>
                               <Link
                                 to={'/mapa'}
-                                className="inline-block px-4 py-2 my-4 border-1 rounded-2 border-red-500 text-red-500 rounded hover:bg-red-500 hover:text-white transition-colors duration-300"
+                                className="inline-block px-1 py-1 my-2 2xl:px-4 2xl:py-2 2xl:my-4 border-1 rounded-2 border-red-500 text-red-500 rounded hover:bg-red-500 hover:text-white transition-colors duration-300"
                               >
                                 Ver Mejores por ciudades
                             </Link>
@@ -109,13 +109,13 @@ const Carrusel = (images) => {
               <div className="absolute inset-0 bg-[#00000080] bg-opacity-100 pointer-events-none rounded-lg"></div>
             </div>
             <button
-              className="hidden lg:block lg:h-175 absolute bg-[#0000003f] top-20/40 left-0 transform -translate-y-1/2 h-full hover:bg-[#29090d54] py-10 px-7 shadow-md text-[#6b1607] hover:text-[#fafafa86] text-5xl"
+              className="hidden lg:block 2xl:h-145 absolute bg-[#0000003f] top-20/40 left-0 transform -translate-y-1/2 h-full hover:bg-[#29090d54] py-10 px-7 shadow-md text-[#6b1607] hover:text-[#fafafa86] text-5xl"
               onClick={prevSlide}
             >
               &#8592;
             </button>
             <button
-              className="hidden lg:block lg:h-175 absolute bg-[#0000003f] top-20/40 right-0 transform -translate-y-1/2 h-full hover:bg-[#29090d54] py-10 px-7 shadow-md text-[#6b1607] hover:text-[#fafafa86] text-5xl text"
+              className="hidden lg:block 2xl:h-145 absolute bg-[#0000003f] top-20/40 right-0 transform -translate-y-1/2 h-full hover:bg-[#29090d54] py-10 px-7 shadow-md text-[#6b1607] hover:text-[#fafafa86] text-5xl"
               onClick={nextSlide}
             >
               &#8594;

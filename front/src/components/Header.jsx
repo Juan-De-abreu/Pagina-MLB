@@ -27,7 +27,7 @@ const Header = () => {
   return (
     <div className="navbar flex justify-between items-center h-20 lg:h-30 py-auto lg:px-8 m-0 py-0 border-b-1 border-[#494a0c]">
       {/* Primer div: logo, oculto en pantallas menores a lg */}
-      <div className="hidden lg:flex items-center">
+      <div className="hidden xl:flex items-center">
         <a href="">
           <img
             src="/public/logomlb-removebg-preview.png"
@@ -65,14 +65,14 @@ const Header = () => {
           lg:static
           flex-1
           ${menuOpen ? 
-            'flex flex-col items-center gap-4 py-2 pt-16 md:py-4 bg-linear-to-t to-[#00000083] from-[#00000059] rounded-lg' 
+            'z-51 flex flex-col items-center gap-4 py-2 pt-16 md:py-4 bg-linear-to-t to-[#000000df] from-[#000000f3] md:to-[#000000b6] md:from-[#000000cf] rounded-lg' 
             :
             'hidden'}
           lg:flex lg:justify-center lg:items-center lg:gap-14
           mx-4 divide-y-1 lg:py-6 divide-[#ddff0053]
         `}
       >
-        <Link onClick={menuOpen} to={"/"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">
+        <Link onClick={menuOpen} to={"/partidos"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">
           Partidos
         </Link>
 
@@ -80,11 +80,11 @@ const Header = () => {
           Jugadores
         </Link>
 
-        <Link onClick={menuOpen} to={"/inicio"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-5xl md:text-4xl hover:scale-120 transition-all duration-150 text-center">
+        <Link onClick={menuOpen} to={"/"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-5xl md:text-4xl hover:scale-120 transition-all duration-150 text-center">
           Inicio
         </Link>
 
-        <Link onClick={menuOpen} to={"/"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl hover:scale-120 transition-all duration-150 text-center">
+        <Link onClick={menuOpen} to={"/equipos"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl hover:scale-120 transition-all duration-150 text-center">
           Equipos
         </Link>
         <Link onClick={menuOpen} to={'/estadisticas'} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">
@@ -97,7 +97,7 @@ const Header = () => {
       <div className={`hidden lg:flex justify-end items-center lg:col-span-1 2xl:flex`}>
         <div className="justify-center flex py-auto">
           <img
-            className="w-50 md:hidden 2xl:block lg:w-50 sm:justify-center lg:hover:scale-120 transition-all duration-200 lg:hover:-translate-y-0.5"
+            className="w-50 md:hidden xl:block lg:w-50 sm:justify-center lg:hover:scale-120 transition-all duration-200 lg:hover:-translate-y-0.5"
             src="/public/logovenezuela-removebg-preview.png"
             alt=""
           />

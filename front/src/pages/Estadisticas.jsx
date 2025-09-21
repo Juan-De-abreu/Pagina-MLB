@@ -1,7 +1,6 @@
 import { useState } from "react";
 import TopWar from "./Estadisticas/TopWar";
 import TopHr from "./Estadisticas/TopHr";
-import Top1b from "./Estadisticas/Top1b";
 import TopAvg from "./Estadisticas/TopAvg";
 import TopDobles from "./Estadisticas/TopDobles";
 import TopTriples from "./Estadisticas/TopTriples";
@@ -9,6 +8,11 @@ import TopOps from "./Estadisticas/TopOps";
 import TopRc from "./Estadisticas/TopRc";
 import TopIso from "./Estadisticas/TopIso";
 import TopBb from "./Estadisticas/TopBB";
+import Topk from "./Estadisticas/Topk";
+import TopEbh from "./Estadisticas/TopEbh";
+import TopSb from "./Estadisticas/TopSb";
+import TopTb from "./Estadisticas/TopTb";
+import TopAllStar from "./Estadisticas/TopAllStar";
 
 const Estadisticas = () => {
   const [activeTab, setActiveTab] = useState("war");
@@ -19,7 +23,7 @@ const Estadisticas = () => {
         📊 Estadísticas de Jugadores Venezolanos
       </h2>
 
-      <ul className="flex border-b border-gray-300 pb-2">
+      <ul className="flex border-b border-gray-300 pb-2 justify-center flex-wrap">
 
 
         <li className="mr-6">
@@ -139,6 +143,71 @@ const Estadisticas = () => {
           </button>
         </li>
 
+        <li>
+          <button
+            onClick={() => setActiveTab("porcentajestrike")}
+            className={`py-2 px-4 block focus:outline-none ${
+              activeTab === "porcentajestrike"
+                ? "border-b-2 border-red-500 text-red-400 font-semibold"
+                : "text-gray-600 hover:text-red-400"
+            }`}
+          >
+            strike%
+          </button>
+        </li>
+
+        <li>
+          <button
+            onClick={() => setActiveTab("ebh")}
+            className={`py-2 px-4 block focus:outline-none ${
+              activeTab === "ebh"
+                ? "border-b-2 border-red-500 text-red-400 font-semibold"
+                : "text-gray-600 hover:text-red-400"
+            }`}
+          >
+            Ebh
+          </button>
+        </li>
+
+        <li>
+          <button
+            onClick={() => setActiveTab("sb")}
+            className={`py-2 px-4 block focus:outline-none ${
+              activeTab === "sb"
+                ? "border-b-2 border-red-500 text-red-400 font-semibold"
+                : "text-gray-600 hover:text-red-400"
+            }`}
+          >
+            Sb
+          </button>
+        </li>
+
+        <li>
+          <button
+            onClick={() => setActiveTab("tb")}
+            className={`py-2 px-4 block focus:outline-none ${
+              activeTab === "tb"
+                ? "border-b-2 border-red-500 text-red-400 font-semibold"
+                : "text-gray-600 hover:text-red-400"
+            }`}
+          >
+            Tb
+          </button>
+        </li>
+
+        <li>
+          <button
+            onClick={() => setActiveTab("allstar")}
+            className={`py-2 px-4 block focus:outline-none ${
+              activeTab === "allstar"
+                ? "border-b-2 border-red-500 text-red-400 font-semibold"
+                : "text-gray-600 hover:text-red-400"
+            }`}
+          >
+            All Star
+          </button>
+        </li>
+
 
       </ul>
 
@@ -153,6 +222,11 @@ const Estadisticas = () => {
         {activeTab === "RC" && <TopRc />}
         {activeTab === "ISO" && <TopIso />}
         {activeTab === "BB" && <TopBb />}
+        {activeTab === "porcentajestrike" && <Topk/>}
+        {activeTab === "ebh" && <TopEbh/>}
+        {activeTab === "sb" && <TopSb/>}
+        {activeTab === "tb" && <TopTb/>}
+        {activeTab === "allstar" && <TopAllStar/>}
 
 
       </div>

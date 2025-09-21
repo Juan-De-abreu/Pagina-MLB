@@ -190,7 +190,7 @@ const Comparador = () => {
   <div className="flex flex-wrap justify-center gap-6 mb-20">
 
     {/* Jugador 1 */}
-    <div className="w-full md:w-5/12 hover:scale-102 hover:transition-all duration-200">
+    <div className="w-full md:w-5/12 hover:scale-102 hover:transition-all duration-200 bg-[ #320f09]">
       <div className="shadow-black border-1 shadow-sm hover:shadow-lg rounded-lg">
         <div className="p-6 text-center">
           <h5 className="text-xl mb-4 font-semibold">Jugador 1</h5>
