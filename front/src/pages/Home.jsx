@@ -10,7 +10,7 @@ const images = [
 ];
 
 return (
-    <div>
+    <div className="bg-[var(--body)]">
         <Carrusel images={images}  />
         <Top5war/>
 

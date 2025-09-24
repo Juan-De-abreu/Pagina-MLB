@@ -25,7 +25,7 @@ const Header = () => {
 
 
   return (
-    <div className="navbar flex justify-between items-center h-20 lg:h-30 py-auto lg:px-8 m-0 py-0 border-b-1 border-[#494a0c]">
+    <div className="navbar flex justify-between items-center h-20 lg:h-30 py-auto lg:px-8 m-0 py-0 border-b-1 border-[#494a0c] bg-[var(--vinotinto)] text-[var(--blanco-hielo)]">
       {/* Primer div: logo, oculto en pantallas menores a lg */}
       <div className="hidden xl:flex items-center">
         <a href="">
@@ -69,7 +69,7 @@ const Header = () => {
             :
             'hidden'}
           lg:flex lg:justify-center lg:items-center lg:gap-14
-          mx-4 divide-y-1 lg:py-6 divide-[#ddff0053]
+          mx-4 divide-y-1 lg:py-6 divide-[var(--dorado)]
         `}
       >
         <Link onClick={menuOpen} to={"/partidos"} href="" className="block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-150 text-center">

@@ -98,7 +98,7 @@ const Jugadores = () => {
   }
 
   return (
-    <div className="bg-[#5e2129] py-4 min-h-screen">
+    <div className="bg-[var(--body)] py-4 min-h-screen text-[var(--blanco-hielo)]">
       <div className="container mx-auto px-4">
         <h3 className="text-center py-2 text-2xl font-semibold">📋 Jugadores Venezolanos en el MLB</h3>
         <p className="text-center text-gray-200 mb-6">
@@ -145,7 +145,7 @@ const Jugadores = () => {
         </div>
 
         {filteredJugadores.length === 0 ? (
-          <div className="text-center py-6 bg-red-200 text-red-700 rounded">
+          <div className="text-center py-6 bg-red-800 text-white rounded-4xl">
             No se encontraron jugadores con esos filtros.
           </div>
         ) : (

@@ -1,15 +1,20 @@
 @import "tailwindcss";
 
-
 .app {
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
+ font-family: 'Oswald', sans-serif;
+ color: var(--blanco-hielo);
 }
 :root {
-  --primario-vi: #800020;
-  --premiun: #D4AF37;
-  --primario-fondos: #2E2E2E;
-  --primario-text: #F5F5F5;
-  --pramario-atencion: #0077FF;
+  --vinotinto: #2f0303;
+  --dorado: #D4AF37;
+  --plateado: #C0C0C0;
+  --body: #1a0805;
+  --bronce: #CD7F32;
+  --gris-oscuro: #181818;
+  --gris-claro: #2c2b2b;
+  --negro-profundo: #0A0A0A;
+  --blanco-hielo: #F9FAFB;
 }

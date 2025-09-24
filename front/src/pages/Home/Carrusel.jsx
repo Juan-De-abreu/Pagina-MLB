@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router";
+import { getMedalColorVar} from "../../util/funciones";
 
 const Carrusel = (images) => {
   const [current, setCurrent] = useState(0);
@@ -54,7 +55,7 @@ const Carrusel = (images) => {
         <div
           role="status"
           aria-label="loading"
-          className="inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"
+          className="inline-block w-8 h-8 border-4 border-red-500 border-t-transparent rounded-full animate-spin"
         ></div>
         <p className="mt-2">Cargando Topwar...</p>
       </div>
@@ -64,7 +65,7 @@ const Carrusel = (images) => {
     return (
       <div className="text-center py-5 text-red-600">
         <h4 className="text-xl font-semibold mb-2">
-          Error al cargar los Jugadores
+          Error al cargar el carrusel topwar
         </h4>
         <p>{error}</p>
       </div>
@@ -88,14 +89,14 @@ const Carrusel = (images) => {
               >
                 {datos.slice(current, current + 1).map((item) => (
                   <div key={item.id} className="px-0 md:px-15 xl:px-40 2xl:px-50">
-                    <p className="text-red-500   text-4xl">
+                    <p className={`text-[var(${getMedalColorVar(current)})] text-4xl`}>
                       Top {current + 1} War
                     </p>
                     <p className="text-4xl 2xl:text-5xl py-3">
                       {item.nombre}
                     </p>
                     <p>
-                       con : <span className="text-red-500">{item.war} </span>y {item.años_en_mlb} años en la MLB
+                       con : <span className="text-[var(--dorado)]">{item.war} </span>y {item.años_en_mlb} años en la MLB
                     </p>
                               <Link
                                 to={'/mapa'}

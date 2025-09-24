@@ -176,279 +176,280 @@ const Comparador = () => {
 
     return (
         // Dentro del return del componente Comparador (solo JSX relevante transformado)
+  <div className='bg-[var(--body)] min-h-screen'>
+    <div className="container mx-auto my-16 px-4">
 
-<div className="container mx-auto my-16 px-4">
-
-  <div className="text-center mb-20">
-    <h3 className="font-bold text-3xl">⚾ Comparador de Peloteros Venezolanos</h3>
-    <p className="text-gray-500 text-lg max-w-xl mx-auto mt-2">
-      Escribe el nombre de un jugador para comparar sus estadísticas en las Grandes Ligas
-    </p>
-  </div>
-
-  {/* Buscadores con autocompletado */}
-  <div className="flex flex-wrap justify-center gap-6 mb-20">
-
-    {/* Jugador 1 */}
-    <div className="w-full md:w-5/12 hover:scale-102 hover:transition-all duration-200 bg-[ #320f09]">
-      <div className="shadow-black border-1 shadow-sm hover:shadow-lg rounded-lg">
-        <div className="p-6 text-center">
-          <h5 className="text-xl mb-4 font-semibold">Jugador 1</h5>
-
-          <div className="relative">
-            <input
-              type="text"
-              className="w-full form-input form-input-lg rounded border border-gray-400 focus:ring-2 focus:ring-red-500 focus:outline-none p-3 text-lg"
-              placeholder="Buscar por nombre..."
-              value={query1}
-              onChange={(e) => setQuery1(e.target.value)}
-              onFocus={() => query1 && setShowSuggestions1(true)}
-              onBlur={() => setTimeout(() => setShowSuggestions1(false), 200)}
-            />
-            {showSuggestions1 && (
-              <ul className="absolute w-full mt-1 bg-gray-700 shadow-lg rounded max-h-52 overflow-auto z-50">
-                {filtered1.map((j) => (
-                  <li
-                    key={j.id}
-                    className="cursor-pointer hover:bg-gray-500 px-2 py-2 flex items-center gap-2"
-                    onClick={() => handleSelect1(j)}
-                  >
-                    <img
-                      src={`https://api.arsistemamlb.com/uploads/jugadores/${j.id}.jpg`}
-                      alt={j.nombre}
-                      className="rounded-full w-8 h-8 object-cover"
-                      onError={(e) => {
-                        e.target.src = 'https://api.arsistemamlb.com/uploads/jugadores/default.png';
-                      }}
-                    />
-                    <span>{j.nombre} {j.pos ? `(${j.pos})` : ''}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
+      <div className="text-center mb-20">
+        <h3 className="font-bold text-3xl">⚾ Comparador de Peloteros Venezolanos</h3>
+        <p className="text-gray-500 text-lg max-w-xl mx-auto mt-2">
+          Escribe el nombre de un jugador para comparar sus estadísticas en las Grandes Ligas
+        </p>
       </div>
-    </div>
 
-    {/* VS */}
-    <div className="w-14 h-14 flex items-center justify-center bg-red-500 rounded-full text-white text-2xl font-bold self-center">
-      VS
-    </div>
+      {/* Buscadores con autocompletado */}
+      <div className="flex flex-wrap justify-center gap-6 mb-20">
 
-    {/* Jugador 2 */}
-    <div className="w-full md:w-5/12 hover:scale-102 hover:transition-all duration-200">
-      <div className="shadow-black border-1 shadow-sm hover:shadow-lg rounded-lg">
-        <div className="p-6 text-center">
-          <h5 className="text-xl mb-4 font-semibold">Jugador 2</h5>
+        {/* Jugador 1 */}
+        <div className="w-full md:w-5/12 hover:scale-102 hover:transition-all duration-200 bg-[ #320f09]">
+          <div className="shadow-black border-1 shadow-sm hover:shadow-lg rounded-lg">
+            <div className="p-6 text-center">
+              <h5 className="text-xl mb-4 font-semibold">Jugador 1</h5>
 
-          <div className="relative">
-            <input
-              type="text"
-              className="w-full form-input form-input-lg rounded border border-gray-500 focus:ring-2 focus:ring-red-500 focus:outline-none p-3 text-lg"
-              placeholder="Buscar por nombre..."
-              value={query2}
-              onChange={(e) => setQuery2(e.target.value)}
-              onFocus={() => query2 && setShowSuggestions2(true)}
-              onBlur={() => setTimeout(() => setShowSuggestions2(false), 200)}
-            />
-            {showSuggestions2 && (
-              <ul className="absolute w-full mt-1 bg-gray-700 shadow-lg rounded max-h-52 overflow-auto z-50">
-                {filtered2.map((j) => (
-                  <li
-                    key={j.id}
-                    className="cursor-pointer hover:bg-gray-500 px-2 py-2 flex items-center gap-2"
-                    onClick={() => handleSelect2(j)}
-                  >
-                    <img
-                      src={`https://api.arsistemamlb.com/uploads/jugadores/${j.id}.jpg`}
-                      alt={j.nombre}
-                      className="rounded-full w-8 h-8 object-cover"
-                      onError={(e) => {
-                        e.target.src = 'https://api.arsistemamlb.com/uploads/jugadores/default.png';
-                      }}
-                    />
-                    <span>{j.nombre} {j.pos ? `(${j.pos})` : ''}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {/* Panel de comparación */}
-  {jugador1 && jugador2 && (
-    <div className="bg-gray-900 shadow-lg rounded-lg overflow-hidden">
-      <div className="bg-gray-800 shadow-lg shadow-black text-white text-center py-4 font-semibold text-xl">
-        Comparación de Estadísticas
-      </div>
-      <div className="divide-y">
-
-        <div className="grid grid-cols-12 text-center py-6 gap-4">
-          <div className="col-span-2 flex items-center justify-center text-gray-500 font-semibold hidden sm:flex">ESTADÍSTICA</div>
-          <div className="col-span-5">
-            <img
-              src={`https://api.arsistemamlb.com/uploads/jugadores/${jugador1.id}.jpg`}
-              alt={jugador1.nombre}
-              className="mx-auto rounded-full w-30 h-30 object-cover mb-2 border border-gray-200"
-              onError={(e) => { e.target.src = 'https://api.arsistemamlb.com/uploads/jugadores/default.png'; }}
-            />
-            <h5 className="text-lg font-semibold">{jugador1.nombre}</h5>
-          </div>
-          <div className="col-span-5">
-            <img
-              src={`https://api.arsistemamlb.com/uploads/jugadores/${jugador2.id}.jpg`}
-              alt={jugador2.nombre}
-              className="mx-auto rounded-full w-30 h-30 object-cover mb-2 border border-gray-200"
-              onError={(e) => { e.target.src = 'https://api.arsistemamlb.com/uploads/jugadores/default.png'; }}
-            />
-            <h5 className="text-lg font-semibold">{jugador2.nombre}</h5>
-          </div>
-        </div>
-
-        {[
-          { key: 'war', label: 'WAR', type: 'war' },
-          { key: 'promedio_bateo', label: 'AVG', type: 'avg' },
-          { key: 'ops', label: 'OPS', type: 'ops' },
-          { key: 'hits', label: 'H', type: 'hits' },
-          { key: 'dobles', label: '2B', type: 'dobles' },
-          { key: 'triples', label: '3B', type: 'triples' },
-          { key: 'carreras_impulsadas', label: 'CI', type: 'carreras_impulsadas' },
-          { key: 'bases_robadas', label: 'BR', type: 'bases_robadas' },
-          { key: 'home_runs', label: 'HR', type: 'hr' },
-          { key: 'años_en_mlb', label: 'AÑOS EN MLB', type: 'number' }
-        ].map((stat, index) => {
-          const val1 = parseFloat(jugador1[stat.key]);
-          const val2 = parseFloat(jugador2[stat.key]);
-          const betterPlayer = getBetterPlayer(stat.key, jugador1, jugador2);
-
-          let maxVal = Math.max(val1, val2);
-          if (maxVal === 0) maxVal = 1;
-
-          const percent1 = (val1 / maxVal) * 100;
-          const percent2 = (val2 / maxVal) * 100;
-
-          return (
-            <div key={index} className="grid grid-cols-12 text-center py-2 items-center gap-4">
-              <div className="col-span-2 font-semibold flex items-center justify-center">{stat.label}</div>
-              <div className="col-span-5 px-2">
-                <div className="relative bg-gray-200 rounded h-7 overflow-hidden">
-                  <div
-                    className={`h-full font-bold text-white flex items-center justify-center ${betterPlayer === 1 ? 'bg-green-500' : 'bg-red-600'}`}
-                    style={{ width: `${percent1}%`, fontSize: '1rem' }}
-                    aria-valuenow={percent1}
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  >
-                    {formatStat(val1, stat.type)}
-                  </div>
-                </div>
-              </div>
-              <div className="col-span-5 px-2">
-                <div className="relative bg-gray-200 rounded h-7 overflow-hidden">
-                  <div
-                    className={`h-full font-bold text-white flex items-center justify-center ${betterPlayer === 2 ? 'bg-green-500' : 'bg-red-600'}`}
-                    style={{ width: `${percent2}%`, fontSize: '1rem' }}
-                    aria-valuenow={percent2}
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  >
-                    {formatStat(val2, stat.type)}
-                  </div>
-                </div>
+              <div className="relative">
+                <input
+                  type="text"
+                  className="w-full form-input form-input-lg rounded border border-gray-400 focus:ring-2 focus:ring-red-500 focus:outline-none p-3 text-lg"
+                  placeholder="Buscar por nombre..."
+                  value={query1}
+                  onChange={(e) => setQuery1(e.target.value)}
+                  onFocus={() => query1 && setShowSuggestions1(true)}
+                  onBlur={() => setTimeout(() => setShowSuggestions1(false), 200)}
+                />
+                {showSuggestions1 && (
+                  <ul className="absolute w-full mt-1 bg-gray-700 shadow-lg rounded max-h-52 overflow-auto z-50">
+                    {filtered1.map((j) => (
+                      <li
+                        key={j.id}
+                        className="cursor-pointer hover:bg-gray-500 px-2 py-2 flex items-center gap-2"
+                        onClick={() => handleSelect1(j)}
+                      >
+                        <img
+                          src={`https://api.arsistemamlb.com/uploads/jugadores/${j.id}.jpg`}
+                          alt={j.nombre}
+                          className="rounded-full w-8 h-8 object-cover"
+                          onError={(e) => {
+                            e.target.src = 'https://api.arsistemamlb.com/uploads/jugadores/default.png';
+                          }}
+                        />
+                        <span>{j.nombre} {j.pos ? `(${j.pos})` : ''}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
-          );
-        })}
-      </div>
-    </div>
-  )}
-
-  {jugador1 && jugador2 && (
-    <div className="bg-gray-900 text-white shadow-lg rounded-lg mt-8">
-      <div className="text-center py-4 font-semibold text-xl border-b border-gray-700">🏆 Resultado Final</div>
-      <div className="p-6 text-center">
-
-        {/* Barra de progreso */}
-        <div className="flex h-10 rounded-full overflow-hidden mb-6 bg-gray-700">
-          <div
-            className={`${calcularGanador().ganador === 1 ? 'bg-green-500' : 'bg-red-600'} flex items-center justify-center font-bold`}
-            style={{ width: `${calcularGanador().porcentaje1}%`, borderTopLeftRadius: '9999px', borderBottomLeftRadius: '9999px' }}
-          >
-            {calcularGanador().jugador1.puntos} puntos
-          </div>
-          <div
-            className={`${calcularGanador().ganador === 2 ? 'bg-green-500' : 'bg-red-600'} flex items-center justify-center font-bold`}
-            style={{ width: `${calcularGanador().porcentaje2}%`, borderTopRightRadius: '9999px', borderBottomRightRadius: '9999px' }}
-          >
-            {calcularGanador().jugador2.puntos} puntos
           </div>
         </div>
 
-        {/* Mensaje del ganador */}
-        {calcularGanador().ganador === 1 && (
-          <div className="bg-green-600 rounded px-4 py-3 flex items-center justify-center gap-2 text-lg font-semibold">
-            <i className="bi bi-trophy-fill text-2xl"></i>
-            {jugador1.nombre} gana la comparación 🏅
-          </div>
-        )}
-        {calcularGanador().ganador === 2 && (
-          <div className="bg-green-600 rounded px-4 py-3 flex items-center justify-center gap-2 text-lg font-semibold">
-            <i className="bi bi-trophy-fill text-2xl"></i>
-            {jugador2.nombre} gana la comparación 🏅
-          </div>
-        )}
-        {calcularGanador().ganador === 0 && (
-          <div className="bg-yellow-400 rounded px-4 py-3 flex items-center justify-center gap-2 text-lg font-semibold text-gray-900">
-            <i className="bi bi-emoji-neutral-fill text-2xl"></i>
-            ¡Empate técnico! Ambos son legendas ⚖️
-          </div>
-        )}
+        {/* VS */}
+        <div className="w-14 h-14 flex items-center justify-center bg-red-500 rounded-full text-white text-2xl font-bold self-center">
+          VS
+        </div>
 
-        {/* Mini resumen */}
-        <div className="grid grid-cols-3 mt-6 items-center text-center">
-          <div>
-            <img
-              src={`https://api.arsistemamlb.com/uploads/jugadores/${jugador1.id}.jpg`}
-              alt={jugador1.nombre}
-              className="rounded-full w-15 h-15 object-cover mx-auto"
-              onError={(e) => e.target.src = 'https://api.arsistemamlb.com/uploads/jugadores/default.png'}
-            />
-            <p className="mt-2 font-semibold">{jugador1.nombre}</p>
-          </div>
-          <div>
-            <span className="text-3xl font-bold">VS</span>
-          </div>
-          <div>
-            <img
-              src={`https://api.arsistemamlb.com/uploads/jugadores/${jugador2.id}.jpg`}
-              alt={jugador2.nombre}
-              className="rounded-full w-15 h-15 object-cover mx-auto"
-              onError={(e) => e.target.src = 'https://api.arsistemamlb.com/uploads/jugadores/default.png'}
-            />
-            <p className="mt-2 font-semibold">{jugador2.nombre}</p>
+        {/* Jugador 2 */}
+        <div className="w-full md:w-5/12 hover:scale-102 hover:transition-all duration-200">
+          <div className="shadow-black border-1 shadow-sm hover:shadow-lg rounded-lg">
+            <div className="p-6 text-center">
+              <h5 className="text-xl mb-4 font-semibold">Jugador 2</h5>
+
+              <div className="relative">
+                <input
+                  type="text"
+                  className="w-full form-input form-input-lg rounded border border-gray-500 focus:ring-2 focus:ring-red-500 focus:outline-none p-3 text-lg"
+                  placeholder="Buscar por nombre..."
+                  value={query2}
+                  onChange={(e) => setQuery2(e.target.value)}
+                  onFocus={() => query2 && setShowSuggestions2(true)}
+                  onBlur={() => setTimeout(() => setShowSuggestions2(false), 200)}
+                />
+                {showSuggestions2 && (
+                  <ul className="absolute w-full mt-1 bg-gray-700 shadow-lg rounded max-h-52 overflow-auto z-50">
+                    {filtered2.map((j) => (
+                      <li
+                        key={j.id}
+                        className="cursor-pointer hover:bg-gray-500 px-2 py-2 flex items-center gap-2"
+                        onClick={() => handleSelect2(j)}
+                      >
+                        <img
+                          src={`https://api.arsistemamlb.com/uploads/jugadores/${j.id}.jpg`}
+                          alt={j.nombre}
+                          className="rounded-full w-8 h-8 object-cover"
+                          onError={(e) => {
+                            e.target.src = 'https://api.arsistemamlb.com/uploads/jugadores/default.png';
+                          }}
+                        />
+                        <span>{j.nombre} {j.pos ? `(${j.pos})` : ''}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  )}
 
-  {(!jugador1 || !jugador2) && (
-    <div className="flex justify-center items-center min-h-[calc(100vh-8rem)]">
-      <div className="bg-black rounded-lg p-8">
-        <div className="text-center text-gray-400">
-          <i className="bi bi-arrow-left-right text-6xl mb-6"></i>
-          <h4 className="text-xl mb-2">Selecciona dos peloteros para comparar</h4>
-          <p>Escribe el nombre de un jugador para ver sus estadísticas comparadas.</p>
+      {/* Panel de comparación */}
+      {jugador1 && jugador2 && (
+        <div className="bg-gray-900 shadow-lg rounded-lg overflow-hidden">
+          <div className="bg-gray-800 shadow-lg shadow-black text-white text-center py-4 font-semibold text-xl">
+            Comparación de Estadísticas
+          </div>
+          <div className="divide-y">
+
+            <div className="grid grid-cols-12 text-center py-6 gap-4">
+              <div className="col-span-2 flex items-center justify-center text-gray-500 font-semibold hidden sm:flex">ESTADÍSTICA</div>
+              <div className="col-span-5">
+                <img
+                  src={`https://api.arsistemamlb.com/uploads/jugadores/${jugador1.id}.jpg`}
+                  alt={jugador1.nombre}
+                  className="mx-auto rounded-full w-30 h-30 object-cover mb-2 border border-gray-200"
+                  onError={(e) => { e.target.src = 'https://api.arsistemamlb.com/uploads/jugadores/default.png'; }}
+                />
+                <h5 className="text-lg font-semibold">{jugador1.nombre}</h5>
+              </div>
+              <div className="col-span-5">
+                <img
+                  src={`https://api.arsistemamlb.com/uploads/jugadores/${jugador2.id}.jpg`}
+                  alt={jugador2.nombre}
+                  className="mx-auto rounded-full w-30 h-30 object-cover mb-2 border border-gray-200"
+                  onError={(e) => { e.target.src = 'https://api.arsistemamlb.com/uploads/jugadores/default.png'; }}
+                />
+                <h5 className="text-lg font-semibold">{jugador2.nombre}</h5>
+              </div>
+            </div>
+
+            {[
+              { key: 'war', label: 'WAR', type: 'war' },
+              { key: 'promedio_bateo', label: 'AVG', type: 'avg' },
+              { key: 'ops', label: 'OPS', type: 'ops' },
+              { key: 'hits', label: 'H', type: 'hits' },
+              { key: 'dobles', label: '2B', type: 'dobles' },
+              { key: 'triples', label: '3B', type: 'triples' },
+              { key: 'carreras_impulsadas', label: 'CI', type: 'carreras_impulsadas' },
+              { key: 'bases_robadas', label: 'BR', type: 'bases_robadas' },
+              { key: 'home_runs', label: 'HR', type: 'hr' },
+              { key: 'años_en_mlb', label: 'AÑOS EN MLB', type: 'number' }
+            ].map((stat, index) => {
+              const val1 = parseFloat(jugador1[stat.key]);
+              const val2 = parseFloat(jugador2[stat.key]);
+              const betterPlayer = getBetterPlayer(stat.key, jugador1, jugador2);
+
+              let maxVal = Math.max(val1, val2);
+              if (maxVal === 0) maxVal = 1;
+
+              const percent1 = (val1 / maxVal) * 100;
+              const percent2 = (val2 / maxVal) * 100;
+
+              return (
+                <div key={index} className="grid grid-cols-12 text-center py-2 items-center gap-4">
+                  <div className="col-span-2 font-semibold flex items-center justify-center">{stat.label}</div>
+                  <div className="col-span-5 px-2">
+                    <div className="relative bg-gray-200 rounded h-7 overflow-hidden">
+                      <div
+                        className={`h-full font-bold text-white flex items-center justify-center ${betterPlayer === 1 ? 'bg-green-500' : 'bg-red-600'}`}
+                        style={{ width: `${percent1}%`, fontSize: '1rem' }}
+                        aria-valuenow={percent1}
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      >
+                        {formatStat(val1, stat.type)}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-span-5 px-2">
+                    <div className="relative bg-gray-200 rounded h-7 overflow-hidden">
+                      <div
+                        className={`h-full font-bold text-white flex items-center justify-center ${betterPlayer === 2 ? 'bg-green-500' : 'bg-red-600'}`}
+                        style={{ width: `${percent2}%`, fontSize: '1rem' }}
+                        aria-valuenow={percent2}
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      >
+                        {formatStat(val2, stat.type)}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </div>
-  )}
+      )}
 
-</div>
+      {jugador1 && jugador2 && (
+        <div className="bg-gray-900 text-white shadow-lg rounded-lg mt-8">
+          <div className="text-center py-4 font-semibold text-xl border-b border-gray-700">🏆 Resultado Final</div>
+          <div className="p-6 text-center">
+
+            {/* Barra de progreso */}
+            <div className="flex h-10 rounded-full overflow-hidden mb-6 bg-gray-700">
+              <div
+                className={`${calcularGanador().ganador === 1 ? 'bg-green-500' : 'bg-red-600'} flex items-center justify-center font-bold`}
+                style={{ width: `${calcularGanador().porcentaje1}%`, borderTopLeftRadius: '9999px', borderBottomLeftRadius: '9999px' }}
+              >
+                {calcularGanador().jugador1.puntos} puntos
+              </div>
+              <div
+                className={`${calcularGanador().ganador === 2 ? 'bg-green-500' : 'bg-red-600'} flex items-center justify-center font-bold`}
+                style={{ width: `${calcularGanador().porcentaje2}%`, borderTopRightRadius: '9999px', borderBottomRightRadius: '9999px' }}
+              >
+                {calcularGanador().jugador2.puntos} puntos
+              </div>
+            </div>
+
+            {/* Mensaje del ganador */}
+            {calcularGanador().ganador === 1 && (
+              <div className="bg-green-600 rounded px-4 py-3 flex items-center justify-center gap-2 text-lg font-semibold">
+                <i className="bi bi-trophy-fill text-2xl"></i>
+                {jugador1.nombre} gana la comparación 🏅
+              </div>
+            )}
+            {calcularGanador().ganador === 2 && (
+              <div className="bg-green-600 rounded px-4 py-3 flex items-center justify-center gap-2 text-lg font-semibold">
+                <i className="bi bi-trophy-fill text-2xl"></i>
+                {jugador2.nombre} gana la comparación 🏅
+              </div>
+            )}
+            {calcularGanador().ganador === 0 && (
+              <div className="bg-yellow-400 rounded px-4 py-3 flex items-center justify-center gap-2 text-lg font-semibold text-gray-900">
+                <i className="bi bi-emoji-neutral-fill text-2xl"></i>
+                ¡Empate técnico! Ambos son legendas ⚖️
+              </div>
+            )}
+
+            {/* Mini resumen */}
+            <div className="grid grid-cols-3 mt-6 items-center text-center">
+              <div>
+                <img
+                  src={`https://api.arsistemamlb.com/uploads/jugadores/${jugador1.id}.jpg`}
+                  alt={jugador1.nombre}
+                  className="rounded-full w-15 h-15 object-cover mx-auto"
+                  onError={(e) => e.target.src = 'https://api.arsistemamlb.com/uploads/jugadores/default.png'}
+                />
+                <p className="mt-2 font-semibold">{jugador1.nombre}</p>
+              </div>
+              <div>
+                <span className="text-3xl font-bold">VS</span>
+              </div>
+              <div>
+                <img
+                  src={`https://api.arsistemamlb.com/uploads/jugadores/${jugador2.id}.jpg`}
+                  alt={jugador2.nombre}
+                  className="rounded-full w-15 h-15 object-cover mx-auto"
+                  onError={(e) => e.target.src = 'https://api.arsistemamlb.com/uploads/jugadores/default.png'}
+                />
+                <p className="mt-2 font-semibold">{jugador2.nombre}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {(!jugador1 || !jugador2) && (
+        <div className="flex justify-center items-center min-h-[calc(100vh-8rem)]">
+          <div className="bg-black rounded-lg p-8">
+            <div className="text-center text-gray-400">
+              <i className="bi bi-arrow-left-right text-6xl mb-6"></i>
+              <h4 className="text-xl mb-2">Selecciona dos peloteros para comparar</h4>
+              <p>Escribe el nombre de un jugador para ver sus estadísticas comparadas.</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+    </div>
+  </div>
 
 
 

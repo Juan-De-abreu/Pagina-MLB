@@ -1,6 +1,8 @@
 const Footer = () => {
   return (
-    <div>Footer</div>
+    <div className="bg-[var(--vinotinto)] text-[var(--blanco-hielo)] text-center p-4">
+      Footer
+    </div>
   )
 }
 

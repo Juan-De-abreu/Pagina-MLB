@@ -155,3 +155,12 @@ export const formatCedulaVE = (cedula) => {
   // Formato: XX.XXX.XXX
   return clean.replace(/(\d{2})(\d{3})(\d{3})/, '$1.$2.$3');
 }
+
+export function getMedalColorVar(index) {
+  const position = index + 1;
+
+  if (position === 1) return '--dorado';
+  if (position === 2) return '--plateado';
+  if (position === 3) return '--bronce';
+  return '--gris-claro';
+}
