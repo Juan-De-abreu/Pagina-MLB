@@ -1,4 +1,5 @@
 import Carrusel from "./Home/Carrusel";
+import Top5Avg from "./Home/Top5Avg";
 import Top5war from "./Home/Top5war";
 
 const Home = () => {
@@ -13,7 +14,7 @@ return (
     <div className="bg-[var(--body)]">
         <Carrusel images={images}  />
         <Top5war/>
-
+        <Top5Avg/>
     </div>
 )
 }

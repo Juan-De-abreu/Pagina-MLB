@@ -118,9 +118,9 @@ const handleCloseModal = () => {
       {ciudades.map((ciudad) => {
         const jugador = getJugadorById(ciudad.id);
         return (
-          <div className="bg-gray-900 shadow-sm rounded-lg flex flex-col h-full" key={`${ciudad.lugar_nacimiento}-${ciudad.id}`}>
+          <div className="bg-[var(--gris-oscuro)] border-1 border-[var(--vinotinto)] shadow-md rounded-lg flex flex-col h-full shadow-black" key={`${ciudad.lugar_nacimiento}-${ciudad.id}`}>
             {/* Bandera o título */}
-            <div className="bg-gray-800 shadow-sm shadow-black text-gray-200 text-center py-5 rounded-t-lg">
+            <div className="bg-[var(--gris-claro)] shadow-sm shadow-black text-white text-center py-5 rounded-t-lg border-b-1 border-[var(--vinotinto)]">
               <h3 className="text-lg font-semibold">{ciudad.lugar_nacimiento.split(',')[0]}</h3>
             </div>
 
@@ -130,23 +130,23 @@ const handleCloseModal = () => {
                 <img
                   src={`https://api.arsistemamlb.com/uploads/jugadores/${jugador.id}.jpg`}
                   alt={jugador.nombre}
-                  className="rounded-full w-24 h-24 object-cover border border-gray-300"
+                  className="rounded-full w-24 h-24 object-cover border border-gray-900"
                   onError={(e) => { e.target.src = 'https://api.arsistemamlb.com/uploads/jugadores/default.png'; }}
                 />
               ) : (
-                <div className="rounded-full bg-gray-400 w-24 h-24"></div>
+                <div className="rounded-full bg-gray-900 w-24 h-24"></div>
               )}
             </div>
 
             {/* Datos */}
-            <div className="p-4 text-center flex-grow flex flex-col justify-between">
+            <div className="p-4 text-center flex-grow flex flex-col justify-between text-[var(--blanco-hielo)] bg-">
               <div>
                 <h5 className="text-lg font-semibold">{ciudad.jugador_destacado}</h5>
-                <p className="text-gray-200 text-sm">{ciudad.lugar_nacimiento}</p>
+                <p className=" text-sm">{ciudad.lugar_nacimiento}</p>
                 <div className="mt-3">
                   <p>
                     <strong>Jugadores:</strong>{' '}
-                    <span className="inline-block bg-red-500 text-white rounded-full px-3 py-1 text-sm">
+                    <span className="inline-block bg-[var(--dorado)] text-black rounded-full px-3 py-1 text-sm">
                       {ciudad.total_jugadores}
                     </span>
                   </p>
@@ -160,7 +160,7 @@ const handleCloseModal = () => {
                     onClick={() => handleOpenList(ciudad.lugar_nacimiento)}
                     data-bs-toggle="modal"
                     data-bs-target="#modalListaCiudad"
-                    className="border border-red-500 shadow-lg hover:shadow-black text-red-600 hover:bg-red-500 hover:text-white transition-all duration-400 rounded px-4 py-1 text-sm"
+                    className="border shadow-md hover:shadow-black text-[var(--dorado)] hover:bg-[var(--dorado)] hover:text-black transition-all duration-400 rounded px-4 py-1 text-sm"
                   >
                     Todos ({ciudad.total_jugadores})
                   </button>

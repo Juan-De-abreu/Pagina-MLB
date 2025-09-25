@@ -5,7 +5,7 @@ import { getMedalColorVartext} from "../../util/funciones";
 
 const API = 'http://localhost:8081/api/estadisticas/top-war';
 
-const Top5war = () => {
+const Top5Avg = () => {
   const [datos, setDatos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -48,9 +48,9 @@ const Top5war = () => {
   }
 
   return (
-    <section className="bg-[var(--body)] py-4">
+    <section className="bg-[var(--body) pb-5">
       <div className="max-w-5xl mx-auto px-4">
-        <h2 className="text-center pb-4 text-3xl font-bold text-[var(--dorado)]">🏆 Top 5 en WAR</h2>
+        <h2 className="text-center pb-4 text-3xl font-bold text-[var(--dorado)]">🏆 Top 5 en AVG</h2>
         <div className="flex justify-center">
           <div className="w-full lg:w-[100vw] bg-[var(--gris-oscuro)] rounded-lg shadow-lg">
             <div className="overflow-x-auto">
@@ -60,14 +60,13 @@ const Top5war = () => {
                     <th className="px-4 py-3 text-left]">#</th>
                     <th className="px-4 py-3 text-left ">Jugador</th>
                     <th className="px-4 py-3 text-left ">Lugar de Nacimiento</th>
-                    <th className="px-4 py-3 text-left ">WAR</th>
+                    <th className="px-4 py-3 text-left ">AVG</th>
                   </tr>
                 </thead>
                 <tbody>
                   {datos.slice(0, 5).map((item, index) => (
-
-                    <tr key={index} className={`hover:bg-[var(--gris-claro)]  text-[var(${getMedalColorVartext(index)})]`}>
-                      <td className={`px-4 py-2 border-l-1 border-[var(--plateado)]`}>
+                    <tr key={index} className={`hover:bg-[var(--gris-claro)] text-[var(${getMedalColorVartext(index)})]`}>
+                      <td className="px-4 py-2 border-l-1 border-[var(--plateado)]">
                         <span
                           className={`block px-1 py-1 text-center mx-auto text-white bg-[var(--bronce)] bg-[var(${getMedalColorVar(index)})] rounded-4xl font-semibold lg:text-2xl`}
                         >
@@ -76,9 +75,8 @@ const Top5war = () => {
                       </td>
                       <td className="px-4 py-2 font-semibold border-l-1 border-[var(--plateado)] lg:text-xl">{item.nombre}</td>
                       <td className="px-4 py-2 border-l-1  border-[var(--plateado)] lg:text-xl">{item.lugar_nacimiento}</td>
-                      <td className="px-4 py-2 border-l-1 border-r-1 border-[var(--plateado)] text-bold lg:text-xl">{item.war}</td>
+                      <td className="px-4 py-2 border-l-1 border-r-1 border-[var(--plateado)] text-bold lg:text-xl">{item.promedio_bateo * 1000}</td>
                     </tr>
-
                   ))}
                 </tbody>
               </table>
@@ -100,4 +98,4 @@ const Top5war = () => {
   );
 };
 
-export default Top5war;
+export default Top5Avg;

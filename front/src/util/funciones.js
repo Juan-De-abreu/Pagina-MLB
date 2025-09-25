@@ -162,5 +162,13 @@ export function getMedalColorVar(index) {
   if (position === 1) return '--dorado';
   if (position === 2) return '--plateado';
   if (position === 3) return '--bronce';
-  return '--gris-claro';
+  return '--vinotinto';
+}
+export function getMedalColorVartext(index) {
+  const position = index + 1;
+
+  if (position === 1) return '--dorado';
+  if (position === 2) return '--plateado';
+  if (position === 3) return '--bronce';
+  return '--blanco-hielo';
 }

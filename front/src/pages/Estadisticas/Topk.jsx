@@ -56,8 +56,8 @@ const Topk = () => {
       <p className="text-center text-gray-500">
         
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-3 mt-6">
-        {datos.map((item) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-2">
+        {datos.map((item,index) => (
           <CardJugadores
             key={item.id}
             item={item}
@@ -67,6 +67,7 @@ const Topk = () => {
             v2={item.promedio_bateo * 1000}
             l3={"WAR"}
             v3={item.war}
+            contador={index + 1}
           />
         ))}
       </div>

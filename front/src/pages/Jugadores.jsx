@@ -108,33 +108,33 @@ const Jugadores = () => {
         <div className="flex flex-col md:flex-row md:items-center md:justify-center gap-4 mb-6">
 
           <Link to={"/comparador"}
-            className="text-center lg:text-left bg-transparent border border-red-600 text-red-600 px-4 py-2 rounded hover:bg-red-600 hover:text-white transition w-full md:w-auto">
+            className="text-center lg:text-left bg-transparent border border-[var(--dorado)] text-[var(--dorado)] px-4 py-2 rounded hover:bg-[var(--dorado)] hover:text-black transition w-full md:w-auto">
             Comparar jugadores
           </Link>
 
           <input
             type="text"
-            className="border border-gray-300 rounded px-4 py-2 w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="border border-[var(--dorado)] rounded px-4 py-2 w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-[var(--dorado)]"
             placeholder="Buscar por nombre..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
 
           <select
-            className="border border-red-300 rounded px-4 py-2 w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="border border-[var(--dorado)] rounded px-4 py-2 w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-[var(--dorado)]"
             value={positionFilter}
             onChange={(e) => setPositionFilter(e.target.value)}
           >
             <option value="">Seleccione una posición</option>
             {posiciones.map((item, index) => (
-              <option className="bg-[#2E2E2E]" key={index} value={item.value}>
+              <option className="bg-[var(--gris-oscuro)]" key={index} value={item.value}>
                 {item.label}
               </option>
             ))}
           </select>
 
           <button
-            className="bg-transparent border border-red-600 text-red-600 px-4 py-2 rounded hover:bg-red-600 hover:text-white transition w-full md:w-auto"
+            className="bg-transparent border border-[var(--dorado)] text-[var(--dorado)] px-4 py-2 rounded hover:bg-[var(--dorado)] hover:text-black transition w-full md:w-auto"
             onClick={() => {
               setSearch("");
               setPositionFilter("");
@@ -149,7 +149,7 @@ const Jugadores = () => {
             No se encontraron jugadores con esos filtros.
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-2">
             {filteredJugadores.map((item) => (
               <CardJugadores
                 key={item.id}

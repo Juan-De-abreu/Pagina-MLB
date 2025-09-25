@@ -7,8 +7,8 @@ const Top1b = () => {
   const [datos, setDatos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const getDatos = async () => {
+  
+    const getDatos = async () => {
     try {
       const response = await fetch(API);
       if (!response.ok) {
@@ -56,8 +56,8 @@ const Top1b = () => {
       <p className="text-center text-gray-500">
         Pete Rose con 4.256 hits / Ty Cobb con 4.191 hits / Hank Aaron con 3.771 hits
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
-        {datos.map((item) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-2">
+        {datos.map((item,index) => (
           <CardJugadores
             key={item.id}
             item={item}
@@ -67,6 +67,7 @@ const Top1b = () => {
             v2={item.promedio_bateo * 1000}
             l3={"WAR"}
             v3={item.war}
+            contador={index + 1}
           />
         ))}
       </div>

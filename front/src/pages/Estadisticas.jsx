@@ -13,6 +13,7 @@ import TopEbh from "./Estadisticas/TopEbh";
 import TopSb from "./Estadisticas/TopSb";
 import TopTb from "./Estadisticas/TopTb";
 import TopAllStar from "./Estadisticas/TopAllStar";
+import Top1b from "./Estadisticas/Top1b";
 
 const Estadisticas = () => {
   const [activeTab, setActiveTab] = useState("war");
@@ -24,7 +25,7 @@ const Estadisticas = () => {
           📊 Estadísticas de Jugadores Venezolanos
         </h2>
 
-        <ul className="flex border-b border-gray-300 pb-2 justify-center flex-wrap">
+        <ul className="flex border-b border-[var(--dorado)] pb-2 justify-center flex-wrap">
 
 
           <li className="mr-6">
@@ -33,10 +34,23 @@ const Estadisticas = () => {
               className={`py-2 px-4 block focus:outline-none ${
                 activeTab === "war"
                   ? "border-b-2  border-[var(--dorado)] text-[var(--dorado)] font-semibold"
-                  : "text-gray-4000 hover:text-[#fbf300a9]"
+                  : "text-gray-400 hover:text-[var(--dorado)]"
               }`}
             >
               WAR
+            </button>
+          </li>
+
+          <li className="mr-6">
+            <button
+              onClick={() => setActiveTab("Hits")}
+              className={`py-2 px-4 block focus:outline-none ${
+                activeTab === "Hits"
+                  ? "border-b-2  border-[var(--dorado)] text-[var(--dorado)] font-semibold"
+                  : "text-gray-400 hover:text-[var(--dorado)]"
+              }`}
+            >
+              HITS
             </button>
           </li>
 
@@ -46,7 +60,7 @@ const Estadisticas = () => {
               className={`py-2 px-4 block focus:outline-none ${
                 activeTab === "avg"
                   ? "border-b-2  border-[var(--dorado)] text-[var(--dorado)] font-semibold"
-                  : "text-gray-4000 hover:text-[#fbf300a9]"
+                  : "text-gray-400 hover:text-[var(--dorado)]"
               }`}
             >
               AVG
@@ -59,7 +73,7 @@ const Estadisticas = () => {
               className={`py-2 px-4 block focus:outline-none ${
                 activeTab === "hr"
                   ? "border-b-2  border-[var(--dorado)] text-[var(--dorado)] font-semibold"
-                  : "text-gray-4000 hover:text-[#fbf300a9]"
+                  : "text-gray-400 hover:text-[var(--dorado)]"
               }`}
             >
               HR
@@ -72,7 +86,7 @@ const Estadisticas = () => {
               className={`py-2 px-4 block focus:outline-none ${
                 activeTab === "Dobles"
                   ? "border-b-2  border-[var(--dorado)] text-[var(--dorado)] font-semibold"
-                  : "text-gray-4000 hover:text-[#fbf300a9]"
+                  : "text-gray-400 hover:text-[var(--dorado)]"
               }`}
             >
               Dobles
@@ -85,7 +99,7 @@ const Estadisticas = () => {
               className={`py-2 px-4 block focus:outline-none ${
                 activeTab === "Triples"
                   ? "border-b-2  border-[var(--dorado)] text-[var(--dorado)] font-semibold"
-                  : "text-gray-4000 hover:text-[#fbf300a9]"
+                  : "text-gray-400 hover:text-[var(--dorado)]"
               }`}
             >
               Triples
@@ -98,7 +112,7 @@ const Estadisticas = () => {
               className={`py-2 px-4 block focus:outline-none ${
                 activeTab === "OPS"
                   ? "border-b-2  border-[var(--dorado)] text-[var(--dorado)] font-semibold"
-                  : "text-gray-4000 hover:text-[#fbf300a9]"
+                  : "text-gray-400 hover:text-[var(--dorado)]"
               }`}
             >
               OPS
@@ -111,7 +125,7 @@ const Estadisticas = () => {
               className={`py-2 px-4 block focus:outline-none ${
                 activeTab === "RC"
                   ? "border-b-2  border-[var(--dorado)] text-[var(--dorado)] font-semibold"
-                  : "text-gray-4000 hover:text-[#fbf300a9]"
+                  : "text-gray-400 hover:text-[var(--dorado)]"
               }`}
             >
               RC
@@ -124,7 +138,7 @@ const Estadisticas = () => {
               className={`py-2 px-4 block focus:outline-none ${
                 activeTab === "ISO"
                   ? "border-b-2  border-[var(--dorado)] text-[var(--dorado)] font-semibold"
-                  : "text-gray-4000 hover:text-[#fbf300a9]"
+                  : "text-gray-400 hover:text-[var(--dorado)]"
               }`}
             >
               ISO
@@ -137,7 +151,7 @@ const Estadisticas = () => {
               className={`py-2 px-4 block focus:outline-none ${
                 activeTab === "BB"
                   ? "border-b-2  border-[var(--dorado)] text-[var(--dorado)] font-semibold"
-                  : "text-gray-4000 hover:text-[#fbf300a9]"
+                  : "text-gray-400 hover:text-[var(--dorado)]"
               }`}
             >
               BB
@@ -150,7 +164,7 @@ const Estadisticas = () => {
               className={`py-2 px-4 block focus:outline-none ${
                 activeTab === "porcentajestrike"
                   ? "border-b-2  border-[var(--dorado)] text-[var(--dorado)] font-semibold"
-                  : "text-gray-4000 hover:text-[#fbf300a9]"
+                  : "text-gray-400 hover:text-[var(--dorado)]"
               }`}
             >
               strike%
@@ -163,7 +177,7 @@ const Estadisticas = () => {
               className={`py-2 px-4 block focus:outline-none ${
                 activeTab === "ebh"
                   ? "border-b-2  border-[var(--dorado)] text-[var(--dorado)] font-semibold"
-                  : "text-gray-4000 hover:text-[#fbf300a9]"
+                  : "text-gray-400 hover:text-[var(--dorado)]"
               }`}
             >
               Ebh
@@ -176,7 +190,7 @@ const Estadisticas = () => {
               className={`py-2 px-4 block focus:outline-none ${
                 activeTab === "sb"
                   ? "border-b-2  border-[var(--dorado)] text-[var(--dorado)] font-semibold"
-                  : "text-gray-4000 hover:text-[#fbf300a9]"
+                  : "text-gray-400 hover:text-[var(--dorado)]"
               }`}
             >
               Sb
@@ -189,7 +203,7 @@ const Estadisticas = () => {
               className={`py-2 px-4 block focus:outline-none ${
                 activeTab === "tb"
                   ? "border-b-2  border-[var(--dorado)] text-[var(--dorado)] font-semibold"
-                  : "text-gray-4000 hover:text-[#fbf300a9]"
+                  : "text-gray-400 hover:text-[var(--dorado)]"
               }`}
             >
               Tb
@@ -202,7 +216,7 @@ const Estadisticas = () => {
               className={`py-2 px-4 block focus:outline-none ${
                 activeTab === "allstar"
                   ? "border-b-2  border-[var(--dorado)] text-[var(--dorado)] font-semibold"
-                  : "text-gray-4000 hover:text-[#fbf300a9]"
+                  : "text-gray-400 hover:text-[var(--dorado)]"
               }`}
             >
               All Star
@@ -228,7 +242,7 @@ const Estadisticas = () => {
           {activeTab === "sb" && <TopSb/>}
           {activeTab === "tb" && <TopTb/>}
           {activeTab === "allstar" && <TopAllStar/>}
-
+          {activeTab === "Hits" && <Top1b/>}
 
         </div>
       </div>

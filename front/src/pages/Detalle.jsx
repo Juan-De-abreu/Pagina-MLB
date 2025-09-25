@@ -63,7 +63,7 @@ const Detalle = () => {
   const imagenUrl = `${IMAGE_BASE_URL}${id}.jpg`;
 
   return (
-    <div className="bg-[#56070c] min-h-screen py-10">
+    <div className="bg-[var(--body)] min-h-screen py-10 text-[var(--blanco-hielo)]">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Imagen y datos básicos */}
@@ -85,10 +85,10 @@ const Detalle = () => {
           {/* Información detallada */}
           <div className="md:w-2/3">
             <h2 className="text-3xl font-bold mb-4">{datos.nombre}</h2>
-            <p className="leading-relaxed mb-6 text-gray-700">{datos.biografia}</p>
-            <h4 className="text-2xl font-semibold mb-4">Estadísticas de Carrera</h4>
+            <p className="leading-relaxed text-gray-700 mb-10">{datos.biografia}</p>
+            <h4 className="text-2xl font-semibold mb-4 text-center">Estadísticas de Carrera</h4>
             <div className="overflow-x-auto">
-              <table className="min-w-full bg-[#360609] rounded shadow overflow-hidden">
+              <table className="min-w-full bg-[var(--vinotinto)] rounded shadow overflow-hidden">
                 <tbody>
                   {[
                     ["Posición", datos.pos],
@@ -111,7 +111,7 @@ const Detalle = () => {
                     ["Robos de Base", `${datos.bases_robadas} (atrapado ${datos.atrapado_robando} veces)`]
                   ].map(([label, value]) => (
                     <tr key={label} className="border-b last:border-none">
-                      <th className="px-4 py-2 text-left font-medium bg-[#360609]">{label}</th>
+                      <th className="px-4 py-2 text-left font-medium bg-[var(--vinotinto)]">{label}</th>
                       <td className="px-4 py-2">{value}</td>
                     </tr>
                   ))}
