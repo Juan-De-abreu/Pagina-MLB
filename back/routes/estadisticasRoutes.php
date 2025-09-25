@@ -58,7 +58,10 @@ if ($method === 'GET') {
     } 
     elseif (preg_match('/^\/api\/mapa\/top-city/', $path)) {
         $controller->topCity();
-    } 
+    }
+    elseif (preg_match('/^\/api\/estadisticas\/top-hits/', $path)) {
+        $controller->tophits();
+    }
 
 
     // === RESUMEN GENERAL ===

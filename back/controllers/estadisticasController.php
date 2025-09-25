@@ -26,6 +26,27 @@ class EstadisticasController
         }
     }
 
+    //Get /api/estadisticas/top-hits
+
+    public function tophits()
+    {
+        global $pdo;
+        try {
+            $stmt = $pdo->query("
+                SELECT * 
+                FROM jugadores 
+                WHERE hits >=1000
+                ORDER BY hits DESC;
+ 
+            ");
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode($rows);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['error' => 'Error al obtener top WAR: ' . $e->getMessage()]);
+        }
+    }
+
     // GET /api/estadisticas/top-avg
     public function topAvg()
     {
@@ -298,7 +319,7 @@ class EstadisticasController
 
     // GET /api/mapa/ciudades
 
-    public function Topcity()
+public function topCity()
     {
         global $pdo;
         try {
