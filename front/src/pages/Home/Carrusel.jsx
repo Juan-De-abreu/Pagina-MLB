@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router";
-import { getMedalColorVar} from "../../util/funciones";
+import { getMedalColorVartext} from "../../util/funciones";
 
 const Carrusel = (images) => {
   const [current, setCurrent] = useState(0);
@@ -89,7 +89,7 @@ const Carrusel = (images) => {
               >
                 {datos.slice(current, current + 1).map((item) => (
                   <div key={item.id} className="px-0 md:px-15 xl:px-40 2xl:px-50">
-                    <p className={`text-[var(${getMedalColorVar(current)})] text-4xl`}>
+                    <p className={`text-[var(${getMedalColorVartext(current)})] text-4xl`}>
                       Top {current + 1} War
                     </p>
                     <p className="text-4xl 2xl:text-5xl py-3">

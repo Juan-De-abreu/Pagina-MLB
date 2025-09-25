@@ -14,7 +14,7 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador=4}) => {
   };
   const borderClass =
     contador <= 3
-      ? `border-[var(${getMedalColorVar(contador - 1)})] text-[var(${getMedalColorVar(contador-1)})]`
+      ? `border-[var(${getMedalColorVar(contador-1)})] text-[var(${getMedalColorVar(contador-1)})]`
       : "border-[var(--vinotinto)]";
   return (
     <div className="w-70 md:w-55 xl:w-60 2xl:w-70 my-4 animate-slide-top px-2 mx-auto sm:mx-0">
@@ -30,7 +30,7 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador=4}) => {
             }}
           />
         </div>
-        <div className={`flex flex-col flex-grow p-4 text-center ${borderClass}  justify-between  border-1`}>
+        <div className={`flex flex-col flex-grow p-4 text-center ${borderClass} justify-between  border-1`}>
           <p className="font-bold text-lg">{item.nombre}</p>
           <p className="my-3">
             <span className="border-1 inline-block px-3 py-1 rounded-md mb-3">
@@ -43,8 +43,8 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador=4}) => {
           </p>
           <p>
             {item.all_star_appearances > 0 && (
-              <span className="inline-block border-1 bg-[var(--dorado)] text-black px-2 py-1 rounded">
-                ⭐ All-Star: {item.all_star_appearances}
+              <span className="inline-block border-1 bg-[var(--plateado)] text-black px-2 py-1 rounded">
+                <span className="font-bold"> ⭐ All-Star:</span> {item.all_star_appearances}
               </span>
             )}
           </p>

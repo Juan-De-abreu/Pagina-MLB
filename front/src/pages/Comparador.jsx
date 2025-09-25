@@ -475,7 +475,7 @@ const Comparador = () => {
                   <img
                     src={`https://api.arsistemamlb.com/uploads/jugadores/${jugador1.id}.jpg`}
                     alt={jugador1.nombre}
-                    className="rounded-full w-15 h-15 md:w-30 md:h-30 object-cover mx-auto"
+                    className="rounded-full w-15 h-15 md:w-30 md:h-30 object-cover mx-auto border-2 border-[var(--dorado)]"
                     onError={(e) =>
                       (e.target.src =
                         "https://api.arsistemamlb.com/uploads/jugadores/default.png")
@@ -484,13 +484,13 @@ const Comparador = () => {
                   <p className="mt-2 font-semibold">{jugador1.nombre}</p>
                 </div>
                 <div>
-                  <span className="text-3xl font-bold text-red-900">VS</span>
+                  <span className="text-3xl font-bold text-[var(--dorado)] bg-[var(--vinotinto)] rounded-full p-4 border-1">VS</span>
                 </div>
                 <div>
                   <img
                     src={`https://api.arsistemamlb.com/uploads/jugadores/${jugador2.id}.jpg`}
                     alt={jugador2.nombre}
-                    className="rounded-full w-15 h-15 md:w-30 md:h-30 object-cover mx-auto"
+                    className="rounded-full w-15 h-15 md:w-30 md:h-30 object-cover mx-auto border-2 border-[var(--dorado)]"
                     onError={(e) =>
                       (e.target.src =
                         "https://api.arsistemamlb.com/uploads/jugadores/default.png")
