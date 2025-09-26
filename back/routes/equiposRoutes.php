@@ -1,69 +1,41 @@
 <?php
-// routes/equipoRoutes.php
+// routes/partidosRoutes.php
 
-require_once __DIR__ . '/../controllers/EquiposController.php';
+require_once __DIR__ . '/../controllers/equiposController.php';
 require_once __DIR__ . '/../core/core.php';
 
 $controller = new equiposController();
 
-// Obtener método HTTP y ruta
-$method = $_SERVER['REQUEST_METHOD'];
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$method = $_SERVER['REQUEST_METHOD'];
 
-// Extraer ID de la URL: /api/equipos/5
-$matches = [];
-preg_match('/^\/api\/equipos\/(\d+)$/', $path, $matches);
-$id = !empty($matches) ? (int)$matches[1] : null;
+if ($method === 'GET') {
 
-// Decodificar datos del cuerpo (solo si es POST o PUT)
-$data = in_array($method, ['POST', 'PUT']) 
-    ? json_decode(file_get_contents('php://input'), true) 
-    : null;
+    // Obtener todos los equipos con nombres completos de equipos
+    if (preg_match('/^\/api\/equipos$/', $path)) {
+        $controller->Allequipos();
+    }
+    elseif (preg_match('/^\/api\/equipos\/(\d+)\/jugadores$/', $path, $matches)) {
+        $equipoId = $matches[1];
+        $controller->EquipoidJugadores($equipoId);
+    }
+    
+    elseif (preg_match('/^\/api\/equipos\/(\d+)$/', $path, $matches)) {
+        $equipoId = $matches[1];
+        $controller->Equipoid($equipoId);
+    }
 
-// Validar que el JSON sea válido si se envió
-if (in_array($method, ['POST', 'PUT']) && json_last_error() !== JSON_ERROR_NONE) {
-    http_response_code(400);
-    echo json_encode(['error' => 'Datos JSON inválidos']);
-    exit;
-}
+    elseif (preg_match('/^\/api\/equipos\/partidos$/', $path)) {
+        $controller->Allpartidos();
+    }
 
-// Manejo de rutas
-switch ($method) {
-    case 'GET':
-        if ($id) {
-            $controller->Equipoid($id);
-        }
-        else {
-            $controller->Allequipos();
-        }
-        break;
+    else {
+        http_response_code(404);
+        echo json_encode(['error' => 'Ruta de partidos no encontrada']);
+    }
 
-    case 'POST':
-        // Crear un nuevo equipo
-        //$controller->create($data);
-        break;
-        
-    case 'PUT':
-        if (!$id) {
-            http_response_code(400);
-            echo json_encode(['error' => 'ID requerido en la URL para actualizar']);
-            break;
-        }
-        //$controller->update($id, $data);
-        break;
-
-    case 'DELETE':
-        if (!$id) {
-            http_response_code(400);
-            echo json_encode(['error' => 'ID requerido en la URL para eliminar']);
-            break;
-        }
-        //$controller->delete($id);
-        break;
-
-    default:
-        http_response_code(405);
-        echo json_encode(['error' => 'Método no permitido. Usa GET, POST, PUT o DELETE.']);
-        break;
+} else {
+    http_response_code(405);
+    echo json_encode(['error' => 'Método no permitido. Usa GET.']);
 }
 ?>
