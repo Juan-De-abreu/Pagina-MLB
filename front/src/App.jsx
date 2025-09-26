@@ -9,6 +9,7 @@ import Comparador from "./pages/Comparador"
 import Mapa from "./pages/Home/Mapa"
 import Equipos from "./pages/Equipos"
 import DetalleEquipos from "./pages/Equipos/DetalleEquipos"
+import Partidos from "./pages/Partidos"
 
 const App = () => {
   return (
@@ -27,6 +28,8 @@ const App = () => {
             <Route path="/mapa" element={<Mapa/>}/>
             <Route path="/equipos" element={<Equipos/>}/>
             <Route path="/equipo/:id" element={<DetalleEquipos/>} />
+            <Route path="/partidos" element={<Partidos/>} />
+
 
 
           </Routes>

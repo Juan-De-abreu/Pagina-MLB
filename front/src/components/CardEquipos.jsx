@@ -1,17 +1,14 @@
 import { Link } from "react-router-dom";
 import { getMedalColorVartext } from "../util/funciones";
 import { useEffect, useState } from "react";
+import { getMedalColorVar} from "../util/funciones";
 
 const CardEquipos = ({ item, contador = 4 }) => {
-  const API = `http://localhost:8081/api/equipos/${item.id}`;
+  const API = `http://localhost:8081/api/equipos/${item.id}/jugadores`;
   const [error, setError] = useState(null);
 
   const [datos, setDatos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const borderClass =
-    contador <= 2
-      ? `text-[var(${getMedalColorVartext(contador)})]`
-      : "border-[var(--vinotinto)]";
 
   useEffect(() => {
     const getDatos = async () => {
@@ -44,10 +41,25 @@ const CardEquipos = ({ item, contador = 4 }) => {
       </div>
     );
   }
+
+    const borderClass =
+    contador <= 3
+      ? `text-[var(${getMedalColorVartext(contador-1)})]`
+      : "border-[var(--vinotinto)]";
+
+  const medalla =
+    contador <= 3
+      ? `block absolute px-6 py-4 text-center mx-auto bg-[var(${getMedalColorVar(contador-1)})] rounded-4xl font-semibold lg:text-md text-black border-1`
+      : "hidden";
   return (
     <div className="w-[80vw] lg:w-80 xl:w-100 2xl:w-110 my-4 animate-slide-top px-2 mx-auto sm:mx-0">
-      <div className="bg-[var(--gris-oscuro)] rounded shadow-xl h-full flex flex-col shadow-black border-[var(--vinotinto)] border-1">
+      <div className="bg-[var(--gris-oscuro)] rounded shadow-xl h-full flex flex-col shadow-black border-[var(--vinotinto)] border-2">
         <div className="overflow-hidden rounded-t border-[var(--vinotinto)] border-1">
+          <span
+            className={`${medalla}`}
+          >
+            top: {contador}
+          </span>
           <img
             src={`${item.logo_url}`}
             alt={item.nombre}

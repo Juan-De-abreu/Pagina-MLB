@@ -70,7 +70,7 @@ const Equipos = () => {
               <CardEquipos
                 key={item.id}
                 item={item}
-                contador={index}
+                contador={index+1}
               />
             ))}
           </div>

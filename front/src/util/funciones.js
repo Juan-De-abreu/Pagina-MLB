@@ -172,3 +172,4 @@ export function getMedalColorVartext(index) {
   if (position === 3) return '--bronce';
   return '--blanco-hielo';
 }
+
