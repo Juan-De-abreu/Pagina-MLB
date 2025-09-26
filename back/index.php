@@ -19,6 +19,10 @@ if (preg_match('/^\/api\/mapa/', $path)) {
     require_once 'routes/estadisticasRoutes.php';
     exit;
 }
+if (preg_match('/^\/api\/equipos/', $path)) {
+    require_once 'routes/equiposRoutes.php';
+    exit;
+}
 
 // 🔹 Rutas: /api/jugadores
 if (preg_match('/^\/api\/jugadores/', $path)) {
