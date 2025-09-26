@@ -91,6 +91,7 @@ const Detalle = () => {
               <table className="min-w-full bg-[var(--vinotinto)] rounded shadow overflow-hidden">
                 <tbody>
                   {[
+                    ["Equipo", datos.nombre_equipo],
                     ["Posición", datos.pos],
                     ["Años en MLB", datos.años_en_mlb],
                     ["Año de Debut / Retiro", `${datos.año_debut} – ${datos.año_retiro}`],

@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
 import CardJugadores from "../components/CardJugadores";
-import { Link } from "react-router";
-
+import { Link, useLocation } from "react-router-dom";
 
 const API = "http://localhost:8081/api/jugadores";
 
 const Jugadores = () => {
+  const location = useLocation();
+
+  const queryParams = new URLSearchParams(location.search);
+  const equipoParam = queryParams.get("equipo") || "";
+
   const [datos, setDatos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filteredJugadores, setFilteredJugadores] = useState([]);
   const [search, setSearch] = useState("");
   const [positionFilter, setPositionFilter] = useState("");
+  const [equipoFilter, setEquipoFilter] = useState(equipoParam);
 
   const getDatos = async () => {
     try {
@@ -57,8 +62,16 @@ const Jugadores = () => {
       filtered.sort((a, b) => (b.war || 0) - (a.war || 0));
     }
 
+    if (equipoFilter) {
+      filtered = filtered.filter((j) => {
+        if (!j.nombre_equipo) return false;
+        return j.nombre_equipo.toLowerCase().includes(equipoFilter.toLowerCase());
+      });
+      filtered.sort((a, b) => (b.war || 0) - (a.war || 0));
+    }
+
     setFilteredJugadores(filtered);
-  }, [datos, search, positionFilter]);
+  }, [datos, search, positionFilter, equipoFilter]);
 
   const posiciones = [
     { value: "SP", label: "Lanzador (SP)  Pitcher" },
@@ -73,6 +86,17 @@ const Jugadores = () => {
     { value: "RF", label: "Jardinero Derecho (RF)" },
     { value: "DH", label: "Bateador Designado (DH) " },
     { value: "UTIL", label: "Utilitid (UTIL) " },
+  ];
+
+  const equipos = [
+    "Leones del Caracas",
+    "Tiburones de La Guaira",
+    "Navegantes del Magallanes",
+    "Águilas del Zulia",
+    "Caribes de Anzoátegui",
+    "Bravos de Margarita",
+    "Cardenales de Lara",
+    "Tigres de Aragua",
   ];
 
   if (loading) {
@@ -106,10 +130,11 @@ const Jugadores = () => {
         </p>
 
         <div className="flex flex-col md:flex-row md:items-center md:justify-center gap-4 mb-6">
-
-          <Link to={"/comparador"}
-            className="text-center lg:text-left bg-transparent border border-[var(--dorado)] text-[var(--dorado)] px-4 py-2 rounded hover:bg-[var(--dorado)] hover:text-black transition w-full md:w-auto">
-            Comparar jugadores
+          <Link
+            to={"/comparador"}
+            className="text-center bg-transparent border border-[var(--dorado)] text-[var(--dorado)] px-4 py-2 rounded hover:bg-[var(--dorado)] hover:text-black transition w-full md:w-auto"
+          >
+            Comparar
           </Link>
 
           <input
@@ -125,10 +150,27 @@ const Jugadores = () => {
             value={positionFilter}
             onChange={(e) => setPositionFilter(e.target.value)}
           >
-            <option value="">Seleccione una posición</option>
+            <option className="bg-[var(--gris-claro)]" value="">
+              Seleccione una posición
+            </option>
             {posiciones.map((item, index) => (
               <option className="bg-[var(--gris-oscuro)]" key={index} value={item.value}>
                 {item.label}
+              </option>
+            ))}
+          </select>
+
+          <select
+            className="border border-[var(--dorado)] rounded px-4 py-2 w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-[var(--dorado)]"
+            value={equipoFilter}
+            onChange={(e) => setEquipoFilter(e.target.value)}
+          >
+            <option className="bg-[var(--gris-claro)]" value="">
+              Seleccione un equipo
+            </option>
+            {equipos.map((item, index) => (
+              <option className="bg-[var(--gris-oscuro)]" key={index} value={item}>
+                {item}
               </option>
             ))}
           </select>
@@ -138,6 +180,7 @@ const Jugadores = () => {
             onClick={() => {
               setSearch("");
               setPositionFilter("");
+              setEquipoFilter("");
             }}
           >
             Limpiar
@@ -149,7 +192,7 @@ const Jugadores = () => {
             No se encontraron jugadores con esos filtros.
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-2">
             {filteredJugadores.map((item) => (
               <CardJugadores
                 key={item.id}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router";
-import { getMedalColorVartext} from "../../util/funciones";
+import { getMedalColorVar, getMedalColorVartext} from "../../util/funciones";
 
 const Carrusel = (images) => {
   const [current, setCurrent] = useState(0);
@@ -92,15 +92,15 @@ const Carrusel = (images) => {
                     <p className={`text-[var(${getMedalColorVartext(current)})] text-4xl`}>
                       Top {current + 1} War
                     </p>
-                    <p className="text-4xl 2xl:text-5xl py-3">
+                    <p className={`text-3xl text-[var(${getMedalColorVartext(current)})] 2xl:text-4xl py-3`}>
                       {item.nombre}
                     </p>
                     <p>
-                       con : <span className="text-[var(--dorado)]">{item.war} </span>y {item.años_en_mlb} años en la MLB
+                       con : <span className={`border-1 rounded-md text-[var(${getMedalColorVartext(current)})] px-1`}>{item.war}</span> y {item.años_en_mlb} años en la MLB
                     </p>
                               <Link
                                 to={'/mapa'}
-                                className="inline-block px-1 py-1 my-2 2xl:px-4 2xl:py-2 2xl:my-4 border-1 rounded-2 text-[var(--dorado)] rounded hover:bg-[var(--dorado)] hover:text-white hover:border-[var(--plateado)] transition-colors duration-300"
+                                className="inline-block px-0 lg:px-2 py-1 my-2 2xl:px-4 2xl:py-2 2xl:my-4 border-1 rounded-2 text-[var(--dorado)] rounded hover:bg-[var(--dorado)] hover:text-white hover:border-[var(--plateado)] transition-colors duration-300"
                               >
                                 Ver Mejores por ciudades
                             </Link>

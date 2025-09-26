@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import CardJugadores from "../../components/CardJugadores";
+import { Link } from "react-router";
+import CardEquipos from "../components/CardEquipos";
 
-const API = "http://localhost:8081/api/estadisticas/top-dobles";
 
-const TopDobles = () => {
+const API = "http://localhost:8081/api/equipos";
+
+const Equipos = () => {
   const [datos, setDatos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -27,6 +29,9 @@ const TopDobles = () => {
     getDatos();
   }, []);
 
+
+
+
   if (loading) {
     return (
       <div className="flex flex-col items-center py-10">
@@ -35,7 +40,7 @@ const TopDobles = () => {
           aria-label="loading"
           className="w-10 h-10 border-4 border-red-500 border-t-transparent rounded-full animate-spin"
         ></div>
-        <p className="mt-4 text-red-600">Cargando Top Dobles...</p>
+        <p className="mt-4 text-red-600">Cargando Equipos...</p>
       </div>
     );
   }
@@ -50,29 +55,29 @@ const TopDobles = () => {
   }
 
   return (
-    <>
-      <h4 className="text-center py-4 text-2xl font-semibold">🏆 Top en dobles</h4>
-      <p className="text-center">Total de dobles en toda su carrera</p>
-      <p className="text-center text-gray-500">
+    <div className="bg-[var(--body)] py-4 min-h-screen text-[var(--blanco-hielo)]">
+      <div className="container mx-auto px-4">
+        <h3 className="text-center py-2 text-2xl font-semibold">📋 Equipos de baseball Venezolanos</h3>
+        <p className="text-center text-gray-200 mb-6">
+          {datos.length} Equipos venezolanos
+        </p>
+
+        <div className="flex flex-col md:flex-row md:items-center md:justify-center gap-4 mb-6">
+
+        </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
+            {datos.map((item,index) => (
+              <CardEquipos
+                key={item.id}
+                item={item}
+                contador={index}
+              />
+            ))}
+          </div>
         
-      </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-2">
-        {datos.map((item,index) => (
-          <CardJugadores
-            key={item.id}
-            item={item}
-            l1={"Hits"}
-            v1={item.hits}
-            l2={"AVG"}
-            v2={item.promedio_bateo * 1000}
-            l3={"WAR"}
-            v3={item.war}
-            contador={index + 1}
-          />
-        ))}
       </div>
-    </>
+    </div>
   );
 };
 
-export default TopDobles;
+export default Equipos;

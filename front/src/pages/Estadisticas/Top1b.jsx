@@ -56,7 +56,7 @@ const Top1b = () => {
       <p className="text-center text-gray-500">
         Pete Rose con 4.256 hits / Ty Cobb con 4.191 hits / Hank Aaron con 3.771 hits
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-2">
         {datos.map((item,index) => (
           <CardJugadores
             key={item.id}

@@ -49,7 +49,7 @@ const Top5Avg = () => {
 
   return (
     <section className="bg-[var(--body) pb-5">
-      <div className="max-w-5xl mx-auto px-4">
+      <div className="max-w-4xl xl:max-w-5xl mx-auto px-4">
         <h2 className="text-center pb-4 text-3xl font-bold text-[var(--dorado)]">🏆 Top 5 en AVG</h2>
         <div className="flex justify-center">
           <div className="w-full lg:w-[100vw] bg-[var(--gris-oscuro)] rounded-lg shadow-lg">
