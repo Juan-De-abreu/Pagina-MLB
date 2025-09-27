@@ -75,7 +75,7 @@ const Detalle = () => {
                 e.target.src = "https://via.placeholder.com/200x250?text=Sin+Imagen";
               }}
               className="mx-auto rounded-lg shadow-md object-center max-h-72 w-full"
-              style={{ maxHeight: "300px" }}
+              style={{maxHeight: "450px" }}
             />
             <h5 className="mt-4 text-xl font-semibold">{datos.nombre}</h5>
             <p className="text-gray-300">

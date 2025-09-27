@@ -18,7 +18,7 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador=4}) => {
       : "border-[var(--vinotinto)]";
   const medalla =
     contador <= 3
-      ? `block absolute px-6 py-4 text-center mx-auto bg-[var(${getMedalColorVar(contador-1)})] rounded-4xl font-semibold lg:text-md text-black border-1`
+      ? `block absolute px-3 py-3 text-center mx-auto bg-[var(${getMedalColorVar(contador-1)})] rounded-full font-bold lg:text-md text-black border-1`
       : "hidden";
   return (
     <div className="w-70 md:w-55 xl:w-60 2xl:w-70 my-4 animate-slide-top px-2 mx-auto sm:mx-0">
@@ -27,7 +27,7 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador=4}) => {
           <span
             className={`${medalla}`}
           >
-            top: {contador}
+            {contador}
           </span>
           <img
             src={`https://api.arsistemamlb.com/uploads/jugadores/${item.id}.jpg`}

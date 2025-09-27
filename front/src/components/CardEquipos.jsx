@@ -49,7 +49,7 @@ const CardEquipos = ({ item, contador = 4 }) => {
 
   const medalla =
     contador <= 3
-      ? `block absolute px-6 py-4 text-center mx-auto bg-[var(${getMedalColorVar(contador-1)})] rounded-4xl font-semibold lg:text-md text-black border-1`
+      ? `block absolute px-3 py-3 text-center mx-auto bg-[var(${getMedalColorVar(contador-1)})] rounded-4xl font-semibold lg:text-md text-black border-1`
       : "hidden";
   return (
     <div className="w-[80vw] lg:w-80 xl:w-100 2xl:w-110 my-4 animate-slide-top px-2 mx-auto sm:mx-0">
@@ -58,7 +58,7 @@ const CardEquipos = ({ item, contador = 4 }) => {
           <span
             className={`${medalla}`}
           >
-            top: {contador}
+            {contador}
           </span>
           <img
             src={`${item.logo_url}`}
