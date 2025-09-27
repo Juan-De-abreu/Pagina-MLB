@@ -52,34 +52,39 @@ class equiposController
     // GET /api/equipos/partidos
 
     public function Allpartidos()
-    {
-        global $pdo;
-        try {
-            $stmt = $pdo->query("SELECT 
-                                p.id,
-                                p.fecha,
-                                p.estadio,
-                                p.resultados_local,
-                                p.resultados_visitante,
-                                el.nombre AS equipo_local,
-                                ev.nombre AS equipo_visitante,
-                                p.temporada,
-                                FROM 
-                                partidos p
-                                JOIN 
-                                equipos el ON p.equipo_local_id = el.id
-                                JOIN 
-                                equipos ev ON p.equipo_visitante_id = ev.id
-                                ORDER BY 
-                                p.fecha ASC;");
+{
+    global $pdo;
+    try {
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = "SELECT 
+                    p.id,
+                    p.fecha,
+                    p.estadio,
+                    p.resultados_local,
+                    p.resultados_visitante,
+                    el.nombre AS equipo_local,
+                    p.equipo_local_id,
+                    ev.nombre AS equipo_visitante,
+                    p.equipo_visitante_id,
+                    p.temporada
+                FROM 
+                    partidos p
+                JOIN 
+                    equipos el ON p.equipo_local_id = el.id
+                JOIN 
+                    equipos ev ON p.equipo_visitante_id = ev.id
+                ORDER BY 
+                    p.fecha ASC";
 
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            echo json_encode($rows);
-        } catch (Exception $e) {
-            http_response_code(500);
-            echo json_encode(['error' => 'Error al obtener partidos: ' . $e->getMessage()]);
-        }
+        $stmt = $pdo->query($sql);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($rows);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Error PDO: ' . $e->getMessage()]);
     }
+}
+
 
     // GET /api/equipos/id
 
