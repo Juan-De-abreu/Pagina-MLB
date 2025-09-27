@@ -8,23 +8,21 @@ const Partidos = () => {
   const [datos, setDatos] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const getDatos = async () => {
-      try {
-        const response = await fetch(API);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setDatos(data);
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
-    getDatos();
-  }, []);
+useEffect(() => {
+  const getDatos = async () => {
+    try {
+      const response = await fetch(API);
+      if (!response.ok) throw new Error(`HTTP status ${response.status}`);
+      const data = await response.json();
+      setDatos(data);
+      setLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+  getDatos();
+}, []);
 
   if (loading) {
     return <p>Cargando partidos...</p>;
@@ -41,8 +39,8 @@ const Partidos = () => {
   }
   return (
     <div>
-        <p className='text-center mt-5 text-2xl'>Partidos</p>
-        <div className='container'>
+        <p className='text-center mt-5 text-2xl'>Partidos ({datos.length})</p>
+        <div className='container mx-auto max-w-[100vw]'>
             {datos.map((item) => (
               <CardPartidos
                 key={item.id}
