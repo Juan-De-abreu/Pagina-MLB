@@ -62,34 +62,36 @@ const CardPartidos = ({ item }) => {
   }
 
   return (
-    <div className="w-[90vw] mx-auto my-15 animate-slide-top px-4 sm:px-10">
+    <div className="w-[80vw] mx-auto my-15 animate-slide-top px-4 2xl:px-50">
       <div className="bg-[var(--gris-oscuro)] rounded shadow-xl h-full flex flex-col shadow-black border-[var(--vinotinto)] border-2">
-        <div className="overflow-hidden grid rounded-t border-[var(--vinotinto)] border-l-4 border-r-4 border-t-4 border-b-2 md:grid-cols-[45%_10%_45%]">
+        <div className="overflow-hidden grid rounded-t border-[var(--vinotinto)] border-l-4 border-r-4 border-t-4 border-b-2 md:grid-cols-[47%_6%_47%]">
           <img
             src={equipolocal[0].logo_url}
             alt={equipolocal[0].nombre}
-            className="w-full h-40 lg:h-75 object-center rounded border-3 border-[var(--dorado)]"
+            className="w-full h-50 lg:h-65 object-center rounded-4xl border-6 border-[var(--vinotinto)]"
           />
-          <p className="flex w-full text-center justify-center my-auto"><span className="scale-200 text-4xl border-1 border-[var(--dorado)] rounded-full px-3 py-2 bg-[var(--vinotinto)] opacity-0">vs</span></p>
+          <p></p>
           <img
             src={equipovisitante[0].logo_url}
             alt={equipovisitante[0].nombre}
-            className="w-full h-40 lg:h-75 object-center rounded border-3 border-[var(--dorado)]"
+            className="w-full h-50 lg:h-65 object-center rounded-4xl border-6 border-[var(--vinotinto)]"
           />
         </div>
-        <div className="hidden flex-grow p-4 text-center grid-cols-3 md:grid">
-          <div className="text-2xl text-center">
+        <div className=" flex-grow p-4 text-center md:grid-cols-[43%_14%_43%] md:grid">
+          <div className="text-center text-xl lg:text-2xl">
             <p>{equipolocal[0].nombre}</p>
           </div>
 
           <div className="my-3 text-center">
-            <span className="scale-200 text-6xl rounded-full px-3 py-2">
-              vs
+            <span className="text-xl xl:text-3xl rounded-full px-0 xl:px-4 py-2">
+              {item.resultados_local} vs {item.resultados_visitante}
             </span>
           </div>
 
-          <div className="text-center">
+          <div className="text-center text-xl lg:text-2xl">
             {equipovisitante[0].nombre}
+
+
           </div>
 
         </div>
