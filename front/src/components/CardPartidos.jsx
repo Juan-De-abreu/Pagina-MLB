@@ -65,6 +65,7 @@ const CardPartidos = ({ item }) => {
     <div className="w-[80vw] mx-auto my-15 animate-slide-top px-4 2xl:px-50">
       <div className="bg-[var(--gris-oscuro)] rounded shadow-xl h-full flex flex-col shadow-black border-[var(--vinotinto)] border-2">
         <div className="overflow-hidden grid rounded-t border-[var(--vinotinto)] border-l-4 border-r-4 border-t-4 border-b-2 md:grid-cols-[47%_6%_47%]">
+          
           <img
             src={equipolocal[0].logo_url}
             alt={equipolocal[0].nombre}
@@ -108,6 +109,9 @@ const CardPartidos = ({ item }) => {
           >
             Equipo Visitante
           </Link>
+        </div>
+        <div className="text-sm">
+          <p className="flex justify-center lg:justify-start pt-1 pb-1"> <span className="hidden lg:flex">fecha del partido:</span><span className="text-[var(--dorado)]">{item.fecha}</span></p>
         </div>
       </div>
     </div>
