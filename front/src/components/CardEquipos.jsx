@@ -90,7 +90,7 @@ const CardEquipos = ({ item, contador = 4 }) => {
           </Link>
 
           <Link
-            to={`/detalleequipo/${item.id}`}
+            to={`/equipo/${item.id}/${item.nombre}`}
             className="border text-[var(--dorado)] text-md px-6 py-3 rounded hover:bg-[var(--dorado)] hover:text-black transition"
           >
             Detalles
