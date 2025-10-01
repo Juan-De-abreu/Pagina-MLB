@@ -88,28 +88,27 @@ class equiposController
 
     // GET /api/equipos/id
 
-    public function Equipoid($id)
-    {
-        global $pdo;
-        try {
-            $stmt = $pdo->prepare("
-            SELECT * from equipos WHERE id=?
-        ");
-            $stmt->execute([$id]);
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+public function Equipoid($id)
+{
+    global $pdo;
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM equipos WHERE id = ?");
+        $stmt->execute([$id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if (!$rows) {
-                http_response_code(404);
-                echo json_encode(['message' => 'informacion del equipo no encontrada']);
-                return;
-            }
-
-            echo json_encode($rows);
-        } catch (Exception $e) {
-            http_response_code(500);
-            echo json_encode(['error' => 'Error al obtener informacion del equipo: ' . $e->getMessage()]);
+        if (!$row) {
+            http_response_code(404);
+            echo json_encode(['message' => 'información del equipo no encontrada']);
+            return;
         }
+
+        echo json_encode($row);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Error al obtener información del equipo: ' . $e->getMessage()]);
     }
+}
+
 
 
 }

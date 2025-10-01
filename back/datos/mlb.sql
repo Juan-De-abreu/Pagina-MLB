@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 26-09-2025 a las 15:58:58
+-- Tiempo de generación: 01-10-2025 a las 18:59:18
 -- Versión del servidor: 9.1.0
 -- Versión de PHP: 8.3.14
 
@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `equipos` (
   `titulos_nacionales` int DEFAULT NULL,
   `titulos_serie_caribe` int DEFAULT NULL,
   `logo_url` varchar(200) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `foto_estadio` varchar(200) COLLATE utf8mb4_spanish2_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
@@ -44,15 +45,15 @@ CREATE TABLE IF NOT EXISTS `equipos` (
 -- Volcado de datos para la tabla `equipos`
 --
 
-INSERT INTO `equipos` (`id`, `nombre`, `ciudad`, `estadio`, `fundacion`, `titulos_nacionales`, `titulos_serie_caribe`, `logo_url`) VALUES
-(1, 'Leones del Caracas', 'Caracas', 'Estadio Universitario de Caracas', '1942', 20, 2, 'https://i.pinimg.com/474x/9b/1c/b8/9b1cb8f87521ffc787ba4005d6ed1523.jpg'),
-(2, 'Tiburones de La Guaira', 'La Guaira', 'Estadio Universitario de Caracas', '1962', 7, 0, 'https://images.seeklogo.com/logo-png/22/1/tiburones-de-la-guaira-bbc-logo-png_seeklogo-224373.png'),
-(3, 'Águilas del Zulia', 'Maracaibo', 'Estadio Luis Aparicio El Grande', '1969', 6, 2, 'https://images.seeklogo.com/logo-png/0/1/aguilas-del-zulia-logo-png_seeklogo-4774.png'),
-(4, 'Caribes de Anzoátegui', 'Puerto La Cruz', 'Estadio Alfonso Chico Carrasquel', '1987', 4, 0, 'https://i.pinimg.com/564x/ae/d7/45/aed74561e0e0adc98ded3a1d1106a24c.jpg'),
-(5, 'Bravos de Margarita', 'Porlamar', 'Estadio Nueva Esparta', '2007', 0, 0, 'https://pbs.twimg.com/media/Cr6UFvOWIAA-Tj5.jpg'),
-(6, 'Cardenales de Lara', 'Barquisimeto', 'Estadio Antonio Herrera Gutiérrez', NULL, 7, 0, 'https://lacima967fm.com/wp-content/uploads/2025/01/12f6144a285c4abbf17f1c12cd23f4a5.jpg'),
-(7, 'Navegantes del Magallanes', 'Valencia', 'Estadio José Bernardo Pérez', NULL, 13, 0, 'https://images.seeklogo.com/logo-png/9/1/navegantes-del-magallanes-logo-png_seeklogo-97602.png'),
-(8, 'Tigres de Aragua', 'Maracay', 'Estadio José Pérez Colmenares', NULL, 10, 0, 'https://lvbp.com/wp-content/uploads/2024/05/tigres-desvelo-nuevo-logo-para-la-temporada-2022-2023_665148815b109.jpeg');
+INSERT INTO `equipos` (`id`, `nombre`, `ciudad`, `estadio`, `fundacion`, `titulos_nacionales`, `titulos_serie_caribe`, `logo_url`, `foto_estadio`) VALUES
+(1, 'Leones del Caracas', 'Caracas', 'Estadio Universitario de Caracas', '1942', 20, 2, 'https://i.pinimg.com/474x/9b/1c/b8/9b1cb8f87521ffc787ba4005d6ed1523.jpg', 'https://cdn.septimaentrada.com/uploads/media/2023/07/29/casa-leones-jugara-estadio-monumental.jpg'),
+(2, 'Tiburones de La Guaira', 'La Guaira', 'Estadio Universitario de Caracas', '1962', 7, 0, 'https://images.seeklogo.com/logo-png/22/1/tiburones-de-la-guaira-bbc-logo-png_seeklogo-224373.png', 'https://images.beisbolplay.com/wp-content/uploads/2024/10/nota-forum.jpg'),
+(3, 'Águilas del Zulia', 'Maracaibo', 'Estadio Luis Aparicio El Grande', '1969', 6, 2, 'https://images.seeklogo.com/logo-png/0/1/aguilas-del-zulia-logo-png_seeklogo-4774.png', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuLIRSfGIRRzizPFFEFO8XQccFotQLJ47g9Q&s'),
+(4, 'Caribes de Anzoátegui', 'Puerto La Cruz', 'Estadio Alfonso Chico Carrasquel', '1987', 4, 0, 'https://i.pinimg.com/564x/ae/d7/45/aed74561e0e0adc98ded3a1d1106a24c.jpg', 'https://www.caribesbbc.com/assets/img/stadium/2.jpg'),
+(5, 'Bravos de Margarita', 'Porlamar', 'Estadio Nueva Esparta', '2007', 0, 0, 'https://pbs.twimg.com/media/Cr6UFvOWIAA-Tj5.jpg', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV6_GwNODKMVxUAW8dCQ-HFbOiY8S0NhJB3w&s'),
+(6, 'Cardenales de Lara', 'Barquisimeto', 'Estadio Antonio Herrera Gutiérrez', '1942', 7, 0, 'https://lacima967fm.com/wp-content/uploads/2025/01/12f6144a285c4abbf17f1c12cd23f4a5.jpg', 'https://pbs.twimg.com/media/EIoRR7aWwAE_HtL.jpg'),
+(7, 'Navegantes del Magallanes', 'Valencia', 'Estadio José Bernardo Pérez', '1917', 13, 2, 'https://images.seeklogo.com/logo-png/9/1/navegantes-del-magallanes-logo-png_seeklogo-97602.png', ''),
+(8, 'Tigres de Aragua', 'Maracay', 'Estadio José Pérez Colmenares', '1963', 10, 0, 'https://lvbp.com/wp-content/uploads/2024/05/tigres-desvelo-nuevo-logo-para-la-temporada-2022-2023_665148815b109.jpeg', '');
 
 -- --------------------------------------------------------
 
@@ -244,23 +245,53 @@ CREATE TABLE IF NOT EXISTS `partidos` (
   PRIMARY KEY (`id`),
   KEY `equipo_local_id` (`equipo_local_id`),
   KEY `equipo_visitante_id` (`equipo_visitante_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `partidos`
 --
 
 INSERT INTO `partidos` (`id`, `equipo_local_id`, `equipo_visitante_id`, `fecha`, `estadio`, `resultados_local`, `resultados_visitante`, `temporada`) VALUES
-(1, 1, 2, '2024-10-12', 'Estadio Universitario', 5, 3, '2024'),
-(2, 3, 4, '2024-10-13', 'Estadio Luis Aparicio', 4, 7, '2024'),
-(3, 5, 6, '2024-10-14', 'Estadio Nueva Esparta', 6, 6, '2024'),
-(4, 7, 8, '2024-10-15', 'Estadio José Bernardo Pérez', 2, 1, '2024'),
-(5, 2, 3, '2024-10-16', 'Estadio Fórum de La Guaira', 1, 9, '2024'),
-(6, 4, 5, '2024-10-17', 'Estadio Alfonso Carrasquel', 3, 0, '2024'),
-(7, 6, 7, '2024-10-18', 'Estadio Antonio Herrera Gutiérrez', 8, 2, '2024'),
-(8, 8, 1, '2024-10-19', 'Estadio Universitario', 4, 5, '2024'),
-(9, 1, 3, '2024-10-20', 'Estadio Universitario', 7, 6, '2024'),
-(10, 2, 4, '2024-10-21', 'Estadio Fórum de La Guaira', 0, 0, '2024');
+(1, 3, 1, '2023-10-21', 'Estadio Luis Aparicio El Grande', 5, 3, '2023'),
+(2, 7, 2, '2023-10-21', 'Estadio José Bernardo Pérez', 4, 2, '2023'),
+(3, 5, 6, '2023-10-21', 'Estadio Nueva Esparta', 6, 1, '2023'),
+(4, 4, 8, '2023-10-21', 'Estadio Alfonso Chico Carrasquel', 3, 5, '2023'),
+(5, 1, 2, '2023-10-22', 'Estadio Universitario de Caracas', 7, 4, '2023'),
+(6, 8, 7, '2023-10-22', 'Estadio José Pérez Colmenares', 2, 3, '2023'),
+(7, 6, 5, '2023-10-22', 'Estadio Antonio Herrera Gutiérrez', 0, 2, '2023'),
+(8, 2, 3, '2023-10-23', 'Estadio Universitario de Caracas', 4, 7, '2023'),
+(9, 1, 4, '2023-10-23', 'Estadio Universitario de Caracas', 5, 5, '2023'),
+(10, 7, 8, '2023-10-24', 'Estadio José Bernardo Pérez', 6, 3, '2023'),
+(11, 3, 5, '2023-11-01', 'Estadio Luis Aparicio El Grande', 3, 4, '2023'),
+(12, 2, 6, '2023-11-02', 'Estadio Universitario de Caracas', 2, 6, '2023'),
+(13, 8, 1, '2023-11-03', 'Estadio José Pérez Colmenares', 5, 2, '2023'),
+(14, 4, 7, '2023-11-04', 'Estadio Alfonso Chico Carrasquel', 7, 3, '2023'),
+(15, 5, 2, '2023-11-05', 'Estadio Nueva Esparta', 6, 6, '2023'),
+(16, 6, 3, '2023-11-06', 'Estadio Antonio Herrera Gutiérrez', 1, 2, '2023'),
+(17, 7, 5, '2023-11-07', 'Estadio José Bernardo Pérez', 3, 5, '2023'),
+(18, 1, 8, '2023-11-08', 'Estadio Universitario de Caracas', 4, 1, '2023'),
+(19, 2, 4, '2023-11-09', 'Estadio Universitario de Caracas', 2, 3, '2023'),
+(20, 3, 7, '2023-11-10', 'Estadio Luis Aparicio El Grande', 5, 4, '2023'),
+(21, 2, 3, '2024-10-12', 'Estadio Universitario de Caracas', 4, 2, '2024'),
+(22, 4, 7, '2024-10-13', 'Estadio Alfonso Chico Carrasquel', 3, 4, '2024'),
+(23, 6, 1, '2024-10-14', 'Estadio Antonio Herrera Gutiérrez', 2, 5, '2024'),
+(24, 8, 5, '2024-10-15', 'Estadio José Pérez Colmenares', 3, 3, '2024'),
+(25, 1, 2, '2024-10-16', 'Estadio Universitario de Caracas', 7, 1, '2024'),
+(26, 3, 8, '2024-10-17', 'Estadio Luis Aparicio El Grande', 5, 5, '2024'),
+(27, 4, 6, '2024-10-18', 'Estadio Alfonso Chico Carrasquel', 2, 4, '2024'),
+(28, 5, 7, '2024-10-19', 'Estadio Nueva Esparta', 3, 6, '2024'),
+(29, 2, 1, '2024-10-20', 'Estadio Universitario de Caracas', 1, 4, '2024'),
+(30, 7, 3, '2024-10-21', 'Estadio José Bernardo Pérez', 5, 3, '2024'),
+(31, 8, 4, '2024-10-22', 'Estadio José Pérez Colmenares', 2, 7, '2024'),
+(32, 1, 5, '2024-10-23', 'Estadio Universitario de Caracas', 3, 3, '2024'),
+(33, 6, 2, '2024-10-24', 'Estadio Antonio Herrera Gutiérrez', 4, 2, '2024'),
+(34, 3, 7, '2024-10-25', 'Estadio Luis Aparicio El Grande', 5, 1, '2024'),
+(35, 4, 1, '2024-10-26', 'Estadio Alfonso Chico Carrasquel', 6, 4, '2024'),
+(36, 5, 8, '2024-10-27', 'Estadio Nueva Esparta', 7, 2, '2024'),
+(37, 2, 6, '2024-10-28', 'Estadio Universitario de Caracas', 3, 5, '2024'),
+(38, 7, 4, '2024-10-29', 'Estadio José Bernardo Pérez', 4, 4, '2024'),
+(39, 1, 3, '2024-10-30', 'Estadio Universitario de Caracas', 2, 6, '2024'),
+(40, 8, 5, '2024-10-31', 'Estadio José Pérez Colmenares', 3, 7, '2024');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
