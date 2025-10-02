@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 const API_MAPA = "http://localhost:8081/api/mapa/top-city";
 const API_JUGADORES = "http://localhost:8081/api/jugadores";
@@ -103,9 +102,9 @@ const Mapa = () => {
     // Dentro del return del componente Mapa (solo JSX transformado)
     <div className="bg-[var(--body)]">
       <div className="container mx-auto my-20 px-4 bg-[var(--body)] ">
-        <div className="text-center mb-20">
+        <div className="text-center mb-5">
           <h3 className="font-bold text-3xl">🗺️ Mapa del Talento Venezolano</h3>
-          <p className="text-gray-300 text-lg max-w-xl mx-auto mt-2">
+          <p className="text-[var(--blanco-hielo)] text-lg max-w-xl mx-auto mt-2">
             Descubre de dónde vienen los peloteros venezolanos que han llegado a
             las Grandes Ligas.
           </p>
@@ -146,14 +145,14 @@ const Mapa = () => {
 
                 {/* Datos */}
                 <div className="p-4 text-center flex-grow  flex flex-col justify-between text-[var(--blanco-hielo)] bg-">
-                  <div className="border-b border-gray-700 pb-3 h-30">
+                  <div className="border-b border-[var(--dorado)] pb-3 h-30">
                     <h5 className="text-lg font-semibold">
                       {ciudad.jugador_destacado}
                     </h5>
                     <p className=" text-sm">{ciudad.lugar_nacimiento}</p>
                   </div>
                   
-                    <div className="mt-3 border-b border-gray-700">
+                    <div className="mt-3 border-b border-[var(--dorado)]">
                       <p>
                         <strong>Jugadores:</strong>{" "}
                         <span className="inline-block bg-[var(--dorado)] text-black rounded-full px-3 py-1 text-sm">
@@ -202,7 +201,7 @@ const Mapa = () => {
           >
             <div className="bg-gray-900 rounded-lg shadow-xl max-w-6xl w-full max-h-[90vh] flex flex-col overflow-hidden">
               {/* Header */}
-              <div className="flex items-center justify-between p-4 border-b border-gray-700">
+              <div className="flex items-center justify-between p-4 border-b border-[var(--dorado)] bg-[var(--vinotinto)]">
                 <h5
                   className="text-lg font-semibold text-white"
                   id="modalListaCiudadLabel"
@@ -219,40 +218,40 @@ const Mapa = () => {
               </div>
 
               {/* Body */}
-              <div className="overflow-auto p-4 flex-grow text-white">
+              <div className="overflow-auto p-4 flex-grow bg-[var(--gris-oscuro)] text-[var(--blanco-hielo)]">
                 {jugadoresPorCiudad.length === 0 ? (
-                  <p className="text-gray-400 text-center py-12">
+                  <p className="text-gray-100 text-center py-12">
                     Cargando lista...
                   </p>
                 ) : (
-                  <table className="min-w-full table-auto border-collapse border border-gray-700">
-                    <thead className="bg-gray-800">
+                  <table className="min-w-full table-auto border-collapse border border-[var(--dorado)]">
+                    <thead className="bg-[var(--gris-claro)] text-white">
                       <tr>
-                        <th className="w-16 p-3 border border-gray-700"></th>
-                        <th className="text-left p-3 border border-gray-700">
+                        <th className="w-16 p-3 border border-[var(--dorado)]"></th>
+                        <th className="text-left p-3 border border-[var(--dorado)]">
                           Nombre
                         </th>
-                        <th className="text-center p-3 border border-gray-700">
+                        <th className="text-center p-3 border border-[var(--dorado)]">
                           Años en la MLB
                         </th>
-                        <th className="text-center p-3 border border-gray-700">
+                        <th className="text-center p-3 border border-[var(--dorado)]">
                           Pos
                         </th>
-                        <th className="text-center p-3 border border-gray-700">
+                        <th className="text-center p-3 border border-[var(--dorado)]">
                           WAR
                         </th>
-                        <th className="text-center p-3 border border-gray-700">
+                        <th className="text-center p-3 border border-[var(--dorado)]">
                           HR
                         </th>
-                        <th className="text-center p-3 border border-gray-700">
+                        <th className="text-center p-3 border border-[var(--dorado)]">
                           AVG
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       {jugadoresPorCiudad.map((j) => (
-                        <tr key={j.id} className="hover:bg-gray-800">
-                          <td className="p-2 border border-gray-700">
+                        <tr key={j.id} className="hover:bg-[var(--gris-claro)]">
+                          <td className="p-2 border border-[var(--dorado)]">
                             <img
                               src={`https://api.arsistemamlb.com/uploads/jugadores/${j.id}.jpg`}
                               alt={j.nombre}
@@ -263,24 +262,24 @@ const Mapa = () => {
                               }}
                             />
                           </td>
-                          <td className="p-2 border border-gray-700 font-semibold">
+                          <td className="p-2 border border-[var(--dorado)] font-semibold">
                             {j.nombre}
                           </td>
-                          <td className="p-2 border border-gray-700 font-semibold text-center">
+                          <td className="p-2 border border-[var(--dorado)] font-semibold text-center">
                             {j.años_en_mlb}
                           </td>
-                          <td className="p-2 border border-gray-700 text-center">
+                          <td className="p-2 border border-[var(--dorado)] text-center">
                             <span className="bg-gray-600 text-white rounded-full px-2 text-xs">
                               {j.pos || "N/A"}
                             </span>
                           </td>
-                          <td className="p-2 border border-gray-700 text-center text-sm">
+                          <td className="p-2 border border-[var(--dorado)] text-center text-sm">
                             {j.war ? parseFloat(j.war).toFixed(1) : "N/A"}
                           </td>
-                          <td className="p-2 border border-gray-700 text-center text-sm">
+                          <td className="p-2 border border-[var(--dorado)] text-center text-sm">
                             {j.home_runs || 0}
                           </td>
-                          <td className="p-2 border border-gray-700 text-center text-sm">
+                          <td className="p-2 border border-[var(--dorado)] text-center text-sm">
                             {j.promedio_bateo
                               ? `.${(j.promedio_bateo * 1000).toFixed(0)}`
                               : "N/A"}
@@ -293,10 +292,10 @@ const Mapa = () => {
               </div>
 
               {/* Footer */}
-              <div className="p-4 border-t border-gray-700 text-right">
+              <div className="p-4 border-t-1 border-[var(--dorado)] bg-[var(--vinotinto)] text-right">
                 <button
                   onClick={handleCloseModal}
-                  className="bg-gray-700 hover:bg-gray-600 text-white rounded px-4 py-2 font-semibold"
+                  className="border-1 text-[var(--dorado)] hover:bg-[var(--dorado)] hover:text-white rounded px-4 py-2 font-semibold duration-250 transition-all"
                 >
                   Cerrar
                 </button>

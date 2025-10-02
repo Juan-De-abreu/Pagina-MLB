@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { getMedalColorVartext } from "../util/funciones";
 import { useEffect, useState } from "react";
-import { getMedalColorVar} from "../util/funciones";
+import { getMedalColorVar } from "../util/funciones";
 
 const CardEquipos = ({ item, contador = 4 }) => {
   const API = `http://localhost:8081/api/equipos/${item.id}/jugadores`;
   const [error, setError] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   const [datos, setDatos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,15 +19,19 @@ const CardEquipos = ({ item, contador = 4 }) => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+
         setDatos(data);
-        setLoading(false);
+        const timer = setTimeout(() => {
+          setIsVisible(true);
+        }, contador * 400);
+        return () => clearTimeout(timer), setLoading(false);
       } catch (err) {
         setError(err.message);
         setLoading(false);
       }
     };
     getDatos();
-  }, []);
+  }, [contador]);
 
   if (loading) {
     return <p>Cargando jugadores...</p>;
@@ -42,24 +47,26 @@ const CardEquipos = ({ item, contador = 4 }) => {
     );
   }
 
-    const borderClass =
+  const borderClass =
     contador <= 3
-      ? `text-[var(${getMedalColorVartext(contador-1)})]`
+      ? `text-[var(${getMedalColorVartext(contador - 1)})]`
       : "border-[var(--vinotinto)]";
 
   const medalla =
     contador <= 3
-      ? `block absolute px-3 py-3 text-center mx-auto bg-[var(${getMedalColorVar(contador-1)})] rounded-4xl font-semibold lg:text-md text-black border-1`
+      ? `block absolute px-3 py-3 text-center mx-auto bg-[var(${getMedalColorVar(
+          contador - 1
+        )})] rounded-4xl font-semibold lg:text-md text-black border-1`
       : "hidden";
   return (
-    <div className="w-[80vw] lg:w-80 xl:w-100 2xl:w-110 my-4 animate-slide-top px-2 mx-auto sm:mx-0">
+    <div
+      className={`w-[80vw] lg:w-80 xl:w-100 2xl:w-110 my-4 animate-slide-top px-2 mx-auto sm:mx-0 
+      ${isVisible ? "opacity-100" : "opacity-0"} animate-scale-in-steps`}
+      style={{ animationDelay: `${contador * 0.3}s` }}
+    >
       <div className="bg-[var(--gris-oscuro)] rounded shadow-xl h-full flex flex-col shadow-black border-[var(--vinotinto)] border-2">
         <div className="overflow-hidden rounded-t border-[var(--vinotinto)] border-1">
-          <span
-            className={`${medalla}`}
-          >
-            {contador}
-          </span>
+          <span className={`${medalla}`}>{contador}</span>
           <img
             src={`${item.logo_url}`}
             alt={item.nombre}

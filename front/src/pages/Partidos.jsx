@@ -115,6 +115,7 @@ const Partidos = () => {
             className="bg-transparent border border-[var(--dorado)] text-[var(--dorado)] px-4 py-2 rounded hover:bg-[var(--dorado)] hover:text-black transition w-full md:w-auto"
             onClick={() => {
               setEquipoFilter("");
+              setYearFilter("");
             }}
           >
             Limpiar filtro de equipo
@@ -123,7 +124,7 @@ const Partidos = () => {
 
       <div className="mx-auto max-w-full container mt-6">
         {datosOrdenados.length > 0 ? (
-          datosOrdenados.map((item) => <CardPartidos key={item.id} item={item} />)
+          datosOrdenados.map((item,index) => <CardPartidos key={item.id} item={item} contadorpartidos={index+1} />)
         ) : (
           <p className="text-center col-span-full text-gray-500">
             No hay partidos para el filtro seleccionado.

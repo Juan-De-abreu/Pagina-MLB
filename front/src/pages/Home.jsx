@@ -1,4 +1,5 @@
 import Carrusel from "./Home/Carrusel";
+import Top3War from "./Home/Top3War";
 import Top5Avg from "./Home/Top5Avg";
 import Top5war from "./Home/Top5war";
 
@@ -10,10 +11,12 @@ const images = [
     "/public/slide4.jpg",
 ];
 
+
 return (
     <div className="bg-[var(--body)]">
         <Carrusel images={images}  />
         <Top5war/>
+        <Top3War/>
         <Top5Avg/>
     </div>
 )

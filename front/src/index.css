@@ -1,1 +1,100 @@
 @import "tailwindcss";
+
+@keyframes scaleInSteps {
+  0% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  20% {
+    transform: scale(0.4);
+    opacity: 0.25;
+  }
+  40% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  60% {
+    transform: scale(0.8);
+    opacity: 0.75;
+  }
+  80% {
+    transform: scale(0.9);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-scale-in-steps {
+  animation-name: scaleInSteps;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  20% {
+    transform: translateX(-80%);
+    opacity: 0.2;
+  }
+  40% {
+    transform: translateX(-60%);
+    opacity: 0.4;
+  }
+  60% {
+    transform: translateX(-40%);
+    opacity: 0.6;
+  }
+  80% {
+    transform: translateX(-20%);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-left {
+  animation-name: slideInLeft;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
+}
+
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+.scale-in {
+  animation: scaleIn 300ms forwards;
+}
+
+.scale-out {
+  animation: scaleOut 300ms forwards;
+}

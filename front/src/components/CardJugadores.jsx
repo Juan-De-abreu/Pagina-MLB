@@ -1,17 +1,24 @@
 import { Link } from "react-router-dom";
 import { formatNumberEs } from "../util/funciones";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getMedalColorVar} from "../util/funciones";
 
 const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador=4}) => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const openModal = () => {
-    setModalOpen(true);
-  };
+  const [loading, setLoading] = useState(true);
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+  const [isVisible, setIsVisible] = useState(false);
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, contador * 550);
+    return () => clearTimeout(timer),setLoading(false);
+  }, [contador]);
+  if (loading) {
+    return <p>Cargando perfil...</p>;
+  }
+
   const borderClass =
     contador <= 3
       ? `border-[var(${getMedalColorVar(contador-1)})] text-[var(${getMedalColorVar(contador-1)})] text-[var(--bronce)]`
@@ -21,7 +28,12 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador=4}) => {
       ? `block absolute px-3 py-3 text-center mx-auto bg-[var(${getMedalColorVar(contador-1)})] rounded-full font-bold lg:text-md text-black border-1`
       : "hidden";
   return (
-    <div className="w-70 md:w-55 xl:w-60 2xl:w-70 my-4 animate-slide-top px-2 mx-auto sm:mx-0">
+    <div 
+      className={`w-70 md:w-55 xl:w-60 2xl:w-70 my-4 animate-slide-top px-2 mx-auto sm:mx-0 
+        animate-scale-in-steps 
+        ${isVisible ? "opacity-100" : "opacity-0"}`}
+      style={{ animationDelay: `${contador * 0.1}s` }}
+>
       <div className="bg-[var(--gris-oscuro)] rounded shadow-xl h-full flex flex-col shadow-black border-[var(--vinotinto)] border-1">
         <div className="overflow-hidden rounded-t border-[var(--vinotinto)] border-1">
           <span
@@ -65,111 +77,15 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador=4}) => {
           </p>
         </div>
         <div className="p-4 bg-[var(--vinotinto)] flex justify-center gap-3 rounded-b border-b-1 border-[#520f0f]">
-          <button
-            onClick={() => openModal(item.id)}
-            className="hover:bg-[var(--dorado)] hover:text-black text-[var(--dorado)] border-1 px-3 py-1 rounded font-semibold hover:cursor-pointer"
-          >
-            Perfil
-          </button>
+
           <Link
             to={`/detalle/${item.id}/${item.nombre}`}
-            className="border text-[var(--plateado)] text-md px-3 py-1 rounded hover:bg-[var(--plateado)] hover:text-black transition"
+            className="border text-[var(--dorado)] text-md px-3 py-1 rounded hover:bg-[var(--dorado)] hover:text-black transition"
           >
-            Detalle
+            Detalles del jugador
           </Link>
         </div>
       </div>
-      {modalOpen && (
-        <div
-          className={`fixed inset-0 bg-[#0000005f] bg-opacity-50 flex items-center justify-center z-50 `}
-          onClick={closeModal}
-          aria-modal="true"
-          role="dialog"
-          aria-labelledby="modal-title"
-          aria-describedby="modal-description"
-        >
-          <div
-            className="bg-[var(--body)] rounded-lg p-6 xl:max-w-[60vw] w-full mx-4 max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={closeModal}
-              className="text-[var(--blanco-hielo)] scale-200 text-2xl font-bold mb-4 hover:text-[var(--dorado)]"
-              aria-label="Cerrar modal"
-            >
-              &times;
-            </button>
-            <div className="flex flex-wrap grid-cols-1 lg:grid-cols-2 justify-center text-[var(--blanco-hielo)]">
-              <div className="w-[25vh] xl:w-[30vh]">
-                <div className="2xl:w-50  mx-auto">
-                  <div className="overflow-hidden rounded-full border-[var(--vinotinto)] border-1 justify-center">
-                    <img
-                      src={`https://api.arsistemamlb.com/uploads/jugadores/${item.id}.jpg`}
-                      alt={item.nombre}
-                      className="w-full h-50 object-center"
-                      onError={(e) => {
-                        e.target.src =
-                          "https://api.arsistemamlb.com/uploads/jugadores/default.png";
-                      }}
-                    />
-                  </div>
-                  <p className="text-center text-xl mt-2">{item.nombre}</p>
-                </div>
-              </div>
-
-              <div className="w-[70vh]">
-                <table className="min-w-full bg-[var(--gris-claro)] rounded-md overflow-hidden shadow-lg shadow-[#010000]">
-                  <tbody>
-                    {[
-                      ["Equipo", item.nombre_equipo],
-                      ["Posición", item.pos],
-                      ["Años en MLB", item.años_en_mlb],
-                      [
-                        "Año de Debut / Retiro",
-                        `${item.año_debut} – ${item.año_retiro}`,
-                      ],
-                      [
-                        "Partidos Jugados",
-                        item.partidos_jugados.toLocaleString(),
-                      ],
-                      ["Turnos al Bate", item.turnos_bateo.toLocaleString()],
-                      ["Hits", item.hits.toLocaleString()],
-                      ["Dobles / Triples", `${item.dobles} / ${item.triples}`],
-                      ["Home Runs", item.home_runs],
-                      [
-                        "Carreras Impulsadas (RBI)",
-                        item.carreras_impulsadas.toLocaleString(),
-                      ],
-                      ["Base por Bola", item.bases_por_bola.toLocaleString()],
-                      ["Ponches", item.ponches.toLocaleString()],
-                      ["Promedio de Bateo", item.promedio_bateo],
-                      ["Porcentaje de Enbase (OBP)", item.porcentaje_embase],
-                      [
-                        "Porcentaje de Slugging (SLG)",
-                        item.porcentaje_slugging,
-                      ],
-                      ["OPS", item.ops],
-                      ["WAR (Wins Above Replacement)", item.war],
-                      ["All-Star Appearances", item.all_star_appearances],
-                      [
-                        "Robos de Base",
-                        `${item.bases_robadas} (atrapado ${item.atrapado_robando} veces)`,
-                      ],
-                    ].map(([label, value]) => (
-                      <tr key={label} className="border-b last:border-none">
-                        <th className="px-4 py-2 text-left font-medium bg-[var(--gris-oscuro)] hover:bg-[var(--gris-claro)]">
-                          {label}
-                        </th>
-                        <td className="px-4 py-2 border-l border-[var(--plateado)]">{value}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

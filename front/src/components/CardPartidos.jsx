@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
-const CardPartidos = ({ item }) => {
+const CardPartidos = ({ item ,contadorpartidos}) => {
   const APILOCAL = `http://localhost:8081/api/equipos/${item.equipo_local_id}`;
   const APIVISITANTE = `http://localhost:8081/api/equipos/${item.equipo_visitante_id}`;
 
@@ -9,6 +9,8 @@ const CardPartidos = ({ item }) => {
   const [equipovisitante, setequipovisitante] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+
 
   useEffect(() => {
     setLoading(true);
@@ -26,13 +28,15 @@ const CardPartidos = ({ item }) => {
     ]).then(([localData, visitanteData]) => {
       setequipolocal(localData);
       setequipovisitante(visitanteData);
-      setLoading(false);
-    }).catch(err => {
+        const timer = setTimeout(() => {
+          setIsVisible(true);
+        }, contadorpartidos * 400);
+        return () => clearTimeout(timer), setLoading(false);    }).catch(err => {
       setError(err.message);
       setLoading(false);
     });
 
-  }, [APILOCAL, APIVISITANTE]);
+  }, [APILOCAL, APIVISITANTE,contadorpartidos]);
 
   if (loading) {
     return (
@@ -62,7 +66,10 @@ const CardPartidos = ({ item }) => {
   }
 
   return (
-    <div className="w-[80vw] mx-auto my-15 animate-slide-top px-4 2xl:px-50">
+    <div
+    className={`w-[80vw] mx-auto my-15 animate-slide-top px-4 2xl:px-50 ${isVisible ? "opacity-100" : "opacity-0"} animate-slide-left`}
+      style={{ animationDelay: `${contadorpartidos * 0.3}s` }}
+    >
       <div className="bg-[var(--gris-oscuro)] rounded shadow-xl h-full flex flex-col shadow-black border-[var(--vinotinto)] border-2">
         <div className="overflow-hidden grid rounded-t border-[var(--vinotinto)] border-l-4 border-r-4 border-t-4 border-b-2 md:grid-cols-[47%_6%_47%]">
           
@@ -111,7 +118,7 @@ const CardPartidos = ({ item }) => {
           </Link>
         </div>
         <div className="text-sm">
-          <p className="flex justify-center lg:justify-start pt-1 pb-1"> <span className="hidden lg:flex">fecha del partido:</span><span className="text-[var(--dorado)]">{item.fecha}</span></p>
+          <p className="flex justify-center lg:justify-start pt-1 pb-1 pl-2"> <span className="hidden lg:flex">fecha del partido:</span><span className="text-[var(--dorado)]">{item.fecha}</span></p>
         </div>
       </div>
     </div>

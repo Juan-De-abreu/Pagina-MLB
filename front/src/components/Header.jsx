@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { useRef } from 'react';
-import { useEffect } from 'react';
-import { Link } from 'react-router';
+import React, { useState, useRef, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-   const menuRef = useRef(null);
+  const menuRef = useRef(null);
 
-   useEffect(() => {
+  useEffect(() => {
     function handleClickOutside(event) {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setMenuOpen(false);
@@ -23,10 +21,18 @@ const Header = () => {
     };
   }, [menuOpen]);
 
+  const activeClassName = "border-b border-[var(--dorado)]";
+
+  // Clase personalizada para animar el borde en hover mediante ::after
+  const linkClass = `
+    relative inline-block pb-2
+    after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-[var(--dorado)] after:transition-all after:duration-300
+    hover:after:w-full
+  `;
 
   return (
-    <div className="navbar flex justify-between items-center h-20 lg:h-30 py-auto lg:px-8 m-0 py-0 border-b-1 border-[#494a0c] bg-[var(--vinotinto)] text-[var(--blanco-hielo)]">
-      {/* Primer div: logo, oculto en pantallas menores a lg */}
+    <div className="navbar flex justify-between items-center h-20 lg:h-30 py-auto lg:px-8 m-0 py-0 border-b border-[#494a0c] bg-[var(--vinotinto)] text-[var(--blanco-hielo)]">
+      {/* Imagen lateral izquierda, visible solo en xl */}
       <div className="hidden xl:flex items-center">
         <a href="">
           <img
@@ -40,9 +46,9 @@ const Header = () => {
       {/* Botón hamburguesa solo en menores a lg */}
       <div className="flex justify-center items-center lg:hidden md:items-center">
         <button
-        id='menuopenid'
+          id='menuopenid'
           onClick={() => setMenuOpen(!menuOpen)}
-          className={`focus:outline-none p-2 ${menuOpen? 'hidden':'visible'}`}
+          className={`focus:outline-none p-2 ${menuOpen ? 'hidden' : 'visible'}`}
           aria-label="Toggle menu"
         >
           <svg
@@ -57,44 +63,45 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Menú principal y desplegable*/}
+      {/* Menú principal y desplegable */}
       <div
-      ref={menuRef}
+        ref={menuRef}
         className={`
           fixed top-0 left-0 right-0 z-50
           lg:static
           flex-1
           ${menuOpen ? 
             'z-51 flex flex-col items-center gap-4 py-2 pt-16 md:py-4 bg-linear-to-t to-[#000000df] from-[#000000f3] md:to-[#000000b6] md:from-[#000000cf] rounded-lg' 
-            :
-            'hidden'}
+            : 'hidden'}
           lg:flex lg:justify-center lg:items-center lg:gap-14
-          mx-4  lg:py-6 
+          mx-4  lg:py-6
         `}
       >
-        <Link onClick={menuOpen} to={"/partidos"} href="" className="hover:border-b-1 border-[var(--dorado)] focus:border-b-1 focus:scale-130  block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-200 text-center">
-          Partidos
-        </Link>
-
-        <Link onClick={menuOpen} to={"/jugadores"} href="" className="hover:border-b-1 border-[var(--dorado)] focus:border-b-1 focus:scale-130  block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl hover:scale-120 transition-all duration-200 text-center">
-          Jugadores
-        </Link>
-
-        <Link onClick={menuOpen} to={"/"} href="" className="hover:border-b-1 border-[var(--dorado)] focus:border-b-1 focus:scale-130  block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-5xl md:text-4xl hover:scale-120 transition-all duration-200 text-center">
-          Inicio
-        </Link>
-
-        <Link onClick={menuOpen} to={"/equipos"} href="" className="hover:border-b-1 border-[var(--dorado)] focus:border-b-1 focus:scale-130  block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-3xl md:text-2xl hover:scale-120 transition-all duration-200 text-center">
-          Equipos
-        </Link>
-        <Link onClick={menuOpen} to={'/estadisticas'} href="" className=" hover:border-b-1 border-[var(--dorado)] focus:border-b-1 focus:scale-130  block py-2 px-4 lg:hover:-translate-y-0.5 transform lg:text-2xl md:text-xl hover:scale-120 transition-all duration-200 text-center">
-          Estadisticas
-        </Link>
-        <label htmlFor="menuopenid" className={`hover:scale-120 transition-all duration-200 text-center py-1 md:text-2xl text-1xl ${menuOpen? 'visible':'hidden'}`}>Cerrar</label>
+        {[
+          { to: "/partidos", text: "Partidos", size: "lg:text-2xl md:text-xl" },
+          { to: "/jugadores", text: "Jugadores", size: "lg:text-3xl md:text-2xl" },
+          { to: "/", text: "Inicio", size: "lg:text-5xl md:text-4xl" },
+          { to: "/equipos", text: "Equipos", size: "lg:text-3xl md:text-2xl" },
+          { to: "/estadisticas", text: "Estadisticas", size: "lg:text-2xl md:text-xl" }
+        ].map(({ to, text, size }) => (
+          <NavLink
+            key={to}
+            to={to}
+            className={({ isActive }) =>
+              `${linkClass} block py-2 px-4 text-center hover:scale-120 transition-all duration-200 lg:hover:-translate-y-0.5 transform ${size} ${isActive ? activeClassName : ''}`
+            }
+            onClick={() => setMenuOpen(false)}
+          >
+            {text}
+          </NavLink>
+        ))}
+        <label htmlFor="menuopenid" className={`hover:scale-120 transition-all duration-200 text-center py-1 md:text-2xl text-1xl ${menuOpen ? 'visible' : 'hidden'}`}>
+          Cerrar
+        </label>
       </div>
 
-      {/* Tercer div: logo derecho oculto en <lg */}
-      <div className={`hidden lg:flex justify-end items-center lg:col-span-1 2xl:flex`}>
+      {/* Imagen lateral derecha, visible solo en lg en adelante */}
+      <div className="hidden lg:flex justify-end items-center lg:col-span-1 2xl:flex">
         <div className="justify-center flex py-auto">
           <img
             className="w-50 md:hidden xl:block lg:w-50 sm:justify-center lg:hover:scale-120 transition-all duration-200 lg:hover:-translate-y-0.5"

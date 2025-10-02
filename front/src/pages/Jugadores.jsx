@@ -193,7 +193,7 @@ const Jugadores = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-2">
-            {filteredJugadores.map((item) => (
+            {filteredJugadores.map((item,index) => (
               <CardJugadores
                 key={item.id}
                 item={item}
@@ -203,6 +203,7 @@ const Jugadores = () => {
                 v2={item.home_runs}
                 l3={"AVG"}
                 v3={item.promedio_bateo}
+                contador={index + 4}
               />
             ))}
           </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router";
-import { getMedalColorVar, getMedalColorVartext} from "../../util/funciones";
+import { getMedalColorVartext} from "../../util/funciones";
 
 const Carrusel = (images) => {
   const [current, setCurrent] = useState(0);
