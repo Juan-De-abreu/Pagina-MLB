@@ -2,15 +2,18 @@ import { Link } from "react-router-dom";
 import { getMedalColorVartext } from "../util/funciones";
 import { useEffect, useState } from "react";
 import { getMedalColorVar } from "../util/funciones";
+import { useInView } from "react-intersection-observer";
 
 const CardEquipos = ({ item, contador = 4 }) => {
   const API = `http://localhost:8081/api/equipos/${item.id}/jugadores`;
   const [error, setError] = useState(null);
-  const [isVisible, setIsVisible] = useState(false);
 
   const [datos, setDatos] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const { ref, inView } = useInView({
+    triggerOnce: true, // solo disparar la primera vez
+    threshold: [0.25, 0.5, 0.75, 1], // porcentaje visible para activar
+  });
   useEffect(() => {
     const getDatos = async () => {
       try {
@@ -21,10 +24,7 @@ const CardEquipos = ({ item, contador = 4 }) => {
         const data = await response.json();
 
         setDatos(data);
-        const timer = setTimeout(() => {
-          setIsVisible(true);
-        }, contador * 400);
-        return () => clearTimeout(timer), setLoading(false);
+        setLoading(false);
       } catch (err) {
         setError(err.message);
         setLoading(false);
@@ -60,8 +60,10 @@ const CardEquipos = ({ item, contador = 4 }) => {
       : "hidden";
   return (
     <div
-      className={`w-[80vw] lg:w-80 xl:w-100 2xl:w-110 my-4 animate-slide-top px-2 mx-auto sm:mx-0 
-      ${isVisible ? "opacity-100" : "opacity-0"} animate-scale-in-steps`}
+      
+      className={`w-[80vw] lg:w-80 xl:w-100 2xl:w-110 my-4 animate-slide-top px-2 mx-auto sm:mx-0 transition-all duration-400 ease-out
+     ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'}`}
+     ref={ref}
       style={{ animationDelay: `${contador * 0.3}s` }}
     >
       <div className="bg-[var(--gris-oscuro)] rounded shadow-xl h-full flex flex-col shadow-black border-[var(--vinotinto)] border-2">

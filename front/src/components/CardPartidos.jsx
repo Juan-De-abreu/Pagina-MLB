@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import { Link } from "react-router";
 
 const CardPartidos = ({ item ,contadorpartidos}) => {
@@ -9,8 +10,10 @@ const CardPartidos = ({ item ,contadorpartidos}) => {
   const [equipovisitante, setequipovisitante] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isVisible, setIsVisible] = useState(false);
-
+  const { ref, inView } = useInView({
+    triggerOnce: true, // solo disparar la primera vez
+    threshold: [0.03,0.10,0.25, 0.5, 0.75, 1], // porcentaje visible para activar
+  });
 
   useEffect(() => {
     setLoading(true);
@@ -28,10 +31,7 @@ const CardPartidos = ({ item ,contadorpartidos}) => {
     ]).then(([localData, visitanteData]) => {
       setequipolocal(localData);
       setequipovisitante(visitanteData);
-        const timer = setTimeout(() => {
-          setIsVisible(true);
-        }, contadorpartidos * 400);
-        return () => clearTimeout(timer), setLoading(false);    }).catch(err => {
+      setLoading(false); }).catch(err => {
       setError(err.message);
       setLoading(false);
     });
@@ -67,8 +67,10 @@ const CardPartidos = ({ item ,contadorpartidos}) => {
 
   return (
     <div
-    className={`w-[80vw] mx-auto my-15 animate-slide-top px-4 2xl:px-50 ${isVisible ? "opacity-100" : "opacity-0"} animate-slide-left`}
-      style={{ animationDelay: `${contadorpartidos * 0.3}s` }}
+    className={`w-[80vw] mx-auto my-15 animate-slide-top px-4 2xl:px-50 transition-all duration-400 ease-out
+     ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full'}`}
+    ref={ref}
+    style={{ animationDelay: `${contadorpartidos * 0.3}s` }}
     >
       <div className="bg-[var(--gris-oscuro)] rounded shadow-xl h-full flex flex-col shadow-black border-[var(--vinotinto)] border-2">
         <div className="overflow-hidden grid rounded-t border-[var(--vinotinto)] border-l-4 border-r-4 border-t-4 border-b-2 md:grid-cols-[47%_6%_47%]">

@@ -27,7 +27,7 @@ const Top5Avg = () => {
   };
     const { ref, inView } = useInView({
     triggerOnce: true, // solo disparar la primera vez
-    threshold: [0,0.25, 0.5, 0.75, 1], // porcentaje visible para activar
+    threshold: [0.25, 0.5, 0.75, 1], // porcentaje visible para activar
   });
   useEffect(() => {
     getDatos();

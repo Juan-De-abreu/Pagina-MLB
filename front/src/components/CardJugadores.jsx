@@ -2,19 +2,24 @@ import { Link } from "react-router-dom";
 import { formatNumberEs } from "../util/funciones";
 import { useEffect, useState } from "react";
 import { getMedalColorVar} from "../util/funciones";
+import { useInView } from "react-intersection-observer";
 
 const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador=4}) => {
   const [loading, setLoading] = useState(true);
+  const [visible, setVisible] = useState(false);
 
-  const [isVisible, setIsVisible] = useState(false);
+const { ref, inView } = useInView({
+    triggerOnce: true, // solo disparar la primera vez
+    threshold: [0.25, 0.5, 0.75, 1], // porcentaje visible para activar
+  });
 
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, contador * 550);
-    return () => clearTimeout(timer),setLoading(false);
-  }, [contador]);
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setVisible(true);
+  }, (contador - 1) * 100); // retardo en ms basado en contador
+  return () => clearTimeout(timer),setLoading(false);
+}, [contador]);
   
   if (loading) {
     return <p>Cargando perfil...</p>;
@@ -31,9 +36,11 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador=4}) => {
   return (
     <div 
       className={`w-70 md:w-55 xl:w-60 2xl:w-70 my-4 animate-slide-top px-2 mx-auto sm:mx-0 
-        animate-scale-in-steps 
-        ${isVisible ? "opacity-100" : "opacity-0"}`}
-      style={{ animationDelay: `${contador * 0.1}s` }}
+        transition-all duration-400 ease-out
+     ${visible && inView ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'}
+        `}
+style={{ animationDelay: '0s' /* o quitar si hay animación css */ }}
+    ref={ref} 
 >
       <div className="bg-[var(--gris-oscuro)] rounded shadow-xl h-full flex flex-col shadow-black border-[var(--vinotinto)] border-1">
         <div className="overflow-hidden rounded-t border-[var(--vinotinto)] border-1">

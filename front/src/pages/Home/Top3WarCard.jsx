@@ -67,7 +67,7 @@ const Top3WarCard = () => {
                 bg-[var(${getMedalColorVar(
                 index
               )})]`}
-              style={{ animationDelay: `${index * 0.5}s` }}
+              style={{ animationDelay: `${index * 0.3}s` }}
             >
               <div>
                 <img
