@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 01-10-2025 a las 18:59:18
+-- Tiempo de generación: 02-10-2025 a las 17:27:30
 -- Versión del servidor: 9.1.0
 -- Versión de PHP: 8.3.14
 
@@ -30,14 +30,17 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `equipos`;
 CREATE TABLE IF NOT EXISTS `equipos` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `ciudad` varchar(100) COLLATE utf8mb4_spanish2_ci DEFAULT NULL,
-  `estadio` varchar(150) COLLATE utf8mb4_spanish2_ci DEFAULT NULL,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `ciudad` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci DEFAULT NULL,
+  `estadio` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci DEFAULT NULL,
   `fundacion` year DEFAULT NULL,
   `titulos_nacionales` int DEFAULT NULL,
   `titulos_serie_caribe` int DEFAULT NULL,
-  `logo_url` varchar(200) COLLATE utf8mb4_spanish2_ci NOT NULL,
-  `foto_estadio` varchar(200) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `logo_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `foto_estadio` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `capacidad` int NOT NULL,
+  `entrenador` text COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `presidente` text COLLATE utf8mb4_spanish2_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
@@ -45,15 +48,15 @@ CREATE TABLE IF NOT EXISTS `equipos` (
 -- Volcado de datos para la tabla `equipos`
 --
 
-INSERT INTO `equipos` (`id`, `nombre`, `ciudad`, `estadio`, `fundacion`, `titulos_nacionales`, `titulos_serie_caribe`, `logo_url`, `foto_estadio`) VALUES
-(1, 'Leones del Caracas', 'Caracas', 'Estadio Universitario de Caracas', '1942', 20, 2, 'https://i.pinimg.com/474x/9b/1c/b8/9b1cb8f87521ffc787ba4005d6ed1523.jpg', 'https://cdn.septimaentrada.com/uploads/media/2023/07/29/casa-leones-jugara-estadio-monumental.jpg'),
-(2, 'Tiburones de La Guaira', 'La Guaira', 'Estadio Universitario de Caracas', '1962', 7, 0, 'https://images.seeklogo.com/logo-png/22/1/tiburones-de-la-guaira-bbc-logo-png_seeklogo-224373.png', 'https://images.beisbolplay.com/wp-content/uploads/2024/10/nota-forum.jpg'),
-(3, 'Águilas del Zulia', 'Maracaibo', 'Estadio Luis Aparicio El Grande', '1969', 6, 2, 'https://images.seeklogo.com/logo-png/0/1/aguilas-del-zulia-logo-png_seeklogo-4774.png', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuLIRSfGIRRzizPFFEFO8XQccFotQLJ47g9Q&s'),
-(4, 'Caribes de Anzoátegui', 'Puerto La Cruz', 'Estadio Alfonso Chico Carrasquel', '1987', 4, 0, 'https://i.pinimg.com/564x/ae/d7/45/aed74561e0e0adc98ded3a1d1106a24c.jpg', 'https://www.caribesbbc.com/assets/img/stadium/2.jpg'),
-(5, 'Bravos de Margarita', 'Porlamar', 'Estadio Nueva Esparta', '2007', 0, 0, 'https://pbs.twimg.com/media/Cr6UFvOWIAA-Tj5.jpg', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV6_GwNODKMVxUAW8dCQ-HFbOiY8S0NhJB3w&s'),
-(6, 'Cardenales de Lara', 'Barquisimeto', 'Estadio Antonio Herrera Gutiérrez', '1942', 7, 0, 'https://lacima967fm.com/wp-content/uploads/2025/01/12f6144a285c4abbf17f1c12cd23f4a5.jpg', 'https://pbs.twimg.com/media/EIoRR7aWwAE_HtL.jpg'),
-(7, 'Navegantes del Magallanes', 'Valencia', 'Estadio José Bernardo Pérez', '1917', 13, 2, 'https://images.seeklogo.com/logo-png/9/1/navegantes-del-magallanes-logo-png_seeklogo-97602.png', ''),
-(8, 'Tigres de Aragua', 'Maracay', 'Estadio José Pérez Colmenares', '1963', 10, 0, 'https://lvbp.com/wp-content/uploads/2024/05/tigres-desvelo-nuevo-logo-para-la-temporada-2022-2023_665148815b109.jpeg', '');
+INSERT INTO `equipos` (`id`, `nombre`, `ciudad`, `estadio`, `fundacion`, `titulos_nacionales`, `titulos_serie_caribe`, `logo_url`, `foto_estadio`, `capacidad`, `entrenador`, `presidente`) VALUES
+(1, 'Leones del Caracas', 'Caracas', 'Estadio Universitario de Caracas', '1942', 20, 2, 'https://i.pinimg.com/474x/9b/1c/b8/9b1cb8f87521ffc787ba4005d6ed1523.jpg', 'https://cdn.septimaentrada.com/uploads/media/2023/07/29/casa-leones-jugara-estadio-monumental.jpg', 20720, 'José Alguacil', 'Andrés Guinand'),
+(2, 'Tiburones de La Guaira', 'La Guaira', 'Estadio Universitario de Caracas', '1962', 7, 0, 'https://images.seeklogo.com/logo-png/22/1/tiburones-de-la-guaira-bbc-logo-png_seeklogo-224373.png', 'https://images.beisbolplay.com/wp-content/uploads/2024/10/nota-forum.jpg', 14300, 'Gregorio Petit', 'Roberto Mirabal'),
+(3, 'Águilas del Zulia', 'Maracaibo', 'Estadio Luis Aparicio El Grande', '1969', 6, 2, 'https://images.seeklogo.com/logo-png/0/1/aguilas-del-zulia-logo-png_seeklogo-4774.png', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuLIRSfGIRRzizPFFEFO8XQccFotQLJ47g9Q&s', 23000, 'Lipso Nava', 'César Suárez'),
+(4, 'Caribes de Anzoátegui', 'Puerto La Cruz', 'Estadio Alfonso Chico Carrasquel', '1987', 4, 0, 'https://i.pinimg.com/564x/ae/d7/45/aed74561e0e0adc98ded3a1d1106a24c.jpg', 'https://www.caribesbbc.com/assets/img/stadium/2.jpg', 16000, 'Asdrúbal Cabrera', 'Magglio Ordóñez'),
+(5, 'Bravos de Margarita', 'Porlamar', 'Estadio Nueva Esparta', '2007', 0, 0, 'https://pbs.twimg.com/media/Cr6UFvOWIAA-Tj5.jpg', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV6_GwNODKMVxUAW8dCQ-HFbOiY8S0NhJB3w&s', 11000, 'Henry Blanco', ''),
+(6, 'Cardenales de Lara', 'Barquisimeto', 'Estadio Antonio Herrera Gutiérrez', '1942', 7, 0, 'https://lacima967fm.com/wp-content/uploads/2025/01/12f6144a285c4abbf17f1c12cd23f4a5.jpg', 'https://pbs.twimg.com/media/EIoRR7aWwAE_HtL.jpg', 20450, 'César Izturis', ''),
+(7, 'Navegantes del Magallanes', 'Valencia', 'Estadio José Bernardo Pérez', '1917', 13, 2, 'https://images.seeklogo.com/logo-png/9/1/navegantes-del-magallanes-logo-png_seeklogo-97602.png', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9VYANp56qWm4b8sIzG0ZUxUxgqAAGtP4hCw&s ', 15000, 'Eduardo Pérez', ''),
+(8, 'Tigres de Aragua', 'Maracay', 'Estadio José Pérez Colmenares', '1963', 10, 0, 'https://lvbp.com/wp-content/uploads/2024/05/tigres-desvelo-nuevo-logo-para-la-temporada-2022-2023_665148815b109.jpeg', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2Vt_Ra6lJHysEBr9h_4tdUm_Yo85Fn-iNAw&s ', 16000, 'Oswaldo Guillén', 'Víctor Zambrano');
 
 -- --------------------------------------------------------
 
@@ -238,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `partidos` (
   `equipo_local_id` int NOT NULL,
   `equipo_visitante_id` int NOT NULL,
   `fecha` date NOT NULL,
-  `estadio` varchar(100) COLLATE utf8mb4_spanish2_ci DEFAULT NULL,
+  `estadio` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish2_ci DEFAULT NULL,
   `resultados_local` int DEFAULT NULL,
   `resultados_visitante` int DEFAULT NULL,
   `temporada` year NOT NULL,
