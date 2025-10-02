@@ -15,6 +15,7 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador=4}) => {
     }, contador * 550);
     return () => clearTimeout(timer),setLoading(false);
   }, [contador]);
+  
   if (loading) {
     return <p>Cargando perfil...</p>;
   }

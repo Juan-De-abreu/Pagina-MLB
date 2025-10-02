@@ -1,25 +1,24 @@
 import Carrusel from "./Home/Carrusel";
-import Top3War from "./Home/Top3War";
+import Top3WarCard from "./Home/Top3WarCard";
 import Top5Avg from "./Home/Top5Avg";
 import Top5war from "./Home/Top5war";
 
 const Home = () => {
-const images = [
+  const images = [
     "/public/slide1.jpeg",
     "/public/slide2.jpg",
     "/public/slide3.webp",
     "/public/slide4.jpg",
-];
+  ];
 
-
-return (
+  return (
     <div className="bg-[var(--body)]">
-        <Carrusel images={images}  />
-        <Top5war/>
-        <Top3War/>
-        <Top5Avg/>
+      <Carrusel images={images} />
+      <Top3WarCard />
+      <Top5war />
+      <Top5Avg />
     </div>
-)
-}
+  );
+};
 
-export default Home
+export default Home;

@@ -110,12 +110,12 @@ const DetalleEquipos = () => {
                 alt={`Foto del estadio de ${datos.nombre}`}
                 className="w-full h-110 sm:h-160 lg:h-105 2xl:h-185 mask-contain"
               />
-              <div className="w-100 h-auto xl:h-auto lg:w-auto z-50 text-center absolute -bottom-20 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl text-[#fff] bg-[#000000a2]  mx-auto py-3 rounded-lg border-2 border-[var(--vinotinto)] lg:shadow-lg shadow-[#000 ]">
-                <div className="px-0 md:px-15 xl:px-40 2xl:px-50 mb-0 lg:mb-8">
+              <div className="w-100 h-auto xl:h-auto lg:w-auto z-50 text-center absolute -bottom-20 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl text-[#fff] bg-[#000000a2]  mx-auto pt-3 rounded-lg border-2 border-[var(--vinotinto)] lg:shadow-lg shadow-[#000 ] mb-5">
+                <div className="px-0 md:px-10 xl:px-10 2xl:px-30 mb-0 lg:mb-8">
                   <p className={` text-4xl text-[var(--dorado)]`}>
                     {datos.nombre}
                   </p>
-                  <p className={`text-3xl 2xl:text-4xl py-3`}>{datos.estadio}</p>
+                  <p className={`text-3xl 2xl:text-4xl mt-3`}>{datos.estadio}</p>
                 </div>
               </div>
               <div className="absolute inset-0 bg-[#00000080] bg-opacity-100 pointer-events-none rounded-lg"></div>
@@ -149,7 +149,7 @@ const DetalleEquipos = () => {
               </div>
             </div>
           </div>
-          <div className="bg-[var(--body)] mt-10 p-6 rounded-lg shadow-lg">
+          <div className="bg-[var(--body)] pt-6 p-6 rounded-lg shadow-lg">
             <h2 className="text-2xl font-bold text-center text-[var(--dorado)] border-b-1 mb-6">
               Partidos del equipo
             </h2>

@@ -27,7 +27,7 @@ const Top5Avg = () => {
   };
     const { ref, inView } = useInView({
     triggerOnce: true, // solo disparar la primera vez
-    threshold: [0, 0.25, 0.5, 0.75, 1], // porcentaje visible para activar
+    threshold: [0,0.25, 0.5, 0.75, 1], // porcentaje visible para activar
   });
   useEffect(() => {
     getDatos();
@@ -52,13 +52,15 @@ const Top5Avg = () => {
   }
 
   return (
-    <section  ref={ref}
-      className={`mb-5 transition-all duration-400 ease-out ${
-        inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full'
-      }`}>
-      <div className="max-w-4xl xl:max-w-5xl mx-auto px-4">
+    <section  
+      className={`mb-5`}>
+      <div className={`max-w-4xl xl:max-w-5xl mx-auto px-4`}>
         <h2 className="text-center pb-4 text-3xl font-bold text-[var(--dorado)]">🏆 Top 5 en AVG</h2>
-        <div className="flex justify-center">
+        <div 
+        ref={ref}
+        className={`flex justify-center
+          transition-all duration-400 ease-out 
+        ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full'}`}>
           <div className="w-full lg:w-[100vw] bg-[var(--gris-oscuro)] rounded-lg shadow-lg">
             <div className="overflow-x-auto">
               <table className="table-auto w-full divide-y divide-gray-900">
