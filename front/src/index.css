@@ -117,3 +117,36 @@
   animation-timing-function: ease-out;
   opacity: 0; /* Estado inicial para ocultar */
 }
+
+
+/* Añade esto a tu CSS global o archivo tailwind.css extendiendo por ejemplo: */
+@keyframes border-flow {
+  0% {
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+  }
+  100% {
+    background-position: 100% 0, 100% 100%, 0 100%, 0 0;
+  }
+}
+
+.animated-border {
+  position: relative;
+  border: 4px solid transparent; /* espacio para animación */
+  border-image-slice: 1;
+}
+
+.animated-border::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  top: -4px; left: -4px; right: -4px; bottom: -4px;
+  background:
+    linear-gradient(to right, red 50%, transparent 50%) 0 0 repeat-x,
+    linear-gradient(to bottom, red 50%, transparent 50%) 100% 0 repeat-y,
+    linear-gradient(to left, red 50%, transparent 50%) 100% 100% repeat-x,
+    linear-gradient(to top, red 50%, transparent 50%) 0 100% repeat-y;
+  background-size: 100px 1px, 1px 100px, 100px 1px, 1px 100px;
+  animation: border-flow 4s linear infinite;
+  border-radius:24px; /* igual al borde del contenedor si usas borde redondeado */
+  z-index: 10;
+}

@@ -82,7 +82,9 @@ const Header = () => {
           { to: "/jugadores", text: "Jugadores", size: "lg:text-3xl md:text-2xl" },
           { to: "/", text: "Inicio", size: "lg:text-5xl md:text-4xl" },
           { to: "/equipos", text: "Equipos", size: "lg:text-3xl md:text-2xl" },
-          { to: "/estadisticas", text: "Estadisticas", size: "lg:text-2xl md:text-xl" }
+          { to: "/estadisticas", text: "Estadisticas", size: "lg:text-2xl md:text-xl" },
+          { to: "/FormSesion", text: "Iniciar sesion", size: "lg:text-2xl md:text-xl" }
+
         ].map(({ to, text, size }) => (
           <NavLink
             key={to}
@@ -100,16 +102,7 @@ const Header = () => {
         </label>
       </div>
 
-      {/* Imagen lateral derecha, visible solo en lg en adelante */}
-      <div className="hidden lg:flex justify-end items-center lg:col-span-1 2xl:flex">
-        <div className="justify-center flex py-auto">
-          <img
-            className="w-50 md:hidden xl:block lg:w-50 sm:justify-center lg:hover:scale-120 transition-all duration-200 lg:hover:-translate-y-0.5"
-            src="/public/logovenezuela-removebg-preview.png"
-            alt=""
-          />
-        </div>
-      </div>
+
     </div>
   );
 };
