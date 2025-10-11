@@ -49,29 +49,33 @@ const Formsesion = ({ onSubmit }) => {
     }
   };
 
+
   return (
+
+    <div className="flex  align-center justify-center bg-form border-y-1 border-[#000000]">
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-md mx-auto my-auto bg-[var(--vinotinto)] backdrop-blur-sm rounded-2xl p-6 shadow-lg shadow-black animated-border"
+      className="relative scale-animation w-full max-w-full xl:max-w-lg h-100 mx-auto my-auto bg-[var(--vinotinto)] backdrop-blur-sm rounded-2xl px-10 pt-6 shadow-lg xl:shadow-xl shadow-black animated-border text-[var(--blanco-hielo)]"
       aria-label="Formulario de inicio de sesión"
     >
+      
       <div className="flex items-center justify-center mb-4">
-        <span className="text-2xl font-semibold text-white">Iniciar sesión</span>
+        <span className="text-4xl font-semibold">Iniciar sesión</span>
       </div>
 
       {error && (
-        <div role="alert" className="mb-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded p-2">
+        <div role="alert" className="mb-4 text-lg text-red-600 bg-red-50 border border-red-200 rounded p-2">
           {error}
         </div>
       )}
       {success && (
-        <div role="status" className="mb-4 text-sm text-green-600 bg-green-50 border border-green-200 rounded p-2">
+        <div role="status" className="mb-4 text-lg text-green-600 bg-green-50 border border-green-200 rounded p-2">
           {success}
         </div>
       )}
 
       <div className="mb-4">
-        <label htmlFor="email" className="block text-sm font-medium text-white mb-1">
+        <label htmlFor="email" className="flex text-xl justify-center xl:justify-start font-medium  mb-1">
           Correo electrónico
         </label>
         <input
@@ -85,13 +89,10 @@ const Formsesion = ({ onSubmit }) => {
           aria-invalid={Boolean(error)}
           aria-describedby="email-help"
         />
-        <p id="email-help" className="text-xs text-gray-300 mt-1">
-          No compartas tu correo.
-        </p>
       </div>
 
       <div className="mb-4 relative">
-        <label htmlFor="password" className="block text-sm font-medium text-white mb-1">
+        <label htmlFor="password" className="flex text-xl justify-center xl:justify-start font-medium  mb-1">
           Contraseña
         </label>
         <input
@@ -107,7 +108,7 @@ const Formsesion = ({ onSubmit }) => {
         <button
           type="button"
           onClick={() => setShowPwd((s) => !s)}
-          className="absolute right-2 top-9 text-sm text-white/70 hover:text-white"
+          className="absolute right-2 top-10 text-sm bg-[var(-dorado)] cursor-pointer"
           aria-label="Mostrar u ocultar contraseña"
         >
           {showPwd ? "Ocultar" : "Mostrar"}
@@ -118,16 +119,18 @@ const Formsesion = ({ onSubmit }) => {
         <button
           type="submit"
           disabled={loading}
-          className="hover:bg-[var(--dorado)] duration-150 border-1 border-[var(--dorado)] transition-all bg-[#0000] text-white font-semibold px-4 py-2 rounded-md disabled:opacity-50"
+          className="hover:bg-[var(--dorado)] duration-150 hover:text-black border-1 border-[var(--dorado)] hover:scale-105 transition-all bg-[#0000]  font-semibold px-6 py-4 mt-2 rounded-md disabled:opacity-50 text-lg shadow-md hover:shadow-black"
         >
           {loading ? "Iniciando..." : "Iniciar sesión"}
         </button>
       </div>
 
-      <div className="text-center text-xs text-white/70">
-        ¿No tienes cuenta? Registrate
+      <div className="text-center text-s">
+        ¿No tienes cuenta? <a href="" className="text-red-500 animate-pulse">Registrate</a>
       </div>
     </form>
+    </div>
+
   );
 };
 

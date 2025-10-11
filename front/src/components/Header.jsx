@@ -34,13 +34,13 @@ const Header = () => {
     <div className="navbar flex justify-between items-center h-20 lg:h-30 py-auto lg:px-8 m-0 py-0 border-b border-[#494a0c] bg-[var(--vinotinto)] text-[var(--blanco-hielo)]">
       {/* Imagen lateral izquierda, visible solo en xl */}
       <div className="hidden xl:flex items-center">
-        <a href="">
+        <div href="">
           <img
             src="/public/logomlb-removebg-preview.png"
             alt="logomlb"
             className="scale-0 sm:hover:-translate-y-0.5 transform transition-all duration-200 xl:scale-120"
           />
-        </a>
+        </div>
       </div>
 
       {/* Botón hamburguesa solo en menores a lg */}
@@ -83,7 +83,7 @@ const Header = () => {
           { to: "/", text: "Inicio", size: "lg:text-5xl md:text-4xl" },
           { to: "/equipos", text: "Equipos", size: "lg:text-3xl md:text-2xl" },
           { to: "/estadisticas", text: "Estadisticas", size: "lg:text-2xl md:text-xl" },
-          { to: "/FormSesion", text: "Iniciar sesion", size: "lg:text-2xl md:text-xl" }
+          { to: "/FormSesion", text: "Iniciar sesion", size: "lg:hidden block lg:text-2xl md:text-xl" }
 
         ].map(({ to, text, size }) => (
           <NavLink
@@ -102,6 +102,9 @@ const Header = () => {
         </label>
       </div>
 
+        <div>
+          <NavLink to={'/FormSesion'} className={`text-xl xl:flex hidden`}>Iniciar sesion</NavLink>
+        </div>
 
     </div>
   );
