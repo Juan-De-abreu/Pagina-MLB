@@ -52,10 +52,10 @@ const Formsesion = ({ onSubmit }) => {
 
   return (
 
-    <div className="flex  align-center justify-center bg-form border-y-1 border-[#000000]">
+    <div className="flex  align-center justify-center bg-form border-y-1 min-h-[80vh] border-[#000000]">
     <form
       onSubmit={handleSubmit}
-      className="relative scale-animation w-full max-w-full xl:max-w-lg h-100 mx-auto my-auto bg-[var(--vinotinto)] backdrop-blur-sm rounded-2xl px-10 pt-6 shadow-lg xl:shadow-xl shadow-black animated-border text-[var(--blanco-hielo)]"
+      className="relative scale-animation w-full max-w-full xl:max-w-md 2xl:max-w-lg h-100 mx-auto my-auto bg-[var(--vinotinto)] backdrop-blur-sm rounded-2xl px-10 pt-6 shadow-lg xl:shadow-xl shadow-black animated-border text-[var(--blanco-hielo)]"
       aria-label="Formulario de inicio de sesión"
     >
       

@@ -103,7 +103,7 @@ const Header = () => {
       </div>
 
         <div>
-          <NavLink to={'/FormSesion'} className={`text-xl xl:flex hidden`}>Iniciar sesion</NavLink>
+          <NavLink to={'/FormSesion'} className={({isActive})=>`${linkClass} text-xl xl:flex hidden duration-200 transition-all hover:scale-105 lg:hover:-translate-y-0.5 transform ${isActive ? activeClassName : ''} text-center`}>Iniciar sesion</NavLink>
         </div>
 
     </div>
