@@ -26,7 +26,8 @@ La aplicación permite crear, consultar y mantener información detallada de jug
 - Herramientas de desarrollo y despliegue integradas en entorno local y GitHub.
 - axios para control de inicio de sesion  y comunicacion con la base de datos
 
-## Instrucciones de uso
+## Futuras actualizaciones
+- Visualizacion distinta dependiendo del usuario
 
 ### Frontend
 
