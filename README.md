@@ -24,15 +24,9 @@ La aplicación permite crear, consultar y mantener información detallada de jug
 - HTML, CSS, JavaScript para frontend.
 - Git para control de versiones con ramas específicas.
 - Herramientas de desarrollo y despliegue integradas en entorno local y GitHub.
+- axios para control de inicio de sesion  y comunicacion con la base de datos
 
 ## Instrucciones de uso
-
-### Backend
-
-1. Configurar conexión a base de datos en el archivo PHP.
-2. Importar la base de datos con la estructura y datos necesarios.
-3. Usar el endpoint API `/create` para agregar jugadores asegurando enviar datos validados.
-4. Controlar errores que indican formatos incorrectos o datos inconsistentes.
 
 ### Frontend
 
@@ -43,7 +37,7 @@ La aplicación permite crear, consultar y mantener información detallada de jug
 
 - Trabajar en ramas separadas (`back` para backend, `front` para frontend).
 - Antes de hacer push, siempre realizar pull para evitar conflictos.
-- Hacer push a ramas correspondientes usando:
+- Hacer push a ramas correspondientes usando: git push origin front
 =======
 
 b21c7c9a11b53eadd127ee1c5769c6635456d52b>>>>>>> 
