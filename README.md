@@ -4,7 +4,6 @@
 Este proyecto es una aplicación web para gestionar y visualizar estadísticas de jugadores de béisbol de las Grandes Ligas (MLB), con enfoque especial en jugadores venezolanos, incluyendo funcionalidades backend y frontend.
 
 ## Futuras Actualizaciones
-- **Validacion de inicio de sesion** creacion del codigo de validacion JWT mediante el lenguaje php para asi crear de forma segura y local un registro de usuarios, Siendo asi los registrados por la pagina "visitante", el que tenga permitido borrar otros usuarios "Admin" y los que se les permita solamente crear eliminar y modificar datos en la tabla de datos "Administracion"
 - **Creacion de datos en base de datos** Los perfiles con el cargo de "administracion" tendran permitido crear modificar y eliminar datos en la base de datos
 
 
