@@ -11,6 +11,7 @@ import Equipos from "./pages/Equipos"
 import DetalleEquipos from "./pages/Equipos/DetalleEquipos"
 import Partidos from "./pages/Partidos"
 import FormSesion from "./pages/FormSesion"
+import Admin from "./pages/Admin"
 
 const App = () => {
   return (
@@ -31,8 +32,7 @@ const App = () => {
             <Route path="/equipo/:id/:nombre" element={<DetalleEquipos/>} />
             <Route path="/partidos" element={<Partidos/>} />
             <Route path="/Formsesion" element={<FormSesion/>} />
-
-
+            <Route path="/admin" element={<Admin/>} />
 
           </Routes>
         <Footer/>
