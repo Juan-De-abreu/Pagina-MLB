@@ -27,7 +27,8 @@ La aplicación permite crear, consultar y mantener información detallada de jug
 - axios para control de inicio de sesion  y comunicacion con la base de datos
 
 ## Futuras actualizaciones
-- Visualizacion distinta dependiendo del usuario
+- Visualizacion distinta dependiendo del usuario, si es visitante este solamente tendra acceso a ver la pagina sin poder hacer ningun ajuste en ella, si se registra sera cliente y este podra tener su sesion para poder guardar equipos y jugadores favoritos y se veran en la pagina de su perfil y si es admin podra borrar cuentas ademas de anadir contenido nuevo a la pagina web desde un apartado visual agradable y sencillo
+
 
 ### Frontend
 
