@@ -27,7 +27,7 @@ const Header = () => {
 
   // Leer token JWT y decodificar usuario al cargar el header
       const token = localStorage.getItem('jwtToken');
-
+  
   useEffect(() => {
     if (token) {
       try {

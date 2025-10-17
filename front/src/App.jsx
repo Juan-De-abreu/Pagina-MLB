@@ -12,7 +12,8 @@ import DetalleEquipos from "./pages/Equipos/DetalleEquipos"
 import Partidos from "./pages/Partidos"
 import FormSesion from "./pages/FormSesion"
 import Admin from "./pages/Admin"
-
+import ProtectedRoutes from "./util/ProtectedRoutes"
+import NavbarAdmin from "./components/NavbarAdmin"
 const App = () => {
   return (
 
@@ -20,6 +21,11 @@ const App = () => {
       <div className="app">
         <Header/>
           <Routes>
+
+            <Route element={<ProtectedRoutes/>}>
+              <Route path="/admin" element={<Admin/>} />
+            </Route>
+
             <Route path="/" element={<Home/>}/>
             <Route path="*" element={<Home/>}/>
             <Route path="/inicio" element={<Home/>}/>
@@ -32,7 +38,6 @@ const App = () => {
             <Route path="/equipo/:id/:nombre" element={<DetalleEquipos/>} />
             <Route path="/partidos" element={<Partidos/>} />
             <Route path="/Formsesion" element={<FormSesion/>} />
-            <Route path="/admin" element={<Admin/>} />
 
           </Routes>
         <Footer/>

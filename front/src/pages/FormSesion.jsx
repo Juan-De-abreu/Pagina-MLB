@@ -138,7 +138,7 @@ const Formsesion = () => {
           <button
             type="button"
             onClick={() => setShowPwd((s) => !s)}
-            className="absolute right-2 top-10 text-sm bg-[var(--dorado)] cursor-pointer"
+            className="absolute right-2 top-10 text-sm animate-pulse cursor-pointer"
             aria-label="Mostrar u ocultar contraseña"
           >
             {showPwd ? "Ocultar" : "Mostrar"}
@@ -181,7 +181,7 @@ const Formsesion = () => {
                   setError(null);
                   setSuccess(null);
                 }}
-                className="text-red-500 animate-pulse"
+                className="text-red-500 animate-bounce"
               >
                 Registrate
               </button>
