@@ -20,8 +20,7 @@ const ProtectedRoutes = () => {
 
   if (user === null) return null; // Esperar estado cargado
 
-  // Asegura que es_admin sea string "1" sin espacios ni otro tipo
-const esAdmin = user.es_admin === true;
+const esAdmin = user.es_admin === 1;
 
   return esAdmin ? <Outlet /> : <Navigate to="/" replace />;
 };

@@ -9,7 +9,7 @@ const Header = () => {
   const [user, setUser] = useState(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
-
+  console.log(user);
   // Detectar clic fuera del menú de usuario para cerrarlo
   useEffect(() => {
     function handleClickOutside(event) {
@@ -137,13 +137,14 @@ const Header = () => {
                   </button>
                 )}
                 {user.es_admin && (
-                  <button
+                  <NavLink
+                    to="/admin"
                     className="block w-full text-left px-4 py-2 hover:bg-[var(--dorado)] hover:text-black"
                     onClick={() => setUserMenuOpen(false)}
                     aria-label="Opciones admin"
                   >
                     Opciones admin
-                  </button>
+                  </NavLink>
                 )}
                 <button
                   onClick={handleLogout}
