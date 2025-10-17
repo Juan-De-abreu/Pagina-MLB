@@ -52,7 +52,7 @@ class sesionController {
                 'sub' => $user['id'],
                 'email' => $user['email'],
                 'nombre' => $user['nombre'],
-                'es_admin' => $user['es_admin'] ? "1" : "0"
+                'es_admin' => $user['es_admin']
             ];
 
             $jwt = JWT::encode($payload, $this->secretKey, 'HS256');
