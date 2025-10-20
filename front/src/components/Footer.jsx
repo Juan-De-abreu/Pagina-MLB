@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="bg-[var(--vinotinto)] text-gray-300 py-6 px-4">
+    <footer className="bg-[var(--vinotinto)] text-gray-300 py-6 px-4 border-t-1 border-red-900">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-sm">&copy; Elaborado por Juan De Abreu</p>
         <div className="flex items-center space-x-6">

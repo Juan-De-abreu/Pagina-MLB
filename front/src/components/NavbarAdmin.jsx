@@ -1,26 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const links = [
+  { to: "/admin", text: "Panel principal", end: true },
   { to: "/admin/usuarios", text: "Usuarios" },
   { to: "/admin/jugadores", text: "Jugadores" },
   { to: "/admin/equipos", text: "Equipos" },
   { to: "/admin/partidos", text: "Partidos" },
+  { to: "/inicio", text: "Interfaz del cliente" }
 ];
 
-const NavbarAdmin = () => {
+const NavbarAdmin = ( ) => {
+
+  
+
   return (
-    <nav className="w-50 bg-[var(--vinotinto)] border-r-1 border-[var(--plateado)] text-white min-h-screen p-5 flex flex-col gap-4 justify-beetween">
+    <nav className="w-80 bg-[var(--vinotinto)] border-[var(--plateado)] text-white min-h-screen px-6 py-10 flex flex-col gap-4 justify-beetween">
       <h2 className="text-xl font-bold mb-6 border-b border-[var(--plateado)] pb-2 text-center">
-        Admin
+        Rol Admin
       </h2>
-      {links.map(({ to, text }) => (
+      {links.map(({ to, text, end }) => (
         <NavLink
           key={to}
           to={to}
+          end={end}
           className={({ isActive }) =>
-            `block px-4 py-3 rounded hover:bg-[var(--plateado)] hover:text-black transition duration-200 ${
-              isActive ? "bg-[var(--dorado)] border-1 border-[var(--blanco-hielo)] font-semibold" : ""
+            `block py-3 rounded-md hover:bg-[var(--plateado)] hover:scale-105 text-center px-10 border-1 hover:text-black transition duration-200 ${
+              isActive ? "scale-105 bg-[var(--dorado)] border-1 border-[var(--blanco-hielo)] font-semibold" : ""
             }`
           }
         >

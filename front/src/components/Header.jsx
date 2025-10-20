@@ -108,7 +108,7 @@ const Header = () => {
           { to: "/", text: "Inicio", size: "lg:text-5xl md:text-4xl" },
           { to: "/equipos", text: "Equipos", size: "lg:text-3xl md:text-2xl" },
           { to: "/estadisticas", text: "Estadisticas", size: "lg:text-2xl md:text-xl" },
-          { to: "/admin/usuarios", text: "Opciones Admin", size: "lg:hidden block lg:text-2xl md:text-xl" },
+          { to: "/admin", text: "Opciones Admin", size: "lg:hidden block lg:text-2xl md:text-xl" },
           { to: "/FormSesion", text: "Iniciar sesión", size: "lg:hidden block lg:text-2xl md:text-xl" },
         ].map(({ to, text, size }) => {
   if (to === "/FormSesion") {
@@ -151,7 +151,7 @@ const Header = () => {
       </div>
     );
   } 
-  if (to === "/admin/usuarios") {
+  if (to === "/admin") {
     if (user && user.es_admin) {
       return (
         <NavLink
@@ -198,7 +198,7 @@ const Header = () => {
               {user.nombre}
             </button>
             {userMenuOpen && (
-              <div ref={userMenuRef} className="absolute right-0 mt-2 w-48 bg-[var(--vinotinto)] border border-[var(--dorado)] rounded shadow-lg z-50">
+              <div ref={userMenuRef} className="absolute right-0 mt-2 w-48 bg-[var(--vinotinto)] border border-[var(--dorado)] rounded shadow-lg top-10 z-50">
                 {!user.es_admin && (
                   <button
                     className="block w-full text-left px-4 py-2 hover:bg-[var(--dorado)] hover:text-black"
@@ -210,7 +210,7 @@ const Header = () => {
                 )}
                 {user.es_admin && (
                   <NavLink
-                    to="/admin/usuarios"
+                    to="/admin"
                     className="block w-full text-left px-4 py-2 hover:bg-[var(--dorado)] hover:text-black"
                     onClick={() => setUserMenuOpen(false)}
                     aria-label="Opciones admin"
