@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 02-10-2025 a las 17:27:30
+-- Tiempo de generación: 24-10-2025 a las 16:18:49
 -- Versión del servidor: 9.1.0
 -- Versión de PHP: 8.3.14
 
@@ -295,6 +295,33 @@ INSERT INTO `partidos` (`id`, `equipo_local_id`, `equipo_visitante_id`, `fecha`,
 (38, 7, 4, '2024-10-29', 'Estadio José Bernardo Pérez', 4, 4, '2024'),
 (39, 1, 3, '2024-10-30', 'Estadio Universitario de Caracas', 2, 6, '2024'),
 (40, 8, 5, '2024-10-31', 'Estadio José Pérez Colmenares', 3, 7, '2024');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+DROP TABLE IF EXISTS `usuarios`;
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(191) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `password_hash` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `nombre` varchar(100) COLLATE utf8mb4_spanish2_ci DEFAULT NULL,
+  `es_admin` int NOT NULL DEFAULT '0',
+  `creado_en` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `email`, `password_hash`, `nombre`, `es_admin`, `creado_en`) VALUES
+(1, 'juanadmin@gmail.com', '$2y$12$nm7Be9KxOvC/PQui1RLCdOglA.K6gf3NK/kRodT/pbLGMLZZ3Qgya', 'Juan De abreu', 1, '2025-10-15 17:07:41'),
+(2, 'juancliente@gmail.com', '$2y$12$NugXnIlT3PPnpw5DeRRzV.Ndt/Pw.67tVtRAbDCpFRHD3fDmcSeRi', 'Juan Diaz', 0, '2025-10-15 17:08:13'),
+(3, 'katherineadmin@gmail.com', '$2y$12$R0odVgm51y04j6WNgUcuo.Q9kFp3yd3EZoDk7aZpgZEtlGxBk/LN6', 'katherine de abreu', 1, '2025-10-20 16:01:47');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
