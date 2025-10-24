@@ -12,7 +12,7 @@ const Home = () => {
   ];
 
   return (
-    <div className="bg-[var(--body)]">
+    <div className="bg-[var(--body)] min-h-screen pb-4">
       <Carrusel images={images} />
       <Top3WarCard />
       <Top5war />

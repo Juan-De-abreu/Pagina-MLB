@@ -25,7 +25,6 @@ const cards = [
 ];
 
 const Admin = () => {
-  const [hovered, setHovered] = useState(null);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true); // Estado de carga
 
@@ -64,24 +63,22 @@ const Admin = () => {
 
   return (
     <div className="p-8 bg-[var(--body)] h-full w-full">
-      <h1 className="text-4xl font-bold mb-6 text-[var(--dorado)] border-b animate-pulse text-center">
+      <h1 className="text-4xl font-bold mb-6 text-[var(--dorado)] border-b text-center">
         Panel de Administración
       </h1>
       <h1 className="text-center mb-8 text-xl">
-        Bienvenido {user.nombre} al panel de administración. Aquí puedes gestionar usuarios, jugadores, equipos y partidos.
+        Bienvenid@ {user.nombre} al panel de administración. Aquí puedes gestionar usuarios, jugadores, equipos y partidos.
       </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {cards.map(({ to, title, description }, index) => (
+        {cards.map(({ to, title, description }) => (
           <Link
             key={to}
             to={to}
-            onMouseEnter={() => setHovered(index)}
-            onMouseLeave={() => setHovered(null)}
             className={`
-              bg-[var(--vinotinto)] rounded-lg shadow p-6 transition cursor-pointer border-1 border-[var(--negro-profundo)] hover:border-b-[#5a0909] hover:border-r-[#5a0909]
-              ${hovered !== null && hovered !== index ? "opacity-60" : "opacity-100"}
-              hover:opacity-100 hover:shadow-lg hover:shadow-black
+              bg-[var(--vinotinto)] rounded-lg shadow p-6 cursor-pointer border-1 border-[var(--negro-profundo)] hover:border-b-[#5a0909] hover:border-r-[#5a0909]
+               opacity-100
+              hover:opacity-100 hover:shadow-lg hover:shadow-black hover:animate-pulse hover:scale-105 transition-all duration-200
             `}
           >
             <h2 className="text-xl font-semibold mb-2 text-[var(--dorado)] text-center border-b">

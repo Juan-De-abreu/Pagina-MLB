@@ -15,7 +15,11 @@
   import FormSesion from "./pages/FormSesion";
   import Admin from "./pages/Admin";
   import ProtectedRoutes from "./util/ProtectedRoutes";
-  import Usuarios from "./pages/admin/Usuarios";
+import { EquiposAdmin } from "./pages/admin/EquiposAdmin";
+import PartidosAdmin from "./pages/admin/PartidosAdmin";
+import UsuariosAdmin from "./pages/admin/UsuariosAdmin";
+import AjustesCuenta from "./pages/AjustesCuenta";
+import JugadoresAdmin from "./pages/admin/JugadoresAdmin";
 
   // Layout para páginas no admin (header y footer)
   const MainLayout = () => (
@@ -48,9 +52,10 @@
           <Route element={<ProtectedRoutes />}>
             <Route element={<AdminLayout />}>
               <Route path="/admin" element={<Admin />} />
-              <Route path="/admin/usuarios" element={<Usuarios/>}/>
-              {/* Aquí puedes agregar rutas admin hijas */}
-              {/* Ejemplo: <Route path="usuarios" element={<Usuarios />} /> */}
+              <Route path="/admin/usuarios" element={<UsuariosAdmin/>}/>
+              <Route path="/admin/jugadores" element={<JugadoresAdmin/>}/>
+              <Route path="/admin/equipos" element={<EquiposAdmin/>}/>
+              <Route path="/admin/partidos" element={<PartidosAdmin/>}/>
             </Route>
           </Route>
 
@@ -68,6 +73,7 @@
             <Route path="/partidos" element={<Partidos />} />
             <Route path="/Formsesion" element={<FormSesion />} />
             <Route path="*" element={<Home />} />
+            <Route path="/ajustes" element={<AjustesCuenta />} />
           </Route>
         </Routes>
       </BrowserRouter>

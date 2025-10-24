@@ -16,7 +16,7 @@ const NavbarAdmin = ( ) => {
 
   return (
     <nav className="w-80 bg-[var(--vinotinto)] border-[var(--plateado)] text-white min-h-screen px-6 py-10 flex flex-col gap-4 justify-beetween">
-      <h2 className="text-xl font-bold mb-6 border-b border-[var(--plateado)] pb-2 text-center">
+      <h2 className="text-xl font-bold mb-6 border-b border-[var(--dorado)] pb-2 text-center">
         Rol Admin
       </h2>
       {links.map(({ to, text, end }) => (
@@ -25,8 +25,8 @@ const NavbarAdmin = ( ) => {
           to={to}
           end={end}
           className={({ isActive }) =>
-            `block py-3 rounded-md hover:bg-[var(--plateado)] hover:scale-105 text-center px-10 border-1 hover:text-black transition duration-200 ${
-              isActive ? "scale-105 bg-[var(--dorado)] border-1 border-[var(--blanco-hielo)] font-semibold" : ""
+            `block py-3 rounded-md hover:bg-[var(--dorado)] hover:scale-105 text-center px-10 border-1 border-[var(--dorado)]  hover:text-black transition duration-200 ${
+              isActive ? "scale-105 bg-[var(--dorado)] border-1 font-semibold text-black" : ""
             }`
           }
         >

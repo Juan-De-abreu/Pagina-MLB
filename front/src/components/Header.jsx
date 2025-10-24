@@ -109,6 +109,7 @@ const Header = () => {
           { to: "/equipos", text: "Equipos", size: "lg:text-3xl md:text-2xl" },
           { to: "/estadisticas", text: "Estadisticas", size: "lg:text-2xl md:text-xl" },
           { to: "/admin", text: "Opciones Admin", size: "lg:hidden block lg:text-2xl md:text-xl" },
+          { to: "/ajustes", text: "Opcines de cuenta", size: "lg:hidden block lg:text-2xl md:text-xl" },
           { to: "/FormSesion", text: "Iniciar sesión", size: "lg:hidden block lg:text-2xl md:text-xl" },
         ].map(({ to, text, size }) => {
   if (to === "/FormSesion") {
@@ -193,31 +194,30 @@ const Header = () => {
           <>
             <button
               onClick={() => setUserMenuOpen(!userMenuOpen)}
-              className="text-xl font-semibold px-4 py-2 border border-[var(--dorado)] rounded hover:bg-[var(--dorado)] hover:text-black transition"
+              className="text-lg font-semibold px-2 py-1 mx-4 border-1 border-[var(--dorado)] rounded hover:bg-[var(--dorado)] hover:text-black transition-all duration-300 hover:animate-pulse"
             >
               {user.nombre}
             </button>
             {userMenuOpen && (
-              <div ref={userMenuRef} className="absolute right-0 mt-2 w-48 bg-[var(--vinotinto)] border border-[var(--dorado)] rounded shadow-lg top-10 z-50">
-                {!user.es_admin && (
-                  <button
-                    className="block w-full text-left px-4 py-2 hover:bg-[var(--dorado)] hover:text-black"
-                    onClick={() => setUserMenuOpen(false)}
-                    aria-label="Opciones cliente"
-                  >
-                    Opciones cliente
-                  </button>
-                )}
-                {user.es_admin && (
+              <div ref={userMenuRef} className="absolute right-0 mt-2 w-48 bg-[var(--vinotinto)] border border-[var(--dorado)] rounded shadow-lg top-15 z-50">
+                {user.es_admin ===1  && (
                   <NavLink
                     to="/admin"
                     className="block w-full text-left px-4 py-2 hover:bg-[var(--dorado)] hover:text-black"
                     onClick={() => setUserMenuOpen(false)}
-                    aria-label="Opciones admin"
+                    aria-label="Opciones de admin"
                   >
                     Opciones admin
                   </NavLink>
                 )}
+                  <NavLink
+                    to="/ajustes"
+                    className="block w-full text-left px-4 py-2 hover:bg-[var(--dorado)] hover:text-black"
+                    onClick={() => setUserMenuOpen(false)}
+                    aria-label="Opciones de la cuenta"
+                  >
+                    Opciones de la cuenta
+                  </NavLink>
                 <button
                   onClick={handleLogout}
                   className="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-500 hover:text-white"
