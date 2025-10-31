@@ -5,7 +5,7 @@ import { getMedalColorVar } from "../util/funciones";
 import { useInView } from "react-intersection-observer";
 
 const CardEquipos = ({ item, contador = 4 }) => {
-  const API = `http://localhost:8081/api/equipos/${item.id}/jugadores`;
+  const API = `http://localhost:8081/api/equipos/${item.id}`;
   const [error, setError] = useState(null);
 
   const [datos, setDatos] = useState([]);

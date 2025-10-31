@@ -48,7 +48,7 @@ const Equipos = () => {
   if (error) {
     return (
       <div className="text-center py-10 text-red-600">
-        <h4 className="text-xl font-semibold mb-2">Error al cargar los Jugadores</h4>
+        <h4 className="text-xl font-semibold mb-2">Error al cargar los equipos</h4>
         <p>{error}</p>
       </div>
     );

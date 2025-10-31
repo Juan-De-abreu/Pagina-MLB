@@ -1,42 +1,53 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router";
 
-const CardPartidos = ({ item ,contadorpartidos}) => {
-  const APILOCAL = `http://localhost:8081/api/equipos/${item.equipo_local_id}`;
-  const APIVISITANTE = `http://localhost:8081/api/equipos/${item.equipo_visitante_id}`;
+const cacheEquipos = {};
 
-  const [equipolocal, setequipolocal] = useState(null);
-  const [equipovisitante, setequipovisitante] = useState(null);
+const CardPartidos = ({ item, contadorpartidos }) => {
+  const [equipolocal, setEquipolocal] = useState(null);
+  const [equipovisitante, setEquipovisitante] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   const { ref, inView } = useInView({
-    triggerOnce: true, // solo disparar la primera vez
-    threshold: [0.03,0.10,0.25, 0.5, 0.75, 1], // porcentaje visible para activar
+    triggerOnce: true,
+    threshold: 0.02,
   });
 
+  // useRef para evitar re-fetch si ya está cargando
+  const didFetchLocal = useRef(false);
+  const didFetchVisitante = useRef(false);
+
   useEffect(() => {
+    const fetchEquipo = async (id, setEquipo, didFetchRef) => {
+      if (didFetchRef.current) return;
+      const url = `http://localhost:8081/api/equipos/${id}`;
+      if (cacheEquipos[url]) {
+        setEquipo(cacheEquipos[url]);
+        didFetchRef.current = true;
+        return;
+      }
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Error fetching equipo: ${res.status}`);
+        const data = await res.json();
+        cacheEquipos[url] = data;
+        setEquipo(data);
+        didFetchRef.current = true;
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
     setLoading(true);
     setError(null);
 
     Promise.all([
-      fetch(APILOCAL).then(res => {
-        if (!res.ok) throw new Error(`Error fetching equipo local: ${res.status}`);
-        return res.json();
-      }),
-      fetch(APIVISITANTE).then(res => {
-        if (!res.ok) throw new Error(`Error fetching equipo visitante: ${res.status}`);
-        return res.json();
-      })
-    ]).then(([localData, visitanteData]) => {
-      setequipolocal(localData);
-      setequipovisitante(visitanteData);
-      setLoading(false); }).catch(err => {
-      setError(err.message);
-      setLoading(false);
-    });
-
-  }, [APILOCAL, APIVISITANTE,contadorpartidos]);
+      fetchEquipo(item.equipo_local_id, setEquipolocal, didFetchLocal),
+      fetchEquipo(item.equipo_visitante_id, setEquipovisitante, didFetchVisitante),
+    ]).finally(() => setLoading(false));
+  }, [item.equipo_local_id, item.equipo_visitante_id]);
 
   if (loading) {
     return (
@@ -45,7 +56,7 @@ const CardPartidos = ({ item ,contadorpartidos}) => {
           role="status"
           aria-label="loading"
           className="w-10 h-10 border-4 border-red-500 border-t-transparent rounded-full animate-spin"
-        ></div>
+        />
         <p className="mt-4 text-red-600">Cargando partidos...</p>
       </div>
     );
@@ -60,21 +71,20 @@ const CardPartidos = ({ item ,contadorpartidos}) => {
     );
   }
 
-  // Validar que los datos existen antes de acceder para evitar crashes inesperados
   if (!equipolocal || !equipovisitante) {
     return <p>No se han cargado los datos de los equipos.</p>;
   }
 
   return (
     <div
-    className={`w-[80vw] mx-auto my-15 animate-slide-top px-4 2xl:px-50 transition-all duration-400 ease-out
-     ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full'}`}
-    ref={ref}
-    style={{ animationDelay: `${contadorpartidos * 0.3}s` }}
+      className={`w-[80vw] mx-auto my-15 animate-slide-top px-4 2xl:px-50 transition-all duration-400 ease-out ${
+        inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
+      }`}
+      ref={ref}
+      style={{ animationDelay: `${contadorpartidos * 0.3}s` }}
     >
       <div className="bg-[var(--gris-oscuro)] rounded shadow-xl h-full flex flex-col shadow-black border-[var(--vinotinto)] border-2">
         <div className="overflow-hidden grid rounded-t border-[var(--vinotinto)] border-l-4 border-r-4 border-t-4 border-b-2 md:grid-cols-[47%_6%_47%]">
-          
           <img
             src={equipolocal.logo_url}
             alt={equipolocal.nombre}
@@ -87,7 +97,7 @@ const CardPartidos = ({ item ,contadorpartidos}) => {
             className="w-full h-50 lg:h-65 object-center rounded-4xl border-6 border-[var(--vinotinto)]"
           />
         </div>
-        <div className=" flex-grow p-4 text-center md:grid-cols-[43%_14%_43%] md:grid">
+        <div className="flex-grow p-4 text-center md:grid-cols-[43%_14%_43%] md:grid">
           <div className="text-center text-xl lg:text-2xl">
             <p>{equipolocal.nombre}</p>
           </div>
@@ -98,17 +108,12 @@ const CardPartidos = ({ item ,contadorpartidos}) => {
             </span>
           </div>
 
-          <div className="text-center text-xl lg:text-2xl">
-            {equipovisitante.nombre}
-
-
-          </div>
-
+          <div className="text-center text-xl lg:text-2xl">{equipovisitante.nombre}</div>
         </div>
         <div className="p-4 bg-[var(--vinotinto)] flex justify-center gap-3 rounded-b border-b-1 border-[#520f0f]">
           <Link
             to={`/equipo/${equipolocal.id}/${equipolocal.nombre}`}
-            className=" text-center border text-[var(--dorado)] text-md px-6 py-3 rounded hover:bg-[var(--dorado)] hover:text-black transition"
+            className="text-center border text-[var(--dorado)] text-md px-6 py-3 rounded hover:bg-[var(--dorado)] hover:text-black transition"
           >
             Equipo Local
           </Link>
@@ -120,7 +125,10 @@ const CardPartidos = ({ item ,contadorpartidos}) => {
           </Link>
         </div>
         <div className="text-sm">
-          <p className="flex justify-center lg:justify-start pt-1 pb-1 pl-2"> <span className="hidden lg:flex">fecha del partido:</span><span className="text-[var(--dorado)]">{item.fecha}</span></p>
+          <p className="flex justify-center lg:justify-start pt-1 pb-1 pl-2">
+            <span className="hidden lg:flex">fecha del partido:</span>
+            <span className="text-[var(--dorado)]">{item.fecha}</span>
+          </p>
         </div>
       </div>
     </div>

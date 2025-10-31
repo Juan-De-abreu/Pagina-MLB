@@ -1,4 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+
+const CustomSelect = ({ options, value, onChange }) => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative w-full mt-1" ref={ref}>
+      <button
+        type="button"
+        className="w-full text-left bg-[var(--vinotinto)] text-white p-2 rounded border border-gray-200 focus:outline-none"
+        onClick={() => setOpen((o) => !o)}
+      >
+        {value || "Selecciona un equipo"}
+        <span className="float-right">&#9662;</span>
+      </button>
+      {open && (
+        <ul className="absolute left-0 w-full bg-[var(--vinotinto)] mt-1 rounded-lg shadow-xl z-10 max-h-auto overflow-auto border border-[var(--dorado)]">
+          {options.map((opcion) => (
+            <li
+              key={opcion.nombre}
+              className={`px-4 py-2 cursor-pointer transition-all ${
+                value === opcion.nombre
+                  ? "bg-[var(--body)] text-[var(--dorado)]"
+                  : "text-white"
+              } hover:bg-[var(--body)] hover:text-[var(--dorado)]`}
+              onClick={() => {
+                onChange(opcion.nombre);
+                setOpen(false);
+              }}
+            >
+              {opcion.nombre}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
 
 const AdminJugadores = () => {
   const [jugadores, setJugadores] = useState([]);
@@ -7,9 +53,9 @@ const AdminJugadores = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [jugadorEdit, setJugadorEdit] = useState(null);
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(null);
+  const [search, setSearch] = useState("");
+  const [recargar, setRecargar] = useState(false);
 
-  // Carga jugadores y equipos
   useEffect(() => {
     const fetchDatos = async () => {
       setCargando(true);
@@ -23,62 +69,66 @@ const AdminJugadores = () => {
         setEquipos(dataEquipos);
       } catch (e) {
         console.error("Error al cargar:", e);
+        alert("Error al cargar datos de jugadores o equipos");
       } finally {
         setCargando(false);
       }
     };
     fetchDatos();
-  }, []);
+  }, [recargar]);
 
-  // Abre modal para editar o crear
+  const jugadoresFiltrados = jugadores.filter((j) =>
+    j.nombre.toLowerCase().includes(search.trim().toLowerCase())
+  );
+
   const openModal = (jugador = null) => {
     setJugadorEdit(jugador);
-    setFormData(jugador ?? {
-      nombre: "",
-      pos: "",
-      años_en_mlb: 0,
-      año_debut: 0,
-      año_retiro: 0,
-      all_star_appearances: 0,
-      partidos_jugados: 0,
-      turnos_bateo: 0,
-      veces_al_bate: 0,
-      carreras: 0,
-      hits: 0,
-      dobles: 0,
-      triples: 0,
-      home_runs: 0,
-      carreras_impulsadas: 0,
-      bases_robadas: 0,
-      atrapado_robando: 0,
-      bases_por_bola: 0,
-      ponches: 0,
-      promedio_bateo: "",
-      porcentaje_embase: "",
-      porcentaje_slugging: "",
-      ops: "",
-      war: "",
-      fecha_nacimiento: "",
-      fecha_debut: "",
-      lugar_nacimiento: "",
-      posiciones: "",
-      id_equipo: equipos.length > 0 ? equipos[0].id : 0, // Selección por defecto equipo 0 o primero
-      nombre_equipo: equipos.length > 0 ? equipos[0].nombre : ""
-    });
-    setError(null);
+    setFormData(
+      jugador ?? {
+        nombre: "",
+        pos: "",
+        años_en_mlb: 0,
+        año_debut: 0,
+        año_retiro: 0,
+        all_star_appearances: 0,
+        partidos_jugados: 0,
+        turnos_bateo: 0,
+        veces_al_bate: 0,
+        carreras: 0,
+        hits: 0,
+        dobles: 0,
+        triples: 0,
+        home_runs: 0,
+        carreras_impulsadas: 0,
+        bases_robadas: 0,
+        atrapado_robando: 0,
+        bases_por_bola: 0,
+        ponches: 0,
+        promedio_bateo: "",
+        porcentaje_embase: "",
+        porcentaje_slugging: "",
+        ops: "",
+        war: "",
+        fecha_nacimiento: "",
+        fecha_debut: "",
+        lugar_nacimiento: "",
+        posiciones: "",
+        id_equipo: equipos.length > 0 ? equipos[0].id : 0,
+        nombre_equipo: equipos.length > 0 ? equipos[0].nombre : "",
+      }
+    );
     setModalIsOpen(true);
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
     setJugadorEdit(null);
-    setError(null);
+    setFormData({});
   };
 
   const handleChange = (e) => {
-    const { name, value, type } = e.target;
+    const { name, value, type } = e.target || {};
     let val = type === "number" ? Number(value) : value;
-    // Al cambiar equipo, actualizar id_equipo y nombre_equipo
     if (name === "nombre_equipo") {
       const equipoSeleccionado = equipos.find((eq) => eq.nombre === value);
       if (equipoSeleccionado) {
@@ -93,6 +143,17 @@ const AdminJugadores = () => {
     setFormData((f) => ({ ...f, [name]: val }));
   };
 
+  const handleCustomEquipoChange = (nuevoNombre) => {
+    const equipoSeleccionado = equipos.find((eq) => eq.nombre === nuevoNombre);
+    if (equipoSeleccionado) {
+      setFormData((f) => ({
+        ...f,
+        id_equipo: equipoSeleccionado.id,
+        nombre_equipo: equipoSeleccionado.nombre,
+      }));
+    }
+  };
+
   const validateForm = () => {
     if (!formData.nombre?.trim()) return "El nombre es obligatorio";
     if (!formData.nombre_equipo?.trim()) return "El equipo es obligatorio";
@@ -102,7 +163,7 @@ const AdminJugadores = () => {
   const handleSave = async () => {
     const err = validateForm();
     if (err) {
-      setError(err);
+      alert(err);
       return;
     }
 
@@ -117,28 +178,25 @@ const AdminJugadores = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || "Error al guardar jugador");
+        alert(data.error || "Error al guardar el jugador");
         return;
       }
 
-      if (jugadorEdit) {
-        setJugadores((prev) =>
-          prev.map((j) => (j.id === jugadorEdit.id ? { ...j, ...formData } : j))
-        );
-      } else {
-        setJugadores((prev) => [...prev, data]);
-      }
+      // En lugar de actualizar estado local, recarga toda la lista
+      setRecargar((prev) => !prev);
+
       closeModal();
     } catch {
-      setError("Error de red al guardar jugador");
+      alert("Error de red al guardar jugador");
     }
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("¿Borrar este jugador?")) return;
+  const handleDelete = async (id, nombre) => {
+    if (!window.confirm(`¿Borrar este jugador? ${nombre}`)) return;
 
     try {
       const res = await fetch(`http://localhost:8081/api/jugadores/${id}`, {
@@ -150,50 +208,67 @@ const AdminJugadores = () => {
         alert(data.error || "Error al borrar jugador");
         return;
       }
-      setJugadores((prev) => prev.filter((j) => j.id !== id));
+
+      setRecargar((prev) => !prev);
     } catch {
       alert("Error de red al borrar jugador");
     }
   };
 
-  if (cargando) return <div>Cargando jugadores...</div>;
+  if (cargando)
+    return <div className="text-center mt-10">Cargando jugadores...</div>;
 
   return (
-    <div className="p-6">
-      <h2 className="text-3xl font-semibold mb-6 text-center">Jugadores</h2>
+    <div className="lg:p-6 lg:w-full">
+      <h2 className="text-2xl lg:text-4xl font-semibold mt-20 lg:my-10 text-center text-[var(--dorado)]">
+        Lista de jugadores
+      </h2>
+      <div className="flex flex-col lg:flex-row lg:justify-between items-stretch gap-4 mb-6 px-2 mt-10">
+        <button
+          onClick={() => openModal()}
+          className="max-w-full lg:max-w-xs shadow-lg shadow-black px-4 py-2 hover:bg-[var(--dorado)] text-[var(--dorado)] rounded border border-[var(--dorado)] hover:text-black transition-all duration-200"
+        >
+          Crear Jugador
+        </button>
+        <input
+          type="text"
+          placeholder="Buscar jugador por nombre..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full max-w-full lg:max-w-md p-2 rounded border-1 bg-[var(--gris-claro)] focus:bg-[var(--gris-oscuro)] text-white border-black focus:text-[var(--dorado)] ring-[var(--dorado)] ring-2 hover:ring-[var(--dorado)] transition-all duration-200"
+        />
+      </div>
 
-      <button
-        className="mb-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-        onClick={() => openModal()}
-      >
-        Crear Jugador
-      </button>
-
-      <table className="min-w-full border border-gray-300 rounded-md">
-        <thead className="bg-[var(--dorado)] text-black">
+      <table className="lg:min-w-full text-center rounded-md border-collapse mx-auto">
+        <thead className="bg-[var(--gris-oscuro)] text-[var(--dorado)]">
           <tr>
-            <th className="border px-4 py-2">ID</th>
-            <th className="border px-4 py-2">Nombre</th>
-            <th className="border px-4 py-2">Equipo</th>
-            <th className="border px-4 py-2">Acciones</th>
+            <th className="border-2 border-black px-4 py-2">ID</th>
+            <th className="border-2 border-black px-4 py-2">Nombre</th>
+            <th className="border-2 border-black px-4 py-2">Equipo</th>
+            <th className="border-2 border-black px-4 py-2">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {jugadores.map(({ id, nombre, nombre_equipo }) => (
-            <tr key={id} className="hover:bg-[var(--vinotinto)]">
-              <td className="border border-[var(--dorado)] px-4 py-2">{id}</td>
-              <td className="border border-[var(--dorado)] px-4 py-2">{nombre}</td>
-              <td className="border border-[var(--dorado)] px-4 py-2">{nombre_equipo}</td>
-              <td className="border border-[var(--dorado)] space-x-4 py-2 text-center">
+          {jugadoresFiltrados.map(({ id, nombre, nombre_equipo }) => (
+            <tr
+              key={id}
+              className="hover:bg-[var(--gris-oscuro)] hover:text-[var(--dorado)] bg-[var(--gris-claro)]"
+            >
+              <td className="border-2 border-black px-4 py-2">{id}</td>
+              <td className="border-2 border-black px-4 py-2">{nombre}</td>
+              <td className="border-2 border-black px-4 py-2">
+                {nombre_equipo}
+              </td>
+              <td className="border-2 border-black lg:space-x-4 space-y-2 lg:space-y-0 py-2 text-center grid-cols-1 lg:grid-cols-2 px-2">
                 <button
                   onClick={() => openModal(jugadores.find((j) => j.id === id))}
-                  className="border-[var(--dorado)] border-1 px-3 py-1 rounded hover:bg-[var(--dorado)] hover:text-black"
+                  className="text-[var(--dorado)] border border-[var(--dorado)] px-2 py-1 rounded hover:bg-[var(--dorado)] hover:text-black"
                 >
                   Editar
                 </button>
                 <button
-                  onClick={() => handleDelete(id)}
-                  className="border-1 border-red-700 px-3 py-1 rounded text-white hover:bg-red-700 hover:text-white"
+                  onClick={() => handleDelete(id, nombre)}
+                  className="border border-red-700 px-2 py-1 rounded text-white hover:bg-red-700"
                 >
                   Borrar
                 </button>
@@ -205,37 +280,16 @@ const AdminJugadores = () => {
 
       {modalIsOpen && (
         <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            backgroundColor: "rgba(0,0,0,0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "start",
-            paddingTop: "3rem",
-            zIndex: 1000,
-          }}
+          className="fixed inset-0 bg-[#0000008b] bg-opacity-70 flex justify-center items-start pt-12 z-50"
           onClick={closeModal}
         >
           <div
-            style={{
-              background: "var(--vinotinto)",
-              borderRadius: "8px",
-              padding: "20px",
-              width: "90%",
-              maxWidth: "700px",
-              maxHeight: "90vh",
-              overflowY: "auto",
-              boxShadow: "0 0 10px black",
-            }}
+            className="bg-[var(--vinotinto)] rounded-lg p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl shadow-black"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2
-              style={{ fontWeight: "bold", fontSize: "1.25rem", marginBottom: "12px" }}
-            >
+            <h2 className="text-white font-bold text-xl mb-4">
               {jugadorEdit ? "Editar Jugador" : "Crear Jugador"}
             </h2>
-            {error && <p style={{ color: "red" }}>{error}</p>}
 
             <form
               onSubmit={(e) => {
@@ -243,35 +297,44 @@ const AdminJugadores = () => {
                 handleSave();
               }}
             >
+              {/* Nombre */}
+              <label
+                htmlFor="nombre"
+                className="block mb-4 text-[var(--dorado)]"
+              >
+                Nombre:
+                <input
+                  id="nombre"
+                  type="text"
+                  name="nombre"
+                  value={formData.nombre}
+                  onChange={handleChange}
+                  className="w-full mt-1 rounded border text-gray-200 p-2"
+                  required
+                />
+              </label>
+
+              <label
+                htmlFor="nombre_equipo"
+                className="block mb-4 text-[var(--dorado)]"
+              >
+                Equipo:
+                <CustomSelect
+                  options={equipos}
+                  value={formData.nombre_equipo}
+                  onChange={handleCustomEquipoChange}
+                />
+              </label>
+
+              {/* El resto del formulario dinámico */}
               {Object.entries(formData).map(([key, val]) => {
-                if (key === "id") return null;
-                if (key === "id_equipo") return null; // omitimos id_equipo como input normal
-                if (key === "nombre_equipo") {
-                  return (
-                    <label key={key} style={{ display: "block", marginBottom: "10px" }}>
-                      Equipo:
-                      <select
-                        name="nombre_equipo"
-                        value={val}
-                        onChange={handleChange}
-                        style={{
-                          width: "100%",
-                          borderRadius: "4px",
-                          border: "1px solid gray",
-                          padding: "6px 8px",
-                          marginTop: "4px",
-                        }}
-                        required
-                      >
-                        {equipos.map((equipo) => (
-                          <option key={equipo.id} value={equipo.nombre}>
-                            {equipo.nombre}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-                  );
-                }
+                if (
+                  key === "id" ||
+                  key === "id_equipo" ||
+                  key === "nombre" ||
+                  key === "nombre_equipo"
+                )
+                  return null;
                 let inputType = "text";
                 if (
                   [
@@ -298,23 +361,21 @@ const AdminJugadores = () => {
                 }
                 if (["fecha_nacimiento", "fecha_debut"].includes(key)) {
                   inputType = "date";
-                  val = val ? val.substring(0, 10) : "";
                 }
                 return (
-                  <label key={key} style={{ display: "block", marginBottom: "10px" }}>
+                  <label
+                    htmlFor={key}
+                    key={key}
+                    className="block mb-4 text-[var(--dorado)]"
+                  >
                     {key.replace(/_/g, " ")}:
                     <input
+                      id={key}
                       type={inputType}
                       name={key}
                       value={val}
                       onChange={handleChange}
-                      style={{
-                        width: "100%",
-                        borderRadius: "4px",
-                        border: "1px solid gray",
-                        padding: "6px 8px",
-                        marginTop: "4px",
-                      }}
+                      className="w-full mt-1 rounded border text-gray-200 p-2"
                       required={key === "nombre"}
                       step={inputType === "number" ? "any" : undefined}
                     />
@@ -322,36 +383,17 @@ const AdminJugadores = () => {
                 );
               })}
 
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  gap: "10px",
-                  marginTop: "12px",
-                }}
-              >
+              <div className="flex justify-end gap-4 mt-4">
                 <button
                   type="button"
                   onClick={closeModal}
-                  style={{
-                    padding: "8px 14px",
-                    borderRadius: "4px",
-                    border: "1px solid #ccc",
-                    cursor: "pointer",
-                  }}
+                  className="px-4 py-2 border rounded text-red-900 hover:text-black hover:bg-red-900 transition-all duration-200"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  style={{
-                    padding: "8px 14px",
-                    borderRadius: "4px",
-                    border: "none",
-                    backgroundColor: "#2563EB",
-                    color: "white",
-                    cursor: "pointer",
-                  }}
+                  className="px-4 py-2 hover:bg-[var(--dorado)] text-[var(--dorado)] rounded border hover:text-black transition-all duration-200"
                 >
                   Guardar
                 </button>

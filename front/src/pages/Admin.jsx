@@ -70,14 +70,14 @@ const Admin = () => {
         Bienvenid@ {user.nombre} al panel de administración. Aquí puedes gestionar usuarios, jugadores, equipos y partidos.
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {cards.map(({ to, title, description }) => (
           <Link
             key={to}
             to={to}
             className={`
               bg-[var(--vinotinto)] rounded-lg shadow p-6 cursor-pointer border-1 border-[var(--negro-profundo)] hover:border-b-[#5a0909] hover:border-r-[#5a0909]
-               opacity-100
+               opacity-100 
               hover:opacity-100 hover:shadow-lg hover:shadow-black hover:animate-pulse hover:scale-105 transition-all duration-200
             `}
           >
