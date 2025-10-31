@@ -51,117 +51,80 @@ class JugadorController {
 
     // POST /api/jugadores - Crear un nuevo jugador con id_equipo
     public function create($data) {
-        global $pdo;
+    global $pdo;
 
-        if (!isset($data['nombre'])) {
-            http_response_code(400);
-            echo json_encode(['error' => 'El campo nombre es obligatorio']);
-            return;
-        }
-
-        $id_equipo = $data['id_equipo'] ?? null;
-        if (!$id_equipo) {
-            http_response_code(400);
-            echo json_encode(['error' => 'El campo id_equipo es obligatorio']);
-            return;
-        }
-
-        $campos = [
-            'nombre' => '',
-            'pos' => '',
-            'años_en_mlb' => 0,
-            'año_debut' => null,
-            'año_retiro' => null,
-            'all_star_appearances' => 0,
-            'partidos_jugados' => 0,
-            'turnos_bateo' => 0,
-            'veces_al_bate' => 0,
-            'carreras' => 0,
-            'hits' => 0,
-            'dobles' => 0,
-            'triples' => 0,
-            'home_runs' => 0,
-            'carreras_impulsadas' => 0,
-            'bases_robadas' => 0,
-            'atrapado_robando' => 0,
-            'bases_por_bola' => 0,
-            'ponches' => 0,
-            'promedio_bateo' => 0,
-            'porcentaje_embase' => 0,
-            'porcentaje_slugging' => 0,
-            'ops' => 0,
-            'war' => 0,
-            'fecha_nacimiento' => null,
-            'fecha_debut' => null,
-            'lugar_nacimiento' => '',
-            'posiciones' => '',
-            'id_equipo' => null
-        ];
-
-        $dataCorregido = [];
-        foreach ($campos as $key => $default) {
-            $dataCorregido[$key] = $data[$key] ?? $default;
-        }
-
-        // Validaciones lógicas importantes (puedes agregar más según tu lógica)
-
-        try {
-            $stmt = $pdo->prepare("
-                INSERT INTO jugadores (
-                    nombre, pos, años_en_mlb, año_debut, año_retiro, all_star_appearances, partidos_jugados, turnos_bateo,
-                    veces_al_bate, carreras, hits, dobles, triples, home_runs, carreras_impulsadas, bases_robadas,
-                    atrapado_robando, bases_por_bola, ponches, promedio_bateo, porcentaje_embase, porcentaje_slugging,
-                    ops, war, fecha_nacimiento, fecha_debut, lugar_nacimiento, posiciones, id_equipo
-                ) VALUES (
-                    :nombre, :pos, :años_en_mlb, :año_debut, :año_retiro, :all_star_appearances, :partidos_jugados, :turnos_bateo,
-                    :veces_al_bate, :carreras, :hits, :dobles, :triples, :home_runs, :carreras_impulsadas, :bases_robadas,
-                    :atrapado_robando, :bases_por_bola, :ponches, :promedio_bateo, :porcentaje_embase, :porcentaje_slugging,
-                    :ops, :war, :fecha_nacimiento, :fecha_debut, :lugar_nacimiento, :posiciones, :id_equipo
-                )
-            ");
-
-            $stmt->execute([
-                ':nombre' => $dataCorregido['nombre'],
-                ':pos' => $dataCorregido['pos'],
-                ':años_en_mlb' => $dataCorregido['años_en_mlb'],
-                ':año_debut' => $dataCorregido['año_debut'],
-                ':año_retiro' => $dataCorregido['año_retiro'],
-                ':all_star_appearances' => $dataCorregido['all_star_appearances'],
-                ':partidos_jugados' => $dataCorregido['partidos_jugados'],
-                ':turnos_bateo' => $dataCorregido['turnos_bateo'],
-                ':veces_al_bate' => $dataCorregido['veces_al_bate'],
-                ':carreras' => $dataCorregido['carreras'],
-                ':hits' => $dataCorregido['hits'],
-                ':dobles' => $dataCorregido['dobles'],
-                ':triples' => $dataCorregido['triples'],
-                ':home_runs' => $dataCorregido['home_runs'],
-                ':carreras_impulsadas' => $dataCorregido['carreras_impulsadas'],
-                ':bases_robadas' => $dataCorregido['bases_robadas'],
-                ':atrapado_robando' => $dataCorregido['atrapado_robando'],
-                ':bases_por_bola' => $dataCorregido['bases_por_bola'],
-                ':ponches' => $dataCorregido['ponches'],
-                ':promedio_bateo' => $dataCorregido['promedio_bateo'],
-                ':porcentaje_embase' => $dataCorregido['porcentaje_embase'],
-                ':porcentaje_slugging' => $dataCorregido['porcentaje_slugging'],
-                ':ops' => $dataCorregido['ops'],
-                ':war' => $dataCorregido['war'],
-                ':fecha_nacimiento' => $dataCorregido['fecha_nacimiento'],
-                ':fecha_debut' => $dataCorregido['fecha_debut'],
-                ':lugar_nacimiento' => $dataCorregido['lugar_nacimiento'],
-                ':posiciones' => $dataCorregido['posiciones'],
-                ':id_equipo' => $dataCorregido['id_equipo']
-            ]);
-
-            http_response_code(201);
-            echo json_encode([
-                'message' => 'Jugador creado con éxito',
-                'id' => $pdo->lastInsertId()
-            ]);
-        } catch (Exception $e) {
-            http_response_code(500);
-            echo json_encode(['error' => 'Error al crear jugador: ' . $e->getMessage()]);
-        }
+    if (!isset($data['nombre'])) {
+        http_response_code(400);
+        echo json_encode(['error' => 'El campo nombre es obligatorio']);
+        return;
     }
+
+    $id_equipo = $data['id_equipo'] ?? null;
+    if (!$id_equipo) {
+        http_response_code(400);
+        echo json_encode(['error' => 'El campo id_equipo es obligatorio']);
+        return;
+    }
+
+    // Aquí creas un array con los campos que se utilizan
+    $mapping = [
+        'nombre' => 'nombre',
+        'pos' => 'pos',
+        'años_en_mlb' => 'anos_en_mlb',
+        'año_debut' => 'ano_debut',
+        'año_retiro' => 'ano_retiro',
+        'all_star_appearances' => 'all_star_appearances',
+        'partidos_jugados' => 'partidos_jugados',
+        'turnos_bateo' => 'turnos_bateo',
+        'veces_al_bate' => 'veces_al_bate',
+        'carreras' => 'carreras',
+        'hits' => 'hits',
+        'dobles' => 'dobles',
+        'triples' => 'triples',
+        'home_runs' => 'home_runs',
+        'carreras_impulsadas' => 'carreras_impulsadas',
+        'bases_robadas' => 'bases_robadas',
+        'atrapado_robando' => 'atrapado_robando',
+        'bases_por_bola' => 'bases_por_bola',
+        'ponches' => 'ponches',
+        'promedio_bateo' => 'promedio_bateo',
+        'porcentaje_embase' => 'porcentaje_embase',
+        'porcentaje_slugging' => 'porcentaje_slugging',
+        'ops' => 'ops',
+        'war' => 'war',
+        'fecha_nacimiento' => 'fecha_nacimiento',
+        'fecha_debut' => 'fecha_debut',
+        'lugar_nacimiento' => 'lugar_nacimiento',
+        'posiciones' => 'posiciones',
+        'id_equipo' => 'id_equipo'
+    ];
+
+    // Recorre los campos y arma arrays separados para consulta y valores
+    $campos = [];
+    $placeholders = [];
+    $valores = [];
+    foreach ($mapping as $campoOriginal => $campoPlaceholder) {
+        $campos[] = $campoOriginal;
+        $placeholders[] = ':' . $campoPlaceholder;
+        $valores[':' . $campoPlaceholder] = $data[$campoOriginal] ?? null;
+    }
+
+    $sql = "INSERT INTO jugadores (" . implode(', ', $campos) . ") VALUES (" . implode(', ', $placeholders) . ")";
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($valores);
+        http_response_code(201);
+        echo json_encode([
+            'message' => 'Jugador creado con éxito',
+            'id' => $pdo->lastInsertId()
+        ]);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Error al crear jugador: ' . $e->getMessage()]);
+    }
+}
+
 
     // PUT /api/jugadores/:id - Actualizar un jugador con id_equipo
     public function update($id, $data) {

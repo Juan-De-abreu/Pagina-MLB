@@ -32,13 +32,20 @@ if (preg_match('/^\/api\/registro/', $path)) {
     require_once 'routes/sesionRoutes.php';
     exit;
 }
+if (preg_match('/^\/api\/partidos/', $path)) {
+    require_once 'routes/partidosRoutes.php';
+    exit;
+}
 
 // 🔹 Rutas: /api/jugadores
 if (preg_match('/^\/api\/jugadores/', $path)) {
     require_once 'routes/jugadorRoutes.php';
     exit;
 }
-
+if (preg_match('/^\/api\/usuarios/', $path)) {
+    require_once 'routes/usuariosRoutes.php';
+    exit;
+}
 
 
 
