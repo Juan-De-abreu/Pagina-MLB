@@ -20,6 +20,8 @@ import UsuariosAdmin from "./pages/admin/UsuariosAdmin";
 import AjustesCuenta from "./pages/AjustesCuenta";
 import JugadoresAdmin from "./pages/admin/JugadoresAdmin";
 import EquiposAdmin from "./pages/admin/EquiposAdmin";
+import Favoritos from "./pages/Favoritos";
+import Notificaciones from "./pages/Notificaciones";
 
 // Layout para páginas no admin (header y footer)
 const MainLayout = () => (
@@ -72,6 +74,8 @@ const App = () => {
           <Route path="/partidos" element={<Partidos />} />
           <Route path="/Formsesion" element={<FormSesion />} />
           <Route path="*" element={<Home />} />
+          <Route path="/favoritos" element={<Favoritos />} />
+          <Route path="/notificaciones" element={<Notificaciones />} />
           <Route path="/ajustes" element={<AjustesCuenta />} />
         </Route>
       </Routes>

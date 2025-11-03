@@ -66,6 +66,7 @@ const CustomSelect = ({ options, value, onChange }) => {
 
 
 const PartidosAdmin = () => {
+  
   const [cargando, setCargando] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [partidoEdit, setPartidoEdit] = useState(null);
@@ -74,7 +75,10 @@ const PartidosAdmin = () => {
   const [equipos, setEquipos] = useState([]);
   const [partidos, setPartidos] = useState([]);
   const [estadiosDisponibles, setEstadiosDisponibles] = useState([]);
-
+const fechaSeleccionada = new Date(formData.fecha);
+const hoy = new Date();
+hoy.setHours(0, 0, 0, 0);
+const esFechaFutura = fechaSeleccionada > hoy;
   useEffect(() => {
     Promise.all([
       fetch("http://localhost:8081/api/equipos").then((res) => res.json()),
@@ -116,10 +120,10 @@ const PartidosAdmin = () => {
     const visitante = equipos.find((e) => e.id === formData.equipo_visitante_id);
 
     const estadiosLocal = local?.estadio
-      ? [{ id: `local-${local.id}`, nombre: local.estadio }]
+      ? [{ id: `${local.estadio}`, nombre: local.estadio }]
       : [];
     const estadiosVisitante = visitante?.estadio
-      ? [{ id: `visitante-${visitante.id}`, nombre: visitante.estadio }]
+      ? [{ id: `${visitante.estadio}`, nombre: visitante.estadio }]
       : [];
 
     const combinados = [...estadiosLocal, ...estadiosVisitante];
@@ -182,54 +186,86 @@ const PartidosAdmin = () => {
     return null;
   };
 
-const handleSave = async () => {
-  const err = validateForm();
-  if (err) {
-    alert(err);
-    return;
-  }
-  try {
-    const url = partidoEdit
-      ? `http://localhost:8081/api/partidos/${partidoEdit.id}`
-      : "http://localhost:8081/api/partidos";
-    const method = partidoEdit ? "PUT" : "POST";
-
-    const res = await fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert(data.error || "Error al guardar partido");
+  const handleSave = async () => {
+    const err = validateForm();
+    if (err) {
+      alert(err);
       return;
     }
 
-    // Enriquecer con nombre y logo basados en equipo_local_id y equipo_visitante_id
-    const equipoLocal = equipos.find((e) => e.id === data.equipo_local_id);
-    const equipoVisitante = equipos.find((e) => e.id === data.equipo_visitante_id);
+    const fechaSeleccionada = new Date(formData.fecha);
+    fechaSeleccionada.setHours(0, 0, 0, 0);
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
 
-    const partidoEnriquecido = {
-      ...data,
-      equipo_local: equipoLocal?.nombre || "",
-      equipo_visitante: equipoVisitante?.nombre || "",
-      logo_local: equipoLocal?.logo_url || "",
-      logo_visitante: equipoVisitante?.logo_url || "",
-    };
+    const resultados_local = formData.resultados_local === "" || formData.resultados_local == null ? 0 : Number(formData.resultados_local);
+    const resultados_visitante = formData.resultados_visitante === "" || formData.resultados_visitante == null ? 0 : Number(formData.resultados_visitante);
 
-    if (partidoEdit) {
-      setPartidos((prev) =>
-        prev.map((p) => (p.id === partidoEdit.id ? partidoEnriquecido : p))
-      );
-    } else {
-      setPartidos((prev) => [...prev, partidoEnriquecido]);
+    if (fechaSeleccionada > hoy && (resultados_local !== 0 || resultados_visitante !== 0)) {
+      try {
+        // Enviar notificación
+        const equipoLocal = equipos.find((e) => e.id === formData.equipo_local_id);
+        const equipoVisitante = equipos.find((e) => e.id === formData.equipo_visitante_id);
+        const usuarioId = 1; // Reemplaza con usuario autenticado real
+        const mensaje = `El (${formData.fecha}) jugará el Equipo: ${equipoLocal?.nombre || ""} contra ${equipoVisitante?.nombre || ""}`;
+
+        await fetch("http://localhost:8081/api/notificaciones", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            equipo_id: equipoLocal?.id,
+            usuario_id: usuarioId,
+            mensaje,
+            fecha_creacion: new Date().toISOString(),
+          }),
+        });
+        alert("No se permite ingresar resultados para fechas futuras. Notificación enviada.");
+      } catch {
+        alert("Error de red al crear la notificación.");
+      }
+      closeModal();
+      return;
     }
-    closeModal();
-  } catch {
-    alert("Error de red al guardar partido");
-  }
-};
+
+    // Si es fecha pasada o los resultados son cero, guarda el partido normalmente
+    try {
+      const url = partidoEdit ? `http://localhost:8081/api/partidos/${partidoEdit.id}` : "http://localhost:8081/api/partidos";
+      const method = partidoEdit ? "PUT" : "POST";
+
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, resultados_local, resultados_visitante }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || "Error al guardar partido");
+        return;
+      }
+
+      const equipoLocal = equipos.find((e) => e.id === data.equipo_local_id);
+      const equipoVisitante = equipos.find((e) => e.id === data.equipo_visitante_id);
+
+      const partidoEnriquecido = {
+        ...data,
+        equipo_local: equipoLocal?.nombre || "",
+        equipo_visitante: equipoVisitante?.nombre || "",
+        logo_local: equipoLocal?.logo_url || "",
+        logo_visitante: equipoVisitante?.logo_url || "",
+      };
+
+      if (partidoEdit) {
+        setPartidos((prev) => prev.map((p) => (p.id === partidoEdit.id ? partidoEnriquecido : p)));
+      } else {
+        setPartidos((prev) => [...prev, partidoEnriquecido]);
+      }
+      closeModal();
+    } catch {
+      alert("Error de red al guardar partido");
+    }
+  };
+
 
 
   const handleDelete = async (id) => {
@@ -405,21 +441,6 @@ const handleSave = async () => {
               </label>
 
               <label className="block">
-                Estadio:
-                <CustomSelect
-                  options={estadiosDisponibles.map((e) => ({
-                    id: e.id,
-                    nombre: e.nombre,
-                  }))}
-                  value={
-                    estadiosDisponibles.find((e) => e.id === formData.estadio)
-                      ?.nombre || ""
-                  }
-                  onChange={(v) => setFormData((f) => ({ ...f, estadio: v }))}
-                />
-              </label>
-
-              <label className="block">
                 Equipo Local:
                 <CustomSelect
                   options={equipos.map((e) => ({ id: e.id, nombre: e.nombre }))}
@@ -445,29 +466,47 @@ const handleSave = async () => {
                   }
                 />
               </label>
+                            <label className="block">
+                Estadio:
+                <CustomSelect
+                  options={estadiosDisponibles.map((e) => ({
+                    id: e.id,
+                    nombre: e.nombre,
+                  }))}
+                  value={
+                    estadiosDisponibles.find((e) => e.id === formData.estadio)
+                      ?.nombre || ""
+                  }
+                  onChange={(v) => setFormData((f) => ({ ...f, estadio: v }))}
+                />
+              </label>
 
-              <label className="block">
-                Marcador Local:
-                <input
-                  type="number"
-                  min="0"
-                  name="resultados_local"
-                  value={formData.resultados_local || ""}
-                  onChange={handleChange}
-                  className="w-full p-2 rounded border bg-[var(--gris-claro)] text-[var(--dorado)]"
-                />
-              </label>
-              <label className="block">
-                Marcador Visitante:
-                <input
-                  type="number"
-                  min="0"
-                  name="resultados_visitante"
-                  value={formData.resultados_visitante || ""}
-                  onChange={handleChange}
-                  className="w-full p-2 rounded border bg-[var(--gris-claro)] text-[var(--dorado)]"
-                />
-              </label>
+              {!esFechaFutura && (
+    <>
+      <label className="block">
+        Marcador Local:
+        <input
+          type="number"
+          min="0"
+          name="resultados_local"
+          value={formData.resultados_local || ""}
+          onChange={handleChange}
+          className="w-full p-2 rounded border bg-[var(--gris-claro)] text-[var(--dorado)]"
+        />
+      </label>
+      <label className="block">
+        Marcador Visitante:
+        <input
+          type="number"
+          min="0"
+          name="resultados_visitante"
+          value={formData.resultados_visitante || ""}
+          onChange={handleChange}
+          className="w-full p-2 rounded border bg-[var(--gris-claro)] text-[var(--dorado)]"
+        />
+      </label>
+    </>
+  )}
               <label className="block">
                 Temporada:
                 <input

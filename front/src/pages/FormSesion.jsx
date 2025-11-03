@@ -16,9 +16,8 @@ const Formsesion = () => {
   const validate = () => {
     if (isRegister && nombre.trim() === "") return "El nombre es obligatorio.";
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    const passOk = password.length >= 6;
     if (!emailOk) return "Ingresa un correo válido.";
-    if (!passOk) return "La contraseña debe tener al menos 6 caracteres.";
+    if (password.length < 6) return "La contraseña debe tener al menos 6 caracteres.";
     return null;
   };
 
@@ -48,6 +47,9 @@ const Formsesion = () => {
       if (isRegister) {
         setSuccess("Registro exitoso, ya puedes iniciar sesión.");
         setIsRegister(false);
+        setNombre("");
+        setEmail("");
+        setPassword("");
       } else {
         const token = response.data.token;
         if (!token) throw new Error("Token inválido");
@@ -58,7 +60,11 @@ const Formsesion = () => {
         navigate("/");
       }
     } catch (err) {
-      setError(err.response?.data?.message || err.message || "Error en la operación");
+      setError(
+        err.response?.data?.message ||
+          err.message ||
+          "Error en la operación"
+      );
     } finally {
       setLoading(false);
     }
@@ -68,27 +74,40 @@ const Formsesion = () => {
     <div className="flex align-center justify-center bg-form border-y-1 min-h-[100vh] xl:min-h-[80vh] border-[#000000]">
       <form
         onSubmit={handleSubmit}
-        className={`transition-all duration-200 relative scale-animation w-full max-w-full md:max-w-md 2xl:max-w-lg ${isRegister ? 'h-120' : 'h-100'} mx-auto my-auto bg-[var(--vinotinto)] backdrop-blur-sm rounded-2xl px-10 pt-6 shadow-lg xl:shadow-xl shadow-black animated-border text-[var(--blanco-hielo)]`}
+        className={`transition-all duration-200 relative scale-animation w-full max-w-full md:max-w-md 2xl:max-w-lg ${
+          isRegister ? "h-120" : "h-100"
+        } mx-auto my-auto bg-[var(--vinotinto)] backdrop-blur-sm rounded-2xl px-10 pt-6 shadow-lg xl:shadow-xl shadow-black animated-border text-[var(--blanco-hielo)]`}
         aria-label={isRegister ? "Formulario de registro" : "Formulario de inicio de sesión"}
       >
         <div className="flex items-center justify-center mb-4">
-          <span className="text-4xl font-semibold">{isRegister ? "Registrate" : "Iniciar sesión"}</span>
+          <span className="text-4xl font-semibold">
+            {isRegister ? "Regístrate" : "Iniciar sesión"}
+          </span>
         </div>
 
         {error && (
-          <div role="alert" className="mb-4 text-lg text-red-600 bg-red-200 border border-red-200 rounded p-2">
+          <div
+            role="alert"
+            className="mb-4 text-lg text-red-600 bg-red-200 border border-red-200 rounded p-2"
+          >
             {error}
           </div>
         )}
         {success && (
-          <div role="status" className="mb-4 text-lg text-green-600 bg-green-50 border border-green-200 rounded p-2">
+          <div
+            role="status"
+            className="mb-4 text-lg text-green-600 bg-green-50 border border-green-200 rounded p-2"
+          >
             {success}
           </div>
         )}
 
         {isRegister && (
           <div className="mb-4">
-            <label htmlFor="nombre" className="flex text-xl justify-center xl:justify-start font-medium mb-1">
+            <label
+              htmlFor="nombre"
+              className="flex text-xl justify-center xl:justify-start font-medium mb-1"
+            >
               Nombre
             </label>
             <input
@@ -105,7 +124,10 @@ const Formsesion = () => {
         )}
 
         <div className="mb-4">
-          <label htmlFor="email" className="flex text-xl justify-center xl:justify-start font-medium mb-1">
+          <label
+            htmlFor="email"
+            className="flex text-xl justify-center xl:justify-start font-medium mb-1"
+          >
             Correo electrónico
           </label>
           <input
@@ -122,7 +144,10 @@ const Formsesion = () => {
         </div>
 
         <div className="mb-4 relative">
-          <label htmlFor="password" className="flex text-xl justify-center xl:justify-start font-medium mb-1">
+          <label
+            htmlFor="password"
+            className="flex text-xl justify-center xl:justify-start font-medium mb-1"
+          >
             Contraseña
           </label>
           <input
@@ -151,7 +176,7 @@ const Formsesion = () => {
             disabled={loading}
             className="hover:bg-[var(--dorado)] duration-150 hover:text-black border border-[var(--dorado)] hover:scale-105 transition-all bg-transparent font-semibold px-6 py-4 mt-2 rounded-md disabled:opacity-50 text-lg shadow-md hover:shadow-black"
           >
-            {loading ? (isRegister ? "Registrando..." : "Iniciando...") : (isRegister ? "Registrarte" : "Iniciar sesión")}
+            {loading ? (isRegister ? "Registrando..." : "Iniciando...") : isRegister ? "Registrarte" : "Iniciar sesión"}
           </button>
         </div>
 
@@ -183,7 +208,7 @@ const Formsesion = () => {
                 }}
                 className="text-red-500 animate-bounce"
               >
-                Registrate
+                Regístrate
               </button>
             </>
           )}

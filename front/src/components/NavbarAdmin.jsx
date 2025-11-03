@@ -65,10 +65,10 @@ const NavbarAdmin = () => {
       {/* Menú lateral */}
       <nav
         ref={navRef}
-        className={`fixed top-0 left-0 h-full bg-[var(--vinotinto)] border-r border-[var(--plateado)] text-white px-6 py-10 flex flex-col gap-4
+        className={`fixed top-0 left-0 h-full bg-[var(--vinotinto)] shadow-lg shadow-black text-white px-6 py-10 flex flex-col gap-4
           transform transition-transform duration-300 z-50
           ${open ? "translate-x-0" : "-translate-x-full"}
-          lg:translate-x-0 lg:min-h-screen lg:w-80 lg:flex
+          lg:translate-x-0 lg:min-h-screen 2xl:w-80 lg:flex
           lg:sticky lg:top-0`}
       >
         <h2 className="text-xl font-bold mb-6 border-b border-[var(--dorado)] pb-2 text-center">

@@ -1,65 +1,134 @@
 import { Link } from "react-router-dom";
 import { formatNumberEs } from "../util/funciones";
 import { useEffect, useState } from "react";
-import { getMedalColorVar} from "../util/funciones";
+import { getMedalColorVar } from "../util/funciones";
 import { useInView } from "react-intersection-observer";
 
-const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador=4}) => {
+const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador = 4 }) => {
   const [loading, setLoading] = useState(true);
   const [visible, setVisible] = useState(false);
+  const [favorito, setFavorito] = useState(false);
 
-const { ref, inView } = useInView({
-    triggerOnce: true, // solo disparar la primera vez
-    threshold: [0.25, 0.5, 0.75, 1], // porcentaje visible para activar
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: [0.25, 0.5, 0.75, 1],
   });
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setVisible(true);
+    }, (contador - 1) * 100);
+    setLoading(false);
+    return () => clearTimeout(timer);
+  }, [contador]);
 
-useEffect(() => {
-  const timer = setTimeout(() => {
-    setVisible(true);
-  }, (contador - 1) * 100); // retardo en ms basado en contador
-  return () => clearTimeout(timer),setLoading(false);
-}, [contador]);
-  
+  // Comprobar si es favorito al montar
+  useEffect(() => {
+    const checkFavorito = async () => {
+      try {
+        const token = localStorage.getItem("jwtToken");
+        if (!token) return;
+        const resp = await fetch("http://localhost:8081/api/favoritos/jugadores", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!resp.ok) return;
+        const favs = await resp.json();
+        const esta = favs.some(f => f.id === item.id);
+        setFavorito(esta);
+      } catch {
+        // manejo de error opcional
+      }
+    };
+    checkFavorito();
+  }, [item.id]);
+
+  const toggleFavorito = async () => {
+    try {
+      const token = localStorage.getItem("jwtToken");
+      if (!token) {
+        alert("Necesitas iniciar sesión");
+        return;
+      }
+      setFavorito(prev => !prev);
+      if (favorito) {
+        // quitar favorito
+        await fetch(`http://localhost:8081/api/favoritos?tipo=jugador&id=${item.id}`, {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      } else {
+        // agregar favorito
+        await fetch(`http://localhost:8081/api/favoritos`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ tipo: "jugador", id: item.id }),
+        });
+      }
+    } catch {
+      setFavorito(prev => !prev); // revertir en error
+      alert("Error al actualizar favoritos");
+    }
+  };
+
   if (loading) {
     return <p>Cargando perfil...</p>;
   }
 
   const borderClass =
     contador <= 3
-      ? `border-[var(${getMedalColorVar(contador-1)})] text-[var(${getMedalColorVar(contador-1)})] text-[var(--bronce)]`
+      ? `border-[var(${getMedalColorVar(contador - 1)})] text-[var(${getMedalColorVar(contador - 1)})] text-[var(--bronce)]`
       : "border-[var(--vinotinto)]";
   const medalla =
     contador <= 3
-      ? `block absolute px-3 py-3 text-center mx-auto bg-[var(${getMedalColorVar(contador-1)})] rounded-full font-bold lg:text-md text-black border-1`
+      ? `block absolute px-3 py-3 text-center mx-auto bg-[var(${getMedalColorVar(contador - 1)})] rounded-full font-bold lg:text-md text-black border-1`
       : "hidden";
+
   return (
-    <div 
-      className={`w-70 md:w-55 xl:w-60 2xl:w-70 my-4 animate-slide-top px-2 mx-auto sm:mx-0 
-        transition-all duration-400 ease-out
-     ${visible && inView ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'}
-        `}
-style={{ animationDelay: '0s' /* o quitar si hay animación css */ }}
-    ref={ref} 
->
-      <div className="bg-[var(--gris-oscuro)] rounded shadow-xl h-full flex flex-col shadow-black border-[var(--vinotinto)] border-1">
-        <div className="overflow-hidden rounded-t border-[var(--vinotinto)] border-1">
-          <span
-            className={`${medalla}`}
-          >
-            {contador}
-          </span>
+    <div
+      className={`w-70 md:w-55 xl:w-60 2xl:w-70 my-4 animate-slide-top px-2 mx-auto sm:mx-0 transition-all duration-400 ease-out ${
+        visible && inView ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full"
+      }`}
+      style={{ animationDelay: "0s" }}
+      ref={ref}
+    >
+      <div className="bg-[var(--gris-oscuro)] rounded shadow-xl h-full flex flex-col shadow-black border-[var(--vinotinto)] border-1 relative">
+        <div className="overflow-hidden rounded-t border-[var(--vinotinto)] border-1 relative">
+          <span className={medalla}>{contador}</span>
           <img
             src={`https://api.arsistemamlb.com/uploads/jugadores/${item.id}.jpg`}
             alt={item.nombre}
             className="w-full h-65 object-center"
-            onError={(e) => {
-              e.target.src =
-                "https://api.arsistemamlb.com/uploads/jugadores/default.png";
-            }}
+            onError={e => (e.target.src = "https://api.arsistemamlb.com/uploads/jugadores/default.png")}
           />
+          {/* Botón estrella */}
+          <button
+            onClick={toggleFavorito}
+            className={`absolute top-2 right-2 p-2 rounded-full transition-colors duration-300 ${
+              favorito ? "text-yellow-400" : "text-black hover:text-yellow-400"
+            }`}
+            aria-label={favorito ? "Quitar de favoritos" : "Agregar a favoritos"}
+            title={favorito ? "Quitar de favoritos" : "Agregar a favoritos"}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill={favorito ? "currentColor" : "none"}
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"
+              />
+            </svg>
+          </button>
         </div>
-        <div className={`flex flex-col flex-grow p-4 text-center ${borderClass} justify-between  border-1`}>
+        <div className={`flex flex-col flex-grow p-4 text-center ${borderClass} justify-between border-1`}>
           <p className="font-bold text-lg">{item.nombre}</p>
           <p className="my-3">
             <span className="border-1 inline-block px-3 py-1 rounded-md mb-3">
@@ -85,7 +154,6 @@ style={{ animationDelay: '0s' /* o quitar si hay animación css */ }}
           </p>
         </div>
         <div className="p-4 bg-[var(--vinotinto)] flex justify-center gap-3 rounded-b border-b-1 border-[#520f0f]">
-
           <Link
             to={`/detalle/${item.id}/${item.nombre}`}
             className="border text-[var(--dorado)] text-md px-3 py-1 rounded hover:bg-[var(--dorado)] hover:text-black transition"
