@@ -28,6 +28,14 @@ if (preg_match('/^\/api\/login/', $path)) {
     require_once 'routes/sesionRoutes.php';
     exit;
 }
+if (preg_match('/^\/api\/favoritos/', $path)) {
+    require_once 'routes/favoritosRoutes.php';
+    exit;
+}
+if (preg_match('/^\/api\/notificaciones/', $path)) {
+    require_once 'routes/notificacionesRoutes.php';
+    exit;
+}
 if (preg_match('/^\/api\/registro/', $path)) {
     require_once 'routes/sesionRoutes.php';
     exit;

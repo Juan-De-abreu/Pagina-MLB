@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 24-10-2025 a las 16:18:49
+-- Tiempo de generación: 03-11-2025 a las 21:56:25
 -- Versión del servidor: 9.1.0
 -- Versión de PHP: 8.3.14
 
@@ -57,6 +57,45 @@ INSERT INTO `equipos` (`id`, `nombre`, `ciudad`, `estadio`, `fundacion`, `titulo
 (6, 'Cardenales de Lara', 'Barquisimeto', 'Estadio Antonio Herrera Gutiérrez', '1942', 7, 0, 'https://lacima967fm.com/wp-content/uploads/2025/01/12f6144a285c4abbf17f1c12cd23f4a5.jpg', 'https://pbs.twimg.com/media/EIoRR7aWwAE_HtL.jpg', 20450, 'César Izturis', ''),
 (7, 'Navegantes del Magallanes', 'Valencia', 'Estadio José Bernardo Pérez', '1917', 13, 2, 'https://images.seeklogo.com/logo-png/9/1/navegantes-del-magallanes-logo-png_seeklogo-97602.png', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9VYANp56qWm4b8sIzG0ZUxUxgqAAGtP4hCw&s ', 15000, 'Eduardo Pérez', ''),
 (8, 'Tigres de Aragua', 'Maracay', 'Estadio José Pérez Colmenares', '1963', 10, 0, 'https://lvbp.com/wp-content/uploads/2024/05/tigres-desvelo-nuevo-logo-para-la-temporada-2022-2023_665148815b109.jpeg', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2Vt_Ra6lJHysEBr9h_4tdUm_Yo85Fn-iNAw&s ', 16000, 'Oswaldo Guillén', 'Víctor Zambrano');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `favoritos_equipos`
+--
+
+DROP TABLE IF EXISTS `favoritos_equipos`;
+CREATE TABLE IF NOT EXISTS `favoritos_equipos` (
+  `user_id` int NOT NULL,
+  `equipo_id` int NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `favoritos_equipos`
+--
+
+INSERT INTO `favoritos_equipos` (`user_id`, `equipo_id`) VALUES
+(1, 7);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `favoritos_jugadores`
+--
+
+DROP TABLE IF EXISTS `favoritos_jugadores`;
+CREATE TABLE IF NOT EXISTS `favoritos_jugadores` (
+  `user_id` int NOT NULL,
+  `jugador_id` int NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `favoritos_jugadores`
+--
+
+INSERT INTO `favoritos_jugadores` (`user_id`, `jugador_id`) VALUES
+(1, 68),
+(1, 113);
 
 -- --------------------------------------------------------
 
@@ -232,6 +271,31 @@ INSERT INTO `jugadores` (`id`, `nombre`, `pos`, `años_en_mlb`, `año_debut`, `a
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `notificaciones`
+--
+
+DROP TABLE IF EXISTS `notificaciones`;
+CREATE TABLE IF NOT EXISTS `notificaciones` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `equipo_id` int NOT NULL,
+  `usuario_id` int NOT NULL,
+  `mensaje` varchar(255) COLLATE utf8mb4_spanish2_ci NOT NULL,
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `notificaciones`
+--
+
+INSERT INTO `notificaciones` (`id`, `equipo_id`, `usuario_id`, `mensaje`, `fecha_creacion`) VALUES
+(1, 2, 1, 'Nuevo partido: Tiburones de La Guaira vs Navegantes del Magallanes', '2025-11-03 16:56:39'),
+(2, 7, 1, 'Nuevo partido: Navegantes del Magallanes vs Leones del Caracas', '2025-11-03 17:27:49'),
+(3, 7, 1, 'Nuevo partido: Navegantes del Magallanes vs Tigres de Aragua', '2025-11-03 17:54:50');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `partidos`
 --
 
@@ -248,7 +312,7 @@ CREATE TABLE IF NOT EXISTS `partidos` (
   PRIMARY KEY (`id`),
   KEY `equipo_local_id` (`equipo_local_id`),
   KEY `equipo_visitante_id` (`equipo_visitante_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `partidos`
@@ -294,7 +358,8 @@ INSERT INTO `partidos` (`id`, `equipo_local_id`, `equipo_visitante_id`, `fecha`,
 (37, 2, 6, '2024-10-28', 'Estadio Universitario de Caracas', 3, 5, '2024'),
 (38, 7, 4, '2024-10-29', 'Estadio José Bernardo Pérez', 4, 4, '2024'),
 (39, 1, 3, '2024-10-30', 'Estadio Universitario de Caracas', 2, 6, '2024'),
-(40, 8, 5, '2024-10-31', 'Estadio José Pérez Colmenares', 3, 7, '2024');
+(40, 8, 5, '2024-10-31', 'Estadio José Pérez Colmenares', 3, 7, '2024'),
+(50, 7, 8, '2025-11-27', 'Estadio José Pérez Colmenares', 0, 0, '2025');
 
 -- --------------------------------------------------------
 
