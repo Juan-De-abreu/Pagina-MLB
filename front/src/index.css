@@ -180,3 +180,38 @@
   );
   filter: b blur(10px);
 }
+
+
+
+@keyframes timbrandoAnimation {
+  0% {
+    transform: scale(1.1);
+    transform: rotate(15deg);
+  }
+  25% {
+    transform: scale(1.0);
+    transform: rotate(-15deg);
+  }
+  50% {
+        transform: scale(1);
+
+    transform: rotate(15deg);
+  }
+  75% {
+    transform: scale(1.1);
+    transform: rotate(-15deg);
+  }
+    100% {
+    transform: rotate(0deg);
+  }
+
+
+}
+
+.timbrando {
+  color: var(--dorado);
+  animation-name: timbrandoAnimation;
+  animation-duration: 4s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}

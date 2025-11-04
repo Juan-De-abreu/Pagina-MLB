@@ -85,7 +85,7 @@ const Carrusel = (images) => {
               />
               <div
                 key={datos.id}
-                className="w-100 h-60 xl:h-auto lg:w-auto z-50 text-center absolute -bottom-20 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl text-[#fff] bg-[#000000a2]  mx-auto py-3 rounded-lg"
+                className="w-100 h-60 xl:h-auto lg:w-auto z-2 text-center absolute -bottom-20 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl text-[#fff] bg-[#000000a2]  mx-auto py-3 rounded-lg"
               >
                 {datos.slice(current, current + 1).map((item) => (
                   <div key={item.id} className="px-0 md:px-15 xl:px-40 2xl:px-50">

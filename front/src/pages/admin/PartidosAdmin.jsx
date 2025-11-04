@@ -98,7 +98,7 @@ const esFechaFutura = fechaSeleccionada > hoy;
       })
       .catch(() => alert("Error al cargar datos"))
       .finally(() => setCargando(false));
-  }, []);
+  }, [partidos.length]);
 
   // Extraer año de fecha y actualizar temporada
   useEffect(() => {

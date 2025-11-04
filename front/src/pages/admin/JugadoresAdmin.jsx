@@ -75,7 +75,7 @@ const AdminJugadores = () => {
       }
     };
     fetchDatos();
-  }, [recargar]);
+  }, [recargar,equipos.length,jugadores.length]);
 
   const jugadoresFiltrados = jugadores.filter((j) =>
     j.nombre.toLowerCase().includes(search.trim().toLowerCase())

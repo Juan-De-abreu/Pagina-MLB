@@ -47,6 +47,7 @@ const AdminLayout = () => (
 
 const App = () => {
   return (
+    <div className="app">
     <BrowserRouter>
       <Routes>
         {/* Rutas protegidas admin */}
@@ -80,6 +81,7 @@ const App = () => {
         </Route>
       </Routes>
     </BrowserRouter>
+    </div>
   );
 };
 

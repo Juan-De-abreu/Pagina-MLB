@@ -77,13 +77,13 @@ const CardPartidos = ({ item, contadorpartidos }) => {
 
   return (
     <div
-      className={`w-[80vw] mx-auto my-15 animate-slide-top px-4 2xl:px-50 transition-all duration-400 ease-out ${
+      className={`w-[80vw] mx-auto my-8 animate-slide-top px-4 2xl:px-50 transition-all duration-400 ease-out ${
         inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
       }`}
       ref={ref}
       style={{ animationDelay: `${contadorpartidos * 0.3}s` }}
     >
-      <div className="bg-[var(--gris-oscuro)] rounded shadow-xl h-full flex flex-col shadow-black border-[var(--vinotinto)] border-2">
+      <div className="bg-[var(--gris-oscuro)] rounded transition-all duration-300 hover:scale-104 hover:shadow-lg h-full flex flex-col shadow-black border-[var(--vinotinto)] border-2">
         <div className="overflow-hidden grid rounded-t border-[var(--vinotinto)] border-l-4 border-r-4 border-t-4 border-b-2 md:grid-cols-[47%_6%_47%]">
           <img
             src={equipolocal.logo_url}

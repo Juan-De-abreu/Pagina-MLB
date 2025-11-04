@@ -81,7 +81,7 @@ const Favoritos = () => {
   return (
     <div className="bg-[var(--body)] py-4 min-h-screen text-[var(--blanco-hielo)]">
       <div className="container mx-auto px-4">
-        <h3 className="text-center py-2 text-2xl font-semibold flex items-center justify-center gap-2">
+        <h3 className="text-center py-2 text-xl lg:text-6xl font-semibold flex items-center justify-center gap-2 my-6">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -99,7 +99,7 @@ const Favoritos = () => {
           Favoritos
         </h3>
 
-        <div className="flex justify-center gap-4 mb-6">
+        <div className="justify-center gap-4 mb-6 flex text-lg lg:text-4xl">
           <button
             className={`${baseBtnClass} ${
               tipoFiltro === "jugadores"
