@@ -21,6 +21,7 @@ class NotificacionesController
             empty($data['fecha_creacion'])
         ) {
             http_response_code(400);
+            header('Content-Type: application/json');
             echo json_encode(['error' => 'Datos incompletos para la notificación']);
             return;
         }
@@ -52,31 +53,81 @@ class NotificacionesController
     }
 
 
-    public function notificacionesPorUsuario($userId)
+   public function notificacionesPorUsuario($userId)
+{
+    if (!is_numeric($userId)) {
+        http_response_code(400);
+        header('Content-Type: application/json');
+        echo json_encode(['error' => 'Parámetro userId inválido']);
+        return;
+    }
+
+    try {
+        $sql = "
+            SELECT nu.leida, nu.fecha_lectura, n.id, n.equipo_id, n.mensaje, n.fecha_creacion
+            FROM notificaciones_usuario nu
+            JOIN notificaciones n ON nu.notificacion_id = n.id
+            WHERE nu.usuario_id = ?
+            ORDER BY n.fecha_creacion DESC
+            LIMIT 25
+        ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$userId]);
+        $notificaciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        header('Content-Type: application/json');
+        echo json_encode($notificaciones);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        header('Content-Type: application/json');
+        echo json_encode(['error' => 'Error al obtener notificaciones: ' . $e->getMessage()]);
+    }
+}
+
+
+
+    public function marcarNotificacionesLeidas($data)
     {
-        if (!is_numeric($userId)) {
+        if (
+            empty($data['usuario_id']) ||
+            empty($data['notificaciones_ids']) ||
+            !is_array($data['notificaciones_ids'])
+        ) {
             http_response_code(400);
             header('Content-Type: application/json');
-            echo json_encode(['error' => 'Parámetro userId inválido']);
+            echo json_encode(['error' => 'Parámetros inválidos para marcar notificaciones leídas']);
             return;
         }
 
-        try {
-            $stmt = $this->pdo->prepare("
-                SELECT n.* FROM notificaciones n
-                JOIN favoritos_equipos f ON n.equipo_id = f.equipo_id
-                WHERE f.user_id = ? AND n.usuario_id = ?
-                ORDER BY n.fecha_creacion DESC
-            ");
-            $stmt->execute([$userId, $userId]);
-            $notificaciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $usuarioId = $data['usuario_id'];
+        $notificacionesIds = $data['notificaciones_ids'];
 
+        try {
+            $this->pdo->beginTransaction();
+
+            $placeholders = implode(',', array_fill(0, count($notificacionesIds), '?'));
+
+            $sql = "UPDATE notificaciones_usuario 
+                    SET leida = 1, fecha_lectura = NOW() 
+                    WHERE usuario_id = ? 
+                    AND notificacion_id IN ($placeholders)";
+
+            $stmt = $this->pdo->prepare($sql);
+
+            $params = array_merge([$usuarioId], $notificacionesIds);
+
+            $stmt->execute($params);
+
+            $this->pdo->commit();
+
+            http_response_code(200);
             header('Content-Type: application/json');
-            echo json_encode($notificaciones);
+            echo json_encode(['mensaje' => 'Notificaciones marcadas como leídas']);
         } catch (PDOException $e) {
+            $this->pdo->rollBack();
             http_response_code(500);
             header('Content-Type: application/json');
-            echo json_encode(['error' => 'Error al obtener notificaciones: ' . $e->getMessage()]);
+            echo json_encode(['error' => 'Error al marcar notificaciones como leídas: ' . $e->getMessage()]);
         }
     }
 }

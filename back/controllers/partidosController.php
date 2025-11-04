@@ -62,7 +62,7 @@ public function createPartido()
     }
 
     try {
-        // 1. Insertar partido
+        // Insertar partido
         $stmt = $pdo->prepare("INSERT INTO partidos (fecha, estadio, resultados_local, resultados_visitante, equipo_local_id, equipo_visitante_id, temporada) 
                               VALUES (:fecha, :estadio, :resultados_local, :resultados_visitante, :equipo_local_id, :equipo_visitante_id, :temporada)");
         $stmt->execute([
@@ -75,17 +75,13 @@ public function createPartido()
             ':temporada' => $data['temporada'] ?? null,
         ]);
 
-        $id = $pdo->lastInsertId();
+        $idPartido = $pdo->lastInsertId();
 
-        // 2. Obtener datos del partido creado
-        $stmt2 = $pdo->prepare("SELECT * FROM partidos WHERE id = ?");
-        $stmt2->execute([$id]);
-        $partidoCreado = $stmt2->fetch(PDO::FETCH_ASSOC);
-
-        // 3. Obtener nombres de equipos para el mensaje
+        // Obtener nombres equipos para mensaje
         $stmtEquipos = $pdo->prepare("SELECT id, nombre FROM equipos WHERE id IN (?, ?)");
         $stmtEquipos->execute([$data['equipo_local_id'], $data['equipo_visitante_id']]);
         $equipos = $stmtEquipos->fetchAll(PDO::FETCH_ASSOC);
+
         $nombreLocal = '';
         $nombreVisitante = '';
         foreach ($equipos as $equipo) {
@@ -93,31 +89,39 @@ public function createPartido()
             if ($equipo['id'] == $data['equipo_visitante_id']) $nombreVisitante = $equipo['nombre'];
         }
 
-        // 4. Obtener usuarios que tienen los equipos favoritos
+        // Obtener usuarios favoritos
         $stmtFav = $pdo->prepare("SELECT DISTINCT user_id FROM favoritos_equipos WHERE equipo_id IN (?, ?)");
         $stmtFav->execute([$data['equipo_local_id'], $data['equipo_visitante_id']]);
         $usuariosFavoritos = $stmtFav->fetchAll(PDO::FETCH_COLUMN);
 
-        // 5. Insertar notificaciones para esos usuarios
         if (!empty($usuariosFavoritos)) {
+            // Crear notificación global
             $mensaje = "Nuevo partido: {$nombreLocal} vs {$nombreVisitante}";
-            $stmtNotif = $pdo->prepare("INSERT INTO notificaciones (equipo_id, usuario_id, mensaje, fecha_creacion) VALUES (?, ?, ?, NOW())");
+            $stmtNotif = $pdo->prepare("INSERT INTO notificaciones (equipo_id, mensaje, fecha_creacion) VALUES (?, ?, NOW())");
+            $stmtNotif->execute([$data['equipo_local_id'], $mensaje]);
+            $notificacionId = $pdo->lastInsertId();
+
+            // Insertar estado individual en notificaciones_usuario
+            $stmtNotifUsuario = $pdo->prepare("INSERT INTO notificaciones_usuario (notificacion_id, usuario_id, leida) VALUES (?, ?, 0)");
 
             foreach ($usuariosFavoritos as $userId) {
-                // Aquí se asocia la notificación con el equipo local para referencia
-                $stmtNotif->execute([$data['equipo_local_id'], $userId, $mensaje]);
+                $stmtNotifUsuario->execute([$notificacionId, $userId]);
             }
         }
 
-        // 6. Responder con el partido creado
+        // Responder con partido creado
+        $stmtPartido = $pdo->prepare("SELECT * FROM partidos WHERE id = ?");
+        $stmtPartido->execute([$idPartido]);
+        $partidoCreado = $stmtPartido->fetch(PDO::FETCH_ASSOC);
+
         http_response_code(201);
         echo json_encode($partidoCreado);
-
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(['error' => 'Error en base de datos: ' . $e->getMessage()]);
     }
 }
+
 
 
     // Actualizar partido

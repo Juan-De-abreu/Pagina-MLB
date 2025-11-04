@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../controllers/NotificacionesController.php';
-require_once __DIR__ . '/../core/core.php'; // funciones comunes si tienes
+require_once __DIR__ . '/../core/core.php';
 
 $controller = new NotificacionesController();
 
@@ -18,12 +18,16 @@ if (in_array($method, ['POST']) && json_last_error() !== JSON_ERROR_NONE) {
 
 switch ($method) {
     case 'POST':
-        // Crear notificación
-        $controller->createNotification($data);
+        if ($path === '/api/notificaciones/markread') {
+            // Nueva ruta para marcar notificaciones leídas
+            $controller->marcarNotificacionesLeidas($data);
+        } else {
+            // Crear notificación estándar
+            $controller->createNotification($data);
+        }
         break;
 
     case 'GET':
-        // Validar y obtener param user_id para obtener notificaciones
         if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
             $userId = intval($_GET['user_id']);
             $controller->notificacionesPorUsuario($userId);
