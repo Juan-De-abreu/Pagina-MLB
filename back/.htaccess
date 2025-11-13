@@ -1,11 +1,18 @@
-# .htaccess
-
-# Habilitar el motor de reescritura
+# Habilitar motor de reescritura
 RewriteEngine On
 
-# No aplicar reglas si el archivo o carpeta existe (para CSS, JS, etc.)
+# Añadir cabeceras CORS en todas las respuestas
+Header always set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+Header always set Access-Control-Allow-Headers "Content-Type, Authorization"
+
+# No aplicar reglas si el archivo o carpeta existe (CSS, JS, imágenes, etc.)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-# Redirigir todas las solicitudes a index.php
+# Redirigir todas las peticiones a index.php para manejo centralizado
 RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Responder con 204 (No Content) a peticiones OPTIONS (preflight CORS)
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=204,L]

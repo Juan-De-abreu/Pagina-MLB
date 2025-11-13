@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../controllers/NotificacionesController.php';
+require_once __DIR__ . '/../controllers/notificacionesController.php';
 require_once __DIR__ . '/../core/core.php';
 
 $controller = new NotificacionesController();

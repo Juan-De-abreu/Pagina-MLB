@@ -1,7 +1,7 @@
 <?php
 // routes/jugadorRoutes.php
 
-require_once __DIR__ . '/../controllers/JugadorController.php';
+require_once __DIR__ . '/../controllers/jugadorController.php';
 require_once __DIR__ . '/../core/core.php';
 
 $controller = new JugadorController();

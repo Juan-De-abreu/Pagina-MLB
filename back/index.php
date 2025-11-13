@@ -58,9 +58,14 @@ if (preg_match('/^\/api\/usuarios/', $path)) {
 
 
 // 🔹 Página de inicio
-if ($path === '/' || $path === '/backjuegos') {
+if ($path === '/backjuegos') {
     header('Content-Type: text/html; charset=UTF-8');
     readfile(__DIR__ . '/views/index.html');
+    exit;
+}
+if ($path === '/'|| $path==='') {
+    header('Content-Type: text/html; charset=UTF-8');
+    readfile(__DIR__ . '/public/index.html');
     exit;
 }
 
