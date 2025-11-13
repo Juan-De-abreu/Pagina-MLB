@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CardPartidos from "../../components/CardPartidos";
+import { API_BASE_URL } from '../../config/api';
 
-const API = `http://localhost:8081/api/equipos/`;
+const API = `${API_BASE_URL}/equipos/`;
 // Cambiar a la nueva ruta que filtra partidos por equipo
-const API_PARTIDOS_EQUIPO = (idEquipo) => `http://localhost:8081/api/partidos/equipo/${idEquipo}`;
+const API_PARTIDOS_EQUIPO = (idEquipo) => `${API_BASE_URL}/partidos/equipo/${idEquipo}`;
 
 const DetalleEquipos = () => {
   const { id, nombre } = useParams();

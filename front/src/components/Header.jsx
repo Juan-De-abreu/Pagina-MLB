@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; 
+import { API_BASE_URL } from '../config/api';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -29,7 +31,7 @@ const Header = () => {
   }, [userMenuOpen]);
 
   // Decodifica token
-  const token = localStorage.getItem("jwtToken");
+  const { token } = useAuth();
 
   useEffect(() => {
     if (token) {
@@ -55,7 +57,7 @@ const Header = () => {
     const fetchNotificaciones = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8081/api/notificaciones?user_id=${user.id}`
+          `${API_BASE_URL}/notificaciones?user_id=${user.id}`
         );
         if (!res.ok) {
           const errorMsg = await res.text();

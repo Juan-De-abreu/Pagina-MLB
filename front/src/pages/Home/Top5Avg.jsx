@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { getMedalColorVar} from "../../util/funciones";
 import { getMedalColorVartext} from "../../util/funciones";
 import { useInView } from 'react-intersection-observer';
+import { API_BASE_URL } from '../../config/api';
 
-const API = 'http://localhost:8081/api/estadisticas/top-war';
+const API = `${API_BASE_URL}/estadisticas/top-war`;
 
 const Top5Avg = () => {
   const [datos, setDatos] = useState([]);

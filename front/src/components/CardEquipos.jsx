@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from '../config/api';
 import { getMedalColorVartext } from "../util/funciones";
 import { useEffect, useState } from "react";
 import { getMedalColorVar } from "../util/funciones";
 import { useInView } from "react-intersection-observer";
 
 const CardEquipos = ({ item, contador = 4 }) => {
-  const API = `http://localhost:8081/api/equipos/${item.id}`;
+  const API = `${API_BASE_URL}/equipos/${item.id}`;
   const [error, setError] = useState(null);
   const [datos, setDatos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -38,7 +39,7 @@ const CardEquipos = ({ item, contador = 4 }) => {
       try {
         const token = localStorage.getItem("jwtToken");
         if (!token) return;
-        const response = await fetch(`http://localhost:8081/api/favoritos/equipos`, {
+        const response = await fetch(`${API_BASE_URL}/favoritos/equipos`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!response.ok) return;
@@ -63,14 +64,14 @@ const CardEquipos = ({ item, contador = 4 }) => {
 
       if (!favorito) {
         // Agregar favorito
-        await fetch(`http://localhost:8081/api/favoritos`, {
+        await fetch(`${API_BASE_URL}/favoritos`, {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
           body: JSON.stringify({ tipo: "equipo", id: item.id }),
         });
       } else {
         // Quitar favorito
-        await fetch(`http://localhost:8081/api/favoritos?tipo=equipo&id=${item.id}`, {
+        await fetch(`${API_BASE_URL}/favoritos?tipo=equipo&id=${item.id}`, {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
         });

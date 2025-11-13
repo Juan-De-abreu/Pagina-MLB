@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router";
 import { getMedalColorVartext} from "../../util/funciones";
+import { API_BASE_URL } from '../../config/api';
 
 const Carrusel = (images) => {
   const [current, setCurrent] = useState(0);
-  const API = "http://localhost:8081/api/estadisticas/top-war";
+  const API = `${API_BASE_URL}/estadisticas/top-war`;
   const { images: imagesArray } = images;
 
   const prevSlide = () => {

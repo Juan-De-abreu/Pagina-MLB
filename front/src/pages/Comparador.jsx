@@ -1,6 +1,8 @@
 // src/components/Comparador2.jsx
 import { useState, useEffect } from "react";
-const API = "http://localhost:8081/api/jugadores";
+import { API_BASE_URL } from '../config/api';
+
+const API = `${API_BASE_URL}/jugadores`;
 
 const Comparador = () => {
   const [datos, setDatos] = useState([]);

@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router";
+import { API_BASE_URL } from '../config/api';
 
 const cacheEquipos = {};
 
@@ -22,7 +23,7 @@ const CardPartidos = ({ item, contadorpartidos }) => {
   useEffect(() => {
     const fetchEquipo = async (id, setEquipo, didFetchRef) => {
       if (didFetchRef.current) return;
-      const url = `http://localhost:8081/api/equipos/${id}`;
+      const url = `${API_BASE_URL}/equipos/${id}`;
       if (cacheEquipos[url]) {
         setEquipo(cacheEquipos[url]);
         didFetchRef.current = true;

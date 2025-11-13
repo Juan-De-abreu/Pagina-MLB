@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { API_BASE_URL } from '../../config/api';
 
 // Componente CustomSelect
 const CustomSelect = ({ options, value, onChange }) => {
@@ -81,8 +82,8 @@ hoy.setHours(0, 0, 0, 0);
 const esFechaFutura = fechaSeleccionada > hoy;
   useEffect(() => {
     Promise.all([
-      fetch("http://localhost:8081/api/equipos").then((res) => res.json()),
-      fetch("http://localhost:8081/api/partidos").then((res) => res.json()),
+      fetch(`${API_BASE_URL}/equipos`).then((res) => res.json()),
+      fetch(`${API_BASE_URL}/partidos`).then((res) => res.json()),
     ])
       .then(([equiposData, partidosData]) => {
         setEquipos(equiposData);
@@ -209,7 +210,7 @@ const esFechaFutura = fechaSeleccionada > hoy;
         const usuarioId = 1; // Reemplaza con usuario autenticado real
         const mensaje = `El (${formData.fecha}) jugará el Equipo: ${equipoLocal?.nombre || ""} contra ${equipoVisitante?.nombre || ""}`;
 
-        await fetch("http://localhost:8081/api/notificaciones", {
+        await fetch(`${API_BASE_URL}/notificaciones`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -229,7 +230,7 @@ const esFechaFutura = fechaSeleccionada > hoy;
 
     // Si es fecha pasada o los resultados son cero, guarda el partido normalmente
     try {
-      const url = partidoEdit ? `http://localhost:8081/api/partidos/${partidoEdit.id}` : "http://localhost:8081/api/partidos";
+      const url = partidoEdit ? `${API_BASE_URL}/partidos/${partidoEdit.id}` : `${API_BASE_URL}/partidos`;
       const method = partidoEdit ? "PUT" : "POST";
 
       const res = await fetch(url, {
@@ -271,7 +272,7 @@ const esFechaFutura = fechaSeleccionada > hoy;
   const handleDelete = async (id) => {
     if (!window.confirm("¿Borrar este partido?")) return;
     try {
-      const res = await fetch(`http://localhost:8081/api/partidos/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/partidos/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();

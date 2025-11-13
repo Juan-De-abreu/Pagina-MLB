@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { API_BASE_URL } from '../../config/api';
 
 const CustomSelect = ({ options, value, onChange }) => {
   const [open, setOpen] = useState(false);
@@ -60,11 +61,11 @@ const AdminJugadores = () => {
     const fetchDatos = async () => {
       setCargando(true);
       try {
-        const resJugadores = await fetch("http://localhost:8081/api/jugadores");
+        const resJugadores = await fetch(`${API_BASE_URL}/jugadores`);
         const dataJugadores = await resJugadores.json();
         setJugadores(dataJugadores);
 
-        const resEquipos = await fetch("http://localhost:8081/api/equipos");
+        const resEquipos = await fetch(`${API_BASE_URL}/equipos`);
         const dataEquipos = await resEquipos.json();
         setEquipos(dataEquipos);
       } catch (e) {
@@ -169,8 +170,8 @@ const AdminJugadores = () => {
 
     try {
       const url = jugadorEdit
-        ? `http://localhost:8081/api/jugadores/${jugadorEdit.id}`
-        : "http://localhost:8081/api/jugadores";
+        ? `${API_BASE_URL}/jugadores/${jugadorEdit.id}`
+        : `${API_BASE_URL}/jugadores`;
       const method = jugadorEdit ? "PUT" : "POST";
 
       const res = await fetch(url, {
@@ -199,7 +200,7 @@ const AdminJugadores = () => {
     if (!window.confirm(`¿Borrar este jugador? ${nombre}`)) return;
 
     try {
-      const res = await fetch(`http://localhost:8081/api/jugadores/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/jugadores/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();

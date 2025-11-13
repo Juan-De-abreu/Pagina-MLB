@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import CardEquipos from "../components/CardEquipos";
+import { API_BASE_URL } from '../config/api';
 
 
-const API = "http://localhost:8081/api/equipos";
+const API = `${API_BASE_URL}/equipos`;
 
 const Equipos = () => {
   const [datos, setDatos] = useState([]);

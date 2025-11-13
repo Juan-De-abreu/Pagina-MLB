@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // Importa el hook de auth
 import CardJugadores from "../components/CardJugadores";
 import CardEquipos from "../components/CardEquipos";
 import CardPartidos from "../components/CardPartidos";
+import { API_BASE_URL } from '../config/api';
 
-const API_BASE = "http://localhost:8081/api/favoritos";
-const API_PARTIDOS = "http://localhost:8081/api/favoritos/partidos";
+const API_BASE = `${API_BASE_URL}/favoritos`;
+const API_PARTIDOS = `${API_BASE_URL}/favoritos/partidos`;
 
 const Favoritos = () => {
   const location = useLocation();
+  const { token } = useAuth(); // Obtiene token del contexto
 
   const [tipoFiltro, setTipoFiltro] = useState("jugadores");
   const [datos, setDatos] = useState([]);
@@ -19,9 +22,8 @@ const Favoritos = () => {
     setLoading(true);
     setError(null);
     try {
-      const token = localStorage.getItem("jwtToken");
       if (!token) {
-        setError("No autorizado. Por favor inicia sesión.");
+        setError("Por favor inicia sesión.");
         setLoading(false);
         return;
       }
@@ -45,7 +47,7 @@ const Favoritos = () => {
 
   useEffect(() => {
     getDatos();
-  }, [tipoFiltro]);
+  }, [tipoFiltro, token]); // Refresca datos si cambia token o filtro
 
   if (loading) {
     return (
@@ -71,7 +73,6 @@ const Favoritos = () => {
 
   const baseBtnClass = "px-4 py-2 rounded border cursor-pointer transition-colors duration-300 ease-in-out";
 
-  // Mapear tipoFiltro a clases Tailwind para cantidad columnas grid
   const columnasGrid = {
     jugadores: "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5",
     equipos: "grid-cols-1 sm:grid-cols-2 md:grid-cols-3",
@@ -142,23 +143,21 @@ const Favoritos = () => {
           <div className={`grid gap-4 ${columnasGrid[tipoFiltro]}`}>
             {tipoFiltro === "jugadores"
               ? datos.map((item, index) => (
-                  <CardJugadores key={item.id}
-                item={item}
-                l1={"WAR"}
-                v1={item.war}
-                l2={"HR"}
-                v2={item.home_runs}
-                l3={"AVG"}
-                v3={item.promedio_bateo}
-                contador={index + 4} />
+                  <CardJugadores
+                    key={item.id}
+                    item={item}
+                    l1={"WAR"}
+                    v1={item.war}
+                    l2={"HR"}
+                    v2={item.home_runs}
+                    l3={"AVG"}
+                    v3={item.promedio_bateo}
+                    contador={index + 4}
+                  />
                 ))
               : tipoFiltro === "equipos"
-              ? datos.map((item, index) => (
-                  <CardEquipos key={item.id} item={{ ...item, contador: index + 4 }} />
-                ))
-              : datos.map((item, index) => (
-                  <CardPartidos key={item.id} item={{ ...item, contador: index + 4 }} />
-                ))}
+              ? datos.map((item, index) => <CardEquipos key={item.id} item={{ ...item, contador: index + 4 }} />)
+              : datos.map((item, index) => <CardPartidos key={item.id} item={{ ...item, contador: index + 4 }} />)}
           </div>
         )}
       </div>

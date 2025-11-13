@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { API_BASE_URL } from '../config/api';
 
-const API = "http://localhost:8081/api/jugadores/";
+const API = `${API_BASE_URL}/jugadores/`;
 const IMAGE_BASE_URL = "https://api.arsistemamlb.com/uploads/jugadores/";
 
 const Detalle = () => {

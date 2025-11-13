@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import CardJugadores from "../../components/CardJugadores";
+import { API_BASE_URL } from '../../config/api';
 
-const API = "http://localhost:8081/api/estadisticas/top-tb";
+const API = `${API_BASE_URL}/estadisticas/top-tb`;
 
 const TopTb = () => {
   const [datos, setDatos] = useState([]);

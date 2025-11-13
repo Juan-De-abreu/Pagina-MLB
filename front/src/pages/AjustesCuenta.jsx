@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
+import { useAuth } from '../context/AuthContext';
+import { jwtDecode } from 'jwt-decode';
+import { API_BASE_URL } from '../config/api';
+
 
 const fieldLabelVariants = {
   hidden: { opacity: 0, y: 10 },
@@ -7,6 +11,8 @@ const fieldLabelVariants = {
 };
 
 const AjustesCuenta = () => {
+  const { token } = useAuth();
+
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,24 +26,28 @@ const AjustesCuenta = () => {
   const [mensaje, setMensaje] = useState('');
   const [error, setError] = useState('');
 
-  const getUserIdFromToken = () => {
-    const token = localStorage.getItem('jwtToken');
-    if (!token) return null;
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.sub || null;
-    } catch {
-      return null;
-    }
-  };
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    const userId = getUserIdFromToken();
+    if (token) {
+      try {
+        const payload = jwtDecode(token);
+        setUserId(payload.sub);
+      } catch (err) {
+        setUserId(null);
+        setError('Token inválido');
+      }
+    } else {
+      setUserId(null);
+    }
+  }, [token]);
+
+  useEffect(() => {
     if (!userId) {
       setError('No se encontró usuario autenticado');
       return;
     }
-    fetch('http://localhost:8081/api/usuarios')
+    fetch(`${API_BASE_URL}/usuarios`)
       .then(res => {
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         return res.json();
@@ -47,6 +57,7 @@ const AjustesCuenta = () => {
         if (user) {
           setNombre(user.nombre || '');
           setEmail(user.email || '');
+          setError('');
         } else {
           setError('Usuario no encontrado');
         }
@@ -54,7 +65,7 @@ const AjustesCuenta = () => {
       .catch(err => {
         setError(`Error cargando datos de usuario: ${err.message}`);
       });
-  }, []);
+  }, [userId]);
 
   const validar = () => {
     if (editNombre && !nombre.trim()) {
@@ -92,9 +103,8 @@ const AjustesCuenta = () => {
     if (editPassword) payload.password = password;
 
     try {
-      const userId = getUserIdFromToken();
       if (!userId) throw new Error('Usuario no autenticado');
-      const res = await fetch(`http://localhost:8081/api/usuarios/${userId}`, {
+      const res = await fetch(`${API_BASE_URL}/usuarios/${userId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -118,7 +128,9 @@ const AjustesCuenta = () => {
   return (
     <div className="px-7 lg:px-0 min-h-[75vh]">
       <div className="max-w-md mx-auto p-6 shadow-lg shadow-black rounded my-10 border-1 border-black px-10">
-        <h1 className="text-2xl font-semibold mb-4 text-center text-[var(--dorado)]">Ajustes de Cuenta</h1>
+        <h1 className="text-2xl font-semibold mb-4 text-center text-[var(--dorado)]">
+          Ajustes de Cuenta
+        </h1>
 
         {mensaje && <p className="mb-4 text-green-600">{mensaje}</p>}
         {error && <p className="mb-4 text-red-600">{error}</p>}
@@ -278,13 +290,29 @@ const AjustesCuenta = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full border-1 text-[var(--dorado)] hover:bg-[var(--dorado)] hover:text-black py-2 rounded transition flex justify-center items-center`}
+            className="w-full border-1 text-[var(--dorado)] hover:bg-[var(--dorado)] hover:text-black py-2 rounded transition flex justify-center items-center"
           >
             {loading ? (
               <>
-                <svg className="animate-spin h-5 w-5 mr-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                <svg
+                  className="animate-spin h-5 w-5 mr-3 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
                 </svg>
                 Actualizando...
               </>
@@ -297,4 +325,5 @@ const AjustesCuenta = () => {
     </div>
   );
 };
+
 export default AjustesCuenta;

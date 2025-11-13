@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import CardJugadores from "../components/CardJugadores";
 import { Link, useLocation } from "react-router-dom";
+import { API_BASE_URL } from '../config/api';
 
-const API = "http://localhost:8081/api/jugadores";
+const API = `${API_BASE_URL}/jugadores`;
 
 const Jugadores = () => {
   const location = useLocation();

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+  import { useAuth } from "../context/AuthContext"; 
+import { API_BASE_URL } from '../config/api';
 
 const Notificaciones = () => {
   const [notificaciones, setNotificaciones] = useState([]);
@@ -7,8 +9,10 @@ const Notificaciones = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+
   const getUserIdFromToken = () => {
-    const token = localStorage.getItem('jwtToken');
+      const { token } = useAuth();
+    
     if (!token) return null;
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
@@ -29,7 +33,7 @@ const Notificaciones = () => {
 
     const fetchAndMarkRead = async () => {
       try {
-        const res = await fetch(`http://localhost:8081/api/notificaciones?user_id=${userId}`);
+        const res = await fetch(`${API_BASE_URL}/notificaciones?user_id=${userId}`);
         if (!res.ok) throw new Error('Error cargando notificaciones');
         const data = await res.json();
 
@@ -37,7 +41,7 @@ const Notificaciones = () => {
 
         const idsNoLeidas = data.filter(n => !n.leida).map(n => n.id);
         if (idsNoLeidas.length > 0) {
-          const markReadRes = await fetch(`http://localhost:8081/api/notificaciones/markread`, {
+          const markReadRes = await fetch(`${API_BASE_URL}/notificaciones/markread`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ notificaciones_ids: idsNoLeidas, usuario_id: userId }),

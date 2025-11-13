@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import CardPartidos from "../components/CardPartidos";
+import { API_BASE_URL } from '../config/api';
 
 const Partidos = () => {
-  const API = `http://localhost:8081/api/partidos`;
-  const API_EQUIPOS = 'http://localhost:8081/api/equipos';
+  const API = `${API_BASE_URL}/partidos`;
+  const API_EQUIPOS = `${API_BASE_URL}/equipos`;
 
   const [error, setError] = useState(null);
   const [datos, setDatos] = useState([]);

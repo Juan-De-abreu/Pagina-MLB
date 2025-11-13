@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { API_BASE_URL } from '../../config/api';
 
 const EquiposAdmin = () => {
   const [equipos, setEquipos] = useState([]);
@@ -12,7 +13,7 @@ const EquiposAdmin = () => {
     const fetchDatos = async () => {
       setCargando(true);
       try {
-        const resEquipos = await fetch("http://localhost:8081/api/equipos");
+        const resEquipos = await fetch(`${API_BASE_URL}/equipos`);
         const dataEquipos = await resEquipos.json();
         setEquipos(dataEquipos);
       } catch (e) {
@@ -74,8 +75,8 @@ const EquiposAdmin = () => {
     }
     try {
       const url = equipoEdit
-        ? `http://localhost:8081/api/equipos/${equipoEdit.id}`
-        : "http://localhost:8081/api/equipos";
+        ? `${API_BASE_URL}/equipos/${equipoEdit.id}`
+        : `${API_BASE_URL}/equipos`;
       const method = equipoEdit ? "PUT" : "POST";
 
       const res = await fetch(url, {
@@ -107,7 +108,7 @@ const EquiposAdmin = () => {
   if (!window.confirm(`¿Borrar este equipo? ${nombreborrar}`)) return;
 
   try {
-    const res = await fetch(`http://localhost:8081/api/equipos/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/equipos/${id}`, {
       method: "DELETE",
     });
     const data = await res.json();

@@ -3,6 +3,7 @@ import { formatNumberEs } from "../util/funciones";
 import { useEffect, useState } from "react";
 import { getMedalColorVar } from "../util/funciones";
 import { useInView } from "react-intersection-observer";
+import { API_BASE_URL } from '../config/api';
 
 const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador = 4 }) => {
   const [loading, setLoading] = useState(true);
@@ -28,7 +29,7 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador = 4 }) => {
       try {
         const token = localStorage.getItem("jwtToken");
         if (!token) return;
-        const resp = await fetch("http://localhost:8081/api/favoritos/jugadores", {
+        const resp = await fetch("${API_BASE_URL}/favoritos/jugadores", {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!resp.ok) return;
@@ -52,13 +53,13 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador = 4 }) => {
       setFavorito(prev => !prev);
       if (favorito) {
         // quitar favorito
-        await fetch(`http://localhost:8081/api/favoritos?tipo=jugador&id=${item.id}`, {
+        await fetch(`${API_BASE_URL}/favoritos?tipo=jugador&id=${item.id}`, {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
         // agregar favorito
-        await fetch(`http://localhost:8081/api/favoritos`, {
+        await fetch(`${API_BASE_URL}/favoritos`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

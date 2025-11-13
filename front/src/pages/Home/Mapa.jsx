@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { API_BASE_URL } from '../../config/api';
 
-const API_MAPA = "http://localhost:8081/api/mapa/top-city";
-const API_JUGADORES = "http://localhost:8081/api/jugadores";
+const API_MAPA = `${API_BASE_URL}/mapa/top-city`;
+const API_JUGADORES = `${API_BASE_URL}/jugadores`;
 
 const Mapa = () => {
   const [showModal, setShowModal] = useState(false);
@@ -102,7 +103,7 @@ const Mapa = () => {
     // Dentro del return del componente Mapa (solo JSX transformado)
     <div className="bg-[var(--body)]">
       <div className="container mx-auto my-20 px-4 bg-[var(--body)] ">
-        <div className="text-center mb-5">
+        <div className="text-center mb-10">
           <h3 className="font-bold text-3xl">🗺️ Mapa del Talento Venezolano</h3>
           <p className="text-[var(--blanco-hielo)] text-lg max-w-xl mx-auto mt-2">
             Descubre de dónde vienen los peloteros venezolanos que han llegado a
@@ -116,11 +117,11 @@ const Mapa = () => {
             const jugador = getJugadorById(ciudad.id);
             return (
               <div
-                className="bg-[var(--gris-oscuro)] border-1 border-[var(--vinotinto)] shadow-md rounded-lg flex flex-col h-full shadow-black"
+                className="bg-[var(--gris-claro)] border-1 border-[#8c80187c] shadow-md rounded-xl flex flex-col h-full shadow-[#838a0d56]"
                 key={`${ciudad.lugar_nacimiento}-${ciudad.id}`}
               >
                 {/* Bandera o título */}
-                <div className="bg-[var(--gris-claro)] shadow-sm shadow-black text-white text-center py-5 rounded-t-lg border-b-1 border-[var(--vinotinto)]">
+                <div className="bg-[#120808] shadow-sm text-white text-center py-5 rounded-t-lg border-b-1 border-[var(--dorado)]">
                   <h3 className="text-lg font-semibold">
                     {ciudad.lugar_nacimiento.split(",")[0]}
                   </h3>
