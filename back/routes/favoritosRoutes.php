@@ -6,12 +6,14 @@ $controller = new favoritosController();
 $method = $_SERVER['REQUEST_METHOD'];
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
+// Obtén userId vía middleware JWT verificando Authorization header
 $userId = authMiddleware();
 if (!$userId) {
     http_response_code(401);
     echo json_encode(['error' => 'Usuario no autorizado']);
     exit;
 }
+
 
 if ($method === 'GET') {
     if ($path === '/api/favoritos/equipos') {

@@ -139,26 +139,48 @@ class usuariosController
     }
 
     // DELETE /api/usuarios/{id}
-    public function eliminarUsuario($id)
-    {
-        try {
-            $stmtCheck = $this->pdo->prepare("SELECT id FROM usuarios WHERE id = ?");
-            $stmtCheck->execute([$id]);
+ public function eliminarUsuario($id)
+{
+    try {
+        // Iniciar transacción
+        $this->pdo->beginTransaction();
 
-            if ($stmtCheck->rowCount() === 0) {
-                http_response_code(404);
-                echo json_encode(['error' => 'Usuario no encontrado']);
-                return;
-            }
-
-            $stmt = $this->pdo->prepare("DELETE FROM usuarios WHERE id = ?");
-            $stmt->execute([$id]);
-
-            http_response_code(200);
-            echo json_encode(['mensaje' => 'Usuario eliminado exitosamente']);
-        } catch (PDOException $e) {
-            http_response_code(500);
-            echo json_encode(['error' => 'Error en base de datos: ' . $e->getMessage()]);
+        // Verificar que el usuario exista
+        $stmtCheck = $this->pdo->prepare("SELECT id FROM usuarios WHERE id = ?");
+        $stmtCheck->execute([$id]);
+        if ($stmtCheck->rowCount() === 0) {
+            http_response_code(404);
+            echo json_encode(['error' => 'Usuario no encontrado']);
+            return;
         }
+
+        // Eliminar de favoritos_equipos
+        $stmtFavEquipos = $this->pdo->prepare("DELETE FROM favoritos_equipos WHERE user_id = ?");
+        $stmtFavEquipos->execute([$id]);
+
+        // Eliminar de favoritos_jugadores
+        $stmtFavJugadores = $this->pdo->prepare("DELETE FROM favoritos_jugadores WHERE user_id = ?");
+        $stmtFavJugadores->execute([$id]);
+
+        // Eliminar de notificaciones_usuarios
+        $stmtNotificaciones = $this->pdo->prepare("DELETE FROM notificaciones_usuario WHERE usuario_id = ?");
+        $stmtNotificaciones->execute([$id]);
+
+        // Finalmente eliminar al usuario
+        $stmt = $this->pdo->prepare("DELETE FROM usuarios WHERE id = ?");
+        $stmt->execute([$id]);
+
+        // Confirmar transacción
+        $this->pdo->commit();
+
+        http_response_code(200);
+        echo json_encode(['mensaje' => 'Usuario y datos relacionados eliminados exitosamente']);
+    } catch (PDOException $e) {
+        // Revertir si hay error
+        $this->pdo->rollBack();
+        http_response_code(500);
+        echo json_encode(['error' => 'Error en base de datos: ' . $e->getMessage()]);
     }
+}
+
 }
