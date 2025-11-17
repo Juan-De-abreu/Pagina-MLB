@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CardPartidos from "../components/CardPartidos";
 import { API_BASE_URL } from '../config/api';
+import PaginadorSimple from "../components/Paginador";
 
 const Partidos = () => {
   const API = `${API_BASE_URL}/partidos`;
@@ -16,12 +17,16 @@ const Partidos = () => {
   const [years, setYears] = useState([]);
   const [equipos, setEquipos] = useState([]);
 
-  // Almacena un mapa id -> nombre para referencia rápida
+  const [paginaActual, setPaginaActual] = useState(1);
+  const ITEMS_POR_PAGINA = 10;
+
+  // Mapa id -> nombre para equipos
   const equiposMap = equipos.reduce((acc, equipo) => {
     acc[equipo.id] = equipo.nombre;
     return acc;
   }, {});
 
+  // Carga datos
   useEffect(() => {
     const getDatos = async () => {
       try {
@@ -42,14 +47,41 @@ const Partidos = () => {
         // Extraer años únicos
         const uniqueYears = [...new Set(dataPartidos.map(d => d.fecha?.slice(0, 4)))].sort();
         setYears(uniqueYears);
-        setLoading(false);
       } catch (err) {
         setError(err.message);
+      } finally {
         setLoading(false);
       }
     };
     getDatos();
   }, []);
+
+  // Filtrar y ordenar partidos
+  let datosFiltrados = yearFilter
+    ? datos.filter(d => d.fecha?.startsWith(yearFilter))
+    : datos;
+
+  if (equipoFilter) {
+    datosFiltrados = datosFiltrados.filter(d => {
+      const localNombre = equiposMap[d.equipo_local_id];
+      const visitanteNombre = equiposMap[d.equipo_visitante_id];
+      return localNombre === equipoFilter || visitanteNombre === equipoFilter;
+    });
+  }
+
+  const datosOrdenados = datosFiltrados.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+  // Paginación
+  const totalPaginas = Math.ceil(datosOrdenados.length / ITEMS_POR_PAGINA);
+  const partidosPagina = datosOrdenados.slice(
+    (paginaActual - 1) * ITEMS_POR_PAGINA,
+    paginaActual * ITEMS_POR_PAGINA
+  );
+
+  // Scroll arriba al cambiar página
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, [paginaActual]);
 
   if (loading) {
     return <p>Cargando partidos...</p>;
@@ -63,54 +95,36 @@ const Partidos = () => {
     );
   }
 
-  // Filtrar partidos por año si hay filtro
-  let datosFiltrados = yearFilter
-    ? datos.filter(d => d.fecha?.startsWith(yearFilter))
-    : datos;
-
-  // Filtrar partidos por equipo usando el mapa para comparar nombres
-  if (equipoFilter) {
-    datosFiltrados = datosFiltrados.filter(d => {
-      const localNombre = equiposMap[d.equipo_local_id];
-      const visitanteNombre = equiposMap[d.equipo_visitante_id];
-      return localNombre === equipoFilter || visitanteNombre === equipoFilter;
-    });
-  }
-
-  // Ordenar partidos de más reciente a más antiguo
-  const datosOrdenados = datosFiltrados.sort(
-    (a, b) => new Date(b.fecha) - new Date(a.fecha)
-  );
-
-  // Renderizar
   return (
-    <div className="mx-auto px-4">
-      <p className="text-center text-2xl my-8">Partidos ({datosOrdenados.length})</p>
+    <div className=" px-4  bg-[var(--body)]">
+      <p className="text-center text-4xl my-8">Partidos ({datosOrdenados.length})</p>
 
       <div className="flex flex-col md:flex-row md:items-center md:justify-center gap-4 mb-6">
         <select
           className="border border-[var(--dorado)] rounded px-4 py-2 w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-[var(--dorado)]"
           value={yearFilter}
-          onChange={e => setYearFilter(e.target.value)}
+          onChange={e => {
+            setYearFilter(e.target.value);
+            setPaginaActual(1);
+          }}
         >
           <option className="bg-[var(--gris-claro)]" value="">Todos los partidos</option>
           {[...years].sort((a, b) => Number(b) - Number(a)).map(year => (
-            <option key={year} className="bg-[var(--gris-oscuro)]" value={year}>
-              {year}
-            </option>
+            <option key={year} className="bg-[var(--gris-oscuro)]" value={year}>{year}</option>
           ))}
         </select>
 
         <select
           className="border border-[var(--dorado)] rounded px-4 py-2 w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-[var(--dorado)]"
           value={equipoFilter}
-          onChange={e => setEquipoFilter(e.target.value)}
+          onChange={e => {
+            setEquipoFilter(e.target.value);
+            setPaginaActual(1);
+          }}
         >
           <option className="bg-[var(--gris-claro)]" value="">Todos los equipos</option>
           {equipos.map(e => (
-            <option key={e.id} className="bg-[var(--gris-oscuro)]" value={e.nombre}>
-              {e.nombre}
-            </option>
+            <option key={e.id} className="bg-[var(--gris-oscuro)]" value={e.nombre}>{e.nombre}</option>
           ))}
         </select>
 
@@ -119,22 +133,31 @@ const Partidos = () => {
           onClick={() => {
             setEquipoFilter("");
             setYearFilter("");
+            setPaginaActual(1);
           }}
         >
           Limpiar filtro de equipo
         </button>
       </div>
 
-      <div className="mx-auto max-w-full container mt-6">
-        {datosOrdenados.length > 0 ? (
-          datosOrdenados.map((item, index) => (
-            <CardPartidos key={item.id} item={item} contadorpartidos={index + 1} />
+      <div className=" max-w-full container mt-6">
+        {partidosPagina.length > 0 ? (
+          partidosPagina.map((item, index) => (
+            <CardPartidos key={item.id} item={item} contadorpartidos={(paginaActual - 1) * ITEMS_POR_PAGINA + index + 1} />
           ))
         ) : (
           <p className="text-center col-span-full text-gray-500">
             No hay partidos para el filtro seleccionado.
           </p>
         )}
+      </div>
+
+      <div className="flex items-center gap-4 mt-8 justify-center">
+        <PaginadorSimple
+          paginaActual={paginaActual}
+          totalPaginas={totalPaginas}
+          onCambiarPagina={setPaginaActual}
+        />
       </div>
     </div>
   );

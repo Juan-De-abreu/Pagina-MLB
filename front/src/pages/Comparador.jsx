@@ -298,7 +298,7 @@ const Comparador = () => {
 
         {/* Panel de comparación */}
         {jugador1 && jugador2 && (
-          <div className="bg-[var(--gris-oscuro)] shadow-lg rounded-lg overflow-hidden">
+          <div className="bg-[var(--gris-oscuro)] shadow-lg rounded-lg overflow-hidden expandir-menu">
             <div className="bg-[var(--gris-claro)] shadow-lg shadow-black text-[var(--dorado)] text-center py-4 font-semibold text-xl">
               Comparación de Estadísticas
             </div>
@@ -410,7 +410,7 @@ const Comparador = () => {
         )}
 
         {jugador1 && jugador2 && (
-          <div className="bg-[var(--gris-oscuro)] text-[var(--blanco-hielos)] shadow-lg rounded-lg mt-8">
+          <div className="expandir-menu bg-[var(--gris-oscuro)] text-[var(--blanco-hielos)] shadow-lg rounded-lg mt-8">
             <div className="text-center py-4 font-semibold text-xl border-b border-[var(--plateado)]">
               🏆 Resultado Final
             </div>
@@ -506,7 +506,7 @@ const Comparador = () => {
         )}
 
         {(!jugador1 || !jugador2) && (
-          <div className="flex justify-center items-center min-h-[calc(100vh-8rem)] text-[var(--blanco-hielo)]">
+          <div className="expandir-menu flex justify-center items-center min-h-[calc(100vh-8rem)] text-[var(--blanco-hielo)]">
             <div className="bg-[var(--vinotinto)] rounded-lg p-8">
               <div className="text-center">
                 <i className="bi bi-arrow-left-right text-6xl mb-6"></i>

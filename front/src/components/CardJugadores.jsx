@@ -15,21 +15,20 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador = 4 }) => {
     threshold: [0.25, 0.5, 0.75, 1],
   });
 
+  // Animación de visibilidad
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setVisible(true);
-    }, (contador - 1) * 100);
+    const timer = setTimeout(() => setVisible(true), (contador - 1) * 100);
     setLoading(false);
     return () => clearTimeout(timer);
   }, [contador]);
 
-  // Comprobar si es favorito al montar
+  // Chequear si es favorito
   useEffect(() => {
     const checkFavorito = async () => {
       try {
         const token = localStorage.getItem("jwtToken");
         if (!token) return;
-        const resp = await fetch("${API_BASE_URL}/favoritos/jugadores", {
+        const resp = await fetch(`${API_BASE_URL}/favoritos/jugadores`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!resp.ok) return;
@@ -37,12 +36,13 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador = 4 }) => {
         const esta = favs.some(f => f.id === item.id);
         setFavorito(esta);
       } catch {
-        // manejo de error opcional
+        // Opcional: manejo de error
       }
     };
     checkFavorito();
   }, [item.id]);
 
+  // Función toggle favorito con manejo optimista y revertir en error
   const toggleFavorito = async () => {
     try {
       const token = localStorage.getItem("jwtToken");
@@ -51,14 +51,15 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador = 4 }) => {
         return;
       }
       setFavorito(prev => !prev);
+
       if (favorito) {
-        // quitar favorito
+        // Quitar favorito
         await fetch(`${API_BASE_URL}/favoritos?tipo=jugador&id=${item.id}`, {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        // agregar favorito
+        // Agregar favorito
         await fetch(`${API_BASE_URL}/favoritos`, {
           method: "POST",
           headers: {
@@ -69,19 +70,18 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador = 4 }) => {
         });
       }
     } catch {
-      setFavorito(prev => !prev); // revertir en error
+      setFavorito(prev => !prev); // Revertir cambio en caso de error
       alert("Error al actualizar favoritos");
     }
   };
 
-  if (loading) {
-    return <p>Cargando perfil...</p>;
-  }
+  if (loading) return <p>Cargando perfil...</p>;
 
   const borderClass =
     contador <= 3
       ? `border-[var(${getMedalColorVar(contador - 1)})] text-[var(${getMedalColorVar(contador - 1)})] text-[var(--bronce)]`
-      : "border-[var(--vinotinto)]";
+      : "border-[var(--gris-claro)]";
+
   const medalla =
     contador <= 3
       ? `block absolute px-3 py-3 text-center mx-auto bg-[var(${getMedalColorVar(contador - 1)})] rounded-full font-bold lg:text-md text-black border-1`
@@ -95,8 +95,8 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador = 4 }) => {
       style={{ animationDelay: "0s" }}
       ref={ref}
     >
-      <div className="bg-[var(--gris-oscuro)] rounded shadow-xl h-full flex flex-col shadow-black border-[var(--vinotinto)] border-1 relative">
-        <div className="overflow-hidden rounded-t border-[var(--vinotinto)] border-1 relative">
+      <div className="bg-[var(--gris-oscuro)] rounded shadow-s transition-all duration-300 hover:shadow-lg hover:scale-105 h-full flex flex-col shadow-[#838a0d56] border-[var(--gris-claro)] border-1 relative">
+        <div className="overflow-hidden rounded-t border-[var(--gris-claro)] border-1 relative">
           <span className={medalla}>{contador}</span>
           <img
             src={`https://api.arsistemamlb.com/uploads/jugadores/${item.id}.jpg`}
@@ -104,7 +104,7 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador = 4 }) => {
             className="w-full h-65 object-center"
             onError={e => (e.target.src = "https://api.arsistemamlb.com/uploads/jugadores/default.png")}
           />
-          {/* Botón estrella */}
+          {/* Botón para favoritos */}
           <button
             onClick={toggleFavorito}
             className={`absolute top-2 right-2 p-2 rounded-full transition-colors duration-300 ${
@@ -154,7 +154,7 @@ const CardJugadores = ({ item, l1, v1, l2, v2, l3, v3, contador = 4 }) => {
             </span>
           </p>
         </div>
-        <div className="p-4 bg-[var(--vinotinto)] flex justify-center gap-3 rounded-b border-b-1 border-[#520f0f]">
+        <div className="p-4 bg-[var(--gris-claro)] flex justify-center gap-3 rounded-b border-b-1 border-[var(--dorado)]">
           <Link
             to={`/detalle/${item.id}/${item.nombre}`}
             className="border text-[var(--dorado)] text-md px-3 py-1 rounded hover:bg-[var(--dorado)] hover:text-black transition"

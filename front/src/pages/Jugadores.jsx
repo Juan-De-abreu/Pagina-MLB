@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import CardJugadores from "../components/CardJugadores";
 import { Link, useLocation } from "react-router-dom";
 import { API_BASE_URL } from '../config/api';
+import Paginador from "../components/Paginador";
 
 const API = `${API_BASE_URL}/jugadores`;
 
@@ -18,6 +19,17 @@ const Jugadores = () => {
   const [search, setSearch] = useState("");
   const [positionFilter, setPositionFilter] = useState("");
   const [equipoFilter, setEquipoFilter] = useState(equipoParam);
+
+  const ITEMS_POR_PAGINA = 20;
+const [paginaActual, setPaginaActual] = useState(1);
+
+const totalPaginas = Math.ceil(filteredJugadores.length / ITEMS_POR_PAGINA);
+
+const jugadoresAPagina = filteredJugadores.slice(
+  (paginaActual - 1) * ITEMS_POR_PAGINA,
+  paginaActual * ITEMS_POR_PAGINA
+);
+
 
   const getDatos = async () => {
     try {
@@ -188,27 +200,35 @@ const Jugadores = () => {
           </button>
         </div>
 
-        {filteredJugadores.length === 0 ? (
-          <div className="text-center py-6 bg-red-800 text-white rounded-4xl">
-            No se encontraron jugadores con esos filtros.
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-2">
-            {filteredJugadores.map((item,index) => (
-              <CardJugadores
-                key={item.id}
-                item={item}
-                l1={"WAR"}
-                v1={item.war}
-                l2={"HR"}
-                v2={item.home_runs}
-                l3={"AVG"}
-                v3={item.promedio_bateo}
-                contador={index + 4}
-              />
-            ))}
-          </div>
-        )}
+        {jugadoresAPagina.length === 0 ? (
+  <div className="text-center py-6 bg-red-800 text-white rounded-4xl">
+    No se encontraron jugadores con esos filtros.
+  </div>
+) : (
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-2">
+    {jugadoresAPagina.map((item) => (
+      <CardJugadores
+        key={item.id}
+        item={item}
+        l1={"WAR"}
+        v1={item.war}
+        l2={"HR"}
+        v2={item.home_runs}
+        l3={"AVG"}
+        v3={item.promedio_bateo}
+        contador={4}
+      />
+    ))}
+  </div>
+)}
+<div className="flex items-center gap-4 mt-8">
+  <Paginador
+    paginaActual={paginaActual}
+    totalPaginas={totalPaginas}
+    onCambiarPagina={setPaginaActual}
+  />
+</div>
+
       </div>
     </div>
   );

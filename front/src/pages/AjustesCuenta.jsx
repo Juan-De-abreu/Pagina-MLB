@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
-import { useAuth } from '../context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
 import { API_BASE_URL } from '../config/api';
 
@@ -11,7 +10,7 @@ const fieldLabelVariants = {
 };
 
 const AjustesCuenta = () => {
-  const { token } = useAuth();
+const token = localStorage.getItem("jwtToken");
 
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
@@ -126,8 +125,10 @@ const AjustesCuenta = () => {
   };
 
   return (
-    <div className="px-7 lg:px-0 min-h-[75vh]">
-      <div className="max-w-md mx-auto p-6 shadow-lg shadow-black rounded my-10 border-1 border-black px-10">
+    <div className='bg-[var(--body)]'>
+    <div className="px-7 lg:px-0 min-h-[75vh] ">
+      
+      <div className="max-w-md mx-auto p-6 shadow-lg shadow-black rounded my-10 border-1 border-black px-10 bg-[var(--vinotinto)]">
         <h1 className="text-2xl font-semibold mb-4 text-center text-[var(--dorado)]">
           Ajustes de Cuenta
         </h1>
@@ -322,6 +323,7 @@ const AjustesCuenta = () => {
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 };

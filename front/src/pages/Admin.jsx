@@ -76,9 +76,9 @@ const Admin = () => {
             key={to}
             to={to}
             className={`
-              bg-[var(--vinotinto)] rounded-lg shadow p-6 cursor-pointer border-1 border-[var(--negro-profundo)] hover:border-b-[#5a0909] hover:border-r-[#5a0909]
+              bg-[var(--body)] rounded-lg p-6 cursor-pointer border-2 border-[var(--dorado)]
                opacity-100 
-              hover:opacity-100 hover:shadow-lg hover:shadow-black hover:animate-pulse hover:scale-105 transition-all duration-200
+              hover:opacity-100 hover:shadow-xl shadow-[#838a0d56] shadow-lg hover:animate-pulse hover:scale-105 transition-all duration-200
             `}
           >
             <h2 className="text-xl font-semibold mb-2 text-[var(--dorado)] text-center border-b">

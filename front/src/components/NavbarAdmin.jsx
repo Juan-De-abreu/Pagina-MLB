@@ -3,11 +3,11 @@ import { useState, useEffect, useRef } from "react";
 
 const links = [
   { to: "/admin", text: "Panel principal", end: true },
+  { to: "/inicio", text: "Interfaz del cliente" },
   { to: "/admin/usuarios", text: "Usuarios" },
   { to: "/admin/jugadores", text: "Jugadores" },
   { to: "/admin/equipos", text: "Equipos" },
   { to: "/admin/partidos", text: "Partidos" },
-  { to: "/inicio", text: "Interfaz del cliente" },
 ];
 
 const NavbarAdmin = () => {
@@ -64,13 +64,14 @@ const NavbarAdmin = () => {
 
       {/* Menú lateral */}
       <nav
-        ref={navRef}
-        className={`fixed top-0 left-0 h-full bg-[var(--vinotinto)] shadow-lg shadow-black text-white px-6 py-10 flex flex-col gap-4
-          transform transition-transform duration-300 z-50
-          ${open ? "translate-x-0" : "-translate-x-full"}
-          lg:translate-x-0 lg:min-h-screen 2xl:w-80 lg:flex
-          lg:sticky lg:top-0`}
-      >
+  ref={navRef}
+  className={`fixed top-0 left-0 h-full bg-[var(--vinotinto)] text-[var(--blanco-hielo)] px-6 py-10 flex flex-col gap-4
+    transform transition-transform duration-300 z-50
+    ${open ? "translate-x-0" : "-translate-x-full"}
+    lg:translate-x-0 lg:min-h-screen 2xl:w-80 lg:flex
+    lg:sticky lg:top-0`}
+>
+
         <h2 className="text-xl font-bold mb-6 border-b border-[var(--dorado)] pb-2 text-center">
           Rol Admin
         </h2>

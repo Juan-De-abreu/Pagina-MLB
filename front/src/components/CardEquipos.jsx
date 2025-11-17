@@ -8,7 +8,6 @@ import { useInView } from "react-intersection-observer";
 const CardEquipos = ({ item, contador = 4 }) => {
   const API = `${API_BASE_URL}/equipos/${item.id}`;
   const [error, setError] = useState(null);
-  const [datos, setDatos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [favorito, setFavorito] = useState(false); // Estado para favorito
   const { ref, inView } = useInView({
@@ -24,8 +23,6 @@ const CardEquipos = ({ item, contador = 4 }) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
-        setDatos(data);
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -91,7 +88,7 @@ const CardEquipos = ({ item, contador = 4 }) => {
       </div>
     );
 
-  const borderClass = contador <= 3 ? `text-[var(${getMedalColorVartext(contador - 1)})]` : "border-[var(--vinotinto)]";
+  const borderClass = contador <= 3 ? `text-[var(${getMedalColorVartext(contador - 1)})]` : "border-[var(--gris-claro)]";
   const medalla = contador <= 3 ? `block absolute px-3 py-3 text-center mx-auto bg-[var(${getMedalColorVar(contador - 1)})] rounded-4xl font-semibold lg:text-md text-black border-1` : "hidden";
 
   return (
@@ -101,8 +98,8 @@ const CardEquipos = ({ item, contador = 4 }) => {
       ref={ref}
       style={{ animationDelay: `${contador * 0.3}s` }}
     >
-      <div className="bg-[var(--gris-oscuro)] rounded shadow-xl h-full flex flex-col shadow-black border-[var(--vinotinto)] border-2 relative">
-        <div className="overflow-hidden rounded-t border-[var(--vinotinto)] border-1 relative">
+      <div className="bg-[var(--gris-oscuro)] rounded hover:shadow-lg transition-all duration-300 hover:scale-105 h-full flex flex-col shadow-[#838a0d56] border-[var(--gris-claro)] border-2 relative">
+        <div className="overflow-hidden rounded-t border-[var(--gris-claro)] border-1 relative">
           <span className={`${medalla}`}>{contador}</span>
           <img src={`${item.logo_url}`} alt={item.nombre} className="w-full h-65 object-center" />
           {/* Botón estrella */}
@@ -143,9 +140,9 @@ const CardEquipos = ({ item, contador = 4 }) => {
             </span>
           </p>
         </div>
-        <div className="p-4 bg-[var(--vinotinto)] flex justify-center gap-3 rounded-b border-b-1 border-[#520f0f]">
+        <div className="p-4 bg-[var(--gris-claro)] flex justify-center gap-3 rounded-b border-b-1 border-[var(--dorado)]">
           <Link to={`/jugadores?equipo=${encodeURIComponent(item.nombre)}`} className="border text-[var(--dorado)] text-md px-6 py-3 rounded hover:bg-[var(--dorado)] hover:text-black transition">
-            Jugadores ({datos.length})
+            Jugadores
           </Link>
 
           <Link to={`/equipo/${item.id}/${item.nombre}`} className="border text-[var(--dorado)] text-md px-6 py-3 rounded hover:bg-[var(--dorado)] hover:text-black transition">

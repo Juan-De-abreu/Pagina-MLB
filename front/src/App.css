@@ -8,12 +8,12 @@
  color: var(--blanco-hielo);
 }
 :root {
-  --vinotinto: #2f0303;
+  --vinotinto: #2c0505;
   --dorado: #D4AF37;
   --plateado: #C0C0C0;
-  --body: #1a0805;
+  --body: #080516;
   --bronce: #CD7F32;
-  --gris-oscuro: #0f0d0d;
+  --gris-oscuro: #0f0e1d;
   --gris-claro: #1e1d1d;
   --negro-profundo: #0A0A0A;
   --blanco-hielo: #F9FAFB;
@@ -33,5 +33,5 @@
   background-color: var(--vinotinto);
   border-radius: 10px;
   max-height: 10px;
-  border: 1px solid var(--dorado);
+  border: 1px solid var(--body);
 }

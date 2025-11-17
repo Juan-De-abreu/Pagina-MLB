@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import NavbarAdmin from "./components/NavbarAdmin";
-import { AuthProvider } from "./context/AuthContext";
 
 import Home from "./pages/Home";
 import Estadisticas from "./pages/Estadisticas";
@@ -27,7 +26,7 @@ import Notificaciones from "./pages/Notificaciones";
 // Layout para páginas no admin (header y footer)
 const MainLayout = () => (
   <>
-    <Header />
+      <Header />
     <Outlet />
     <Footer />
   </>
@@ -49,7 +48,6 @@ const AdminLayout = () => (
 const App = () => {
   return (
     <div className="app">
-          <AuthProvider>
 
     <BrowserRouter>
       <Routes>
@@ -84,7 +82,6 @@ const App = () => {
         </Route>
       </Routes>
     </BrowserRouter>
-        </AuthProvider>
 
     </div>
   );

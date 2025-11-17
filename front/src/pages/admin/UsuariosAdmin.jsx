@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { API_BASE_URL } from '../../config/api';
 
 // Componente CustomSelect como el que usas para equipos
 const CustomSelect = ({ options, value, onChange }) => {
@@ -14,7 +15,7 @@ const CustomSelect = ({ options, value, onChange }) => {
   }, []);
 
   return (
-    <div className="relative w-full mt-1" ref={ref}>
+    <div className="relative w-full mt-1 bg-[var(--body)]" ref={ref}>
       <button
         type="button"
         className="w-full text-left bg-[var(--vinotinto)] text-white p-2 rounded border border-gray-200 focus:outline-none"
@@ -64,7 +65,7 @@ const UsuariosAdmin = () => {
     const fetchUsuarios = async () => {
       setCargando(true);
       try {
-        const response = await fetch("http://localhost:8081/api/usuarios");
+        const response = await fetch(`${API_BASE_URL}/usuarios`);
         if (!response.ok) throw new Error("Error al cargar usuarios");
         const data = await response.json();
         setUsuarios(data);
@@ -188,7 +189,7 @@ const validateForm = () => {
     return <div className="text-center mt-10">Cargando usuarios...</div>;
 
   return (
-    <div className="lg:p-6 w-full max-w-full">
+    <div className="lg:p-6 w-full max-w-full min-h-full bg-[var(--body)]">
       <h2 className="text-2xl lg:text-4xl font-semibold mt-20 lg:my-10 text-center text-[var(--dorado)]">
         Lista de usuarios
       </h2>

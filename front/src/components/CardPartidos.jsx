@@ -13,7 +13,7 @@ const CardPartidos = ({ item, contadorpartidos }) => {
 
   const { ref, inView } = useInView({
     triggerOnce: true,
-    threshold: 0.02,
+    threshold: 0.01,
   });
 
   // useRef para evitar re-fetch si ya está cargando
@@ -78,24 +78,24 @@ const CardPartidos = ({ item, contadorpartidos }) => {
 
   return (
     <div
-      className={`w-[80vw] mx-auto my-8 animate-slide-top px-4 2xl:px-50 transition-all duration-400 ease-out ${
+      className={`lg:w-[80vw] mx-auto my-8 animate-slide-top px-4 2xl:px-50 transition-all duration-400 ease-out   ${
         inView ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
       }`}
       ref={ref}
       style={{ animationDelay: `${contadorpartidos * 0.3}s` }}
     >
-      <div className="bg-[var(--gris-oscuro)] rounded transition-all duration-300 hover:scale-104 hover:shadow-lg h-full flex flex-col shadow-black border-[var(--vinotinto)] border-2">
-        <div className="overflow-hidden grid rounded-t border-[var(--vinotinto)] border-l-4 border-r-4 border-t-4 border-b-2 md:grid-cols-[47%_6%_47%]">
+      <div className="bg-[var(--gris-oscuro)] rounded transition-all duration-300 hover:scale-104 hover:shadow-md h-full flex flex-col shadow-[#838a0d56] border-[var(--gris-claro)] border-2">
+        <div className="overflow-hidden grid rounded-t border-[var(--gris-claro)] border-l-4 border-r-4 border-t-4 border-b-2 md:grid-cols-[47%_6%_47%]">
           <img
             src={equipolocal.logo_url}
             alt={equipolocal.nombre}
-            className="w-full h-50 lg:h-65 object-center rounded-4xl border-6 border-[var(--vinotinto)]"
+            className="w-full h-50 lg:h-65 object-center rounded-4xl border-6 border-[var(--gris-claro)]"
           />
           <p></p>
           <img
             src={equipovisitante.logo_url}
             alt={equipovisitante.nombre}
-            className="w-full h-50 lg:h-65 object-center rounded-4xl border-6 border-[var(--vinotinto)]"
+            className="w-full h-50 lg:h-65 object-center rounded-4xl border-6 border-[var(--gris-claro)]"
           />
         </div>
         <div className="flex-grow p-4 text-center md:grid-cols-[43%_14%_43%] md:grid">
@@ -111,7 +111,7 @@ const CardPartidos = ({ item, contadorpartidos }) => {
 
           <div className="text-center text-xl lg:text-2xl">{equipovisitante.nombre}</div>
         </div>
-        <div className="p-4 bg-[var(--vinotinto)] flex justify-center gap-3 rounded-b border-b-1 border-[#520f0f]">
+        <div className="p-4 bg-[var(--gris-claro)] flex justify-center gap-3">
           <Link
             to={`/equipo/${equipolocal.id}/${equipolocal.nombre}`}
             className="text-center border text-[var(--dorado)] text-md px-6 py-3 rounded hover:bg-[var(--dorado)] hover:text-black transition"
@@ -125,8 +125,8 @@ const CardPartidos = ({ item, contadorpartidos }) => {
             Equipo Visitante
           </Link>
         </div>
-        <div className="text-sm">
-          <p className="flex justify-center lg:justify-start pt-1 pb-1 pl-2">
+        <div className="text-sm bg-[var(--gris-claro)] rounded-b border-t-1 border-b-1 border-[var(--dorado)]">
+          <p className="flex justify-center pt-1 pb-1 pl-2">
             <span className="hidden lg:flex">fecha del partido:</span>
             <span className="text-[var(--dorado)]">{item.fecha}</span>
           </p>

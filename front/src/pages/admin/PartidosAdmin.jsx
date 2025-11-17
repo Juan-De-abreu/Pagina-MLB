@@ -287,9 +287,9 @@ const esFechaFutura = fechaSeleccionada > hoy;
   };
 
   return cargando ? (
-    <div className="text-center mt-10">Cargando partidos...</div>
+    <div className="text-center mt-10 bg-[var(--body)] min-h-full">Cargando partidos...</div>
   ) : (
-    <div className="lg:p-6 w-full max-w-full">
+    <div className="lg:p-6 w-full max-w-full bg-[var(--body)]">
       <h2 className="text-2xl lg:text-4xl font-semibold mt-20 lg:my-10 text-center text-[var(--dorado)]">
         Lista de partidos
       </h2>

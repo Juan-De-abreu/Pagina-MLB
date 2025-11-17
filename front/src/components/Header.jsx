@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext"; 
 import { API_BASE_URL } from '../config/api';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
+const buttonRef = useRef(null);
+
 
   const [user, setUser] = useState(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -31,7 +32,7 @@ const Header = () => {
   }, [userMenuOpen]);
 
   // Decodifica token
-  const { token } = useAuth();
+const token = localStorage.getItem("jwtToken");
 
   useEffect(() => {
     if (token) {
@@ -78,12 +79,37 @@ const Header = () => {
     fetchNotificaciones();
   }, [user]);
 
+
+  //Cierre de sesion
   const handleLogout = () => {
     localStorage.removeItem("jwtToken");
     setUser(null);
     setUserMenuOpen(false);
     navigate("/FormSesion");
   };
+
+  //Detector de acciones en el menu principal
+  useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (
+      menuRef.current &&
+      !menuRef.current.contains(event.target) &&
+      buttonRef.current &&
+      !buttonRef.current.contains(event.target)
+    ) {
+      setMenuOpen(false); 
+    }
+  };
+
+  if (menuOpen) {
+    document.addEventListener("mousedown", handleClickOutside);
+  }
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, [menuOpen]);
+
+
 
   const activeClassName = "border-b border-[var(--dorado)]";
 
@@ -107,8 +133,9 @@ const Header = () => {
       {/* Botón hamburguesa */}
       <div className="flex justify-center items-center lg:hidden md:items-center hover:scale-110 hover:text-[var(--dorado)] transition-all duration-300">
         <button
-          id="menuopenid"
-          onClick={() => setMenuOpen(!menuOpen)}
+          ref={buttonRef}
+  id="menuopenid"
+  onClick={() => setMenuOpen(!menuOpen)}
           className={`focus:outline-none p-2 ${
             menuOpen ? "hidden" : "visible"
           }`}
@@ -140,11 +167,11 @@ const Header = () => {
           flex-1
           ${
             menuOpen
-              ? "z-51 flex flex-col items-center gap-4 py-2 pt-16 md:py-4 bg-linear-to-t to-[#000000df] from-[#000000f3] md:to-[#000000b6] md:from-[#000000cf] rounded-lg"
+              ? "h-[60Vh] expandir-menu z-51 flex flex-col items-center gap-4 py-2 pt-16 md:py-4 border-b-1 border-[var(--dorado)] bg-[var(--vinotinto)] rounded-lg"
               : "hidden"
           }
           lg:flex lg:justify-center lg:items-center lg:gap-14
-          mx-4 lg:py-6
+          lg:py-6 
         `}
       >
         {[
@@ -188,8 +215,8 @@ const Header = () => {
             className={({ isActive }) =>
               `${linkClass} block py-2 px-4 text-center hover:scale-120 transition-all duration-200 lg:hover:-translate-y-0.5 transform ${size} ${
                 isActive ? activeClassName : ""
-              }`
-            }
+              }
+              `}
             onClick={() => setMenuOpen(false)}
           >
             {text}
@@ -236,7 +263,7 @@ const Header = () => {
             {userMenuOpen && (
               <div
                 ref={userMenuRef}
-                className="absolute right-0 mt-2 w-48 bg-[var(--vinotinto)] border border-[var(--dorado)] rounded shadow-lg top-15 z-50"
+                className="expandir-menu absolute right-0 mt-2 w-48 bg-[var(--vinotinto)] border border-[var(--dorado)] rounded shadow-lg top-15 z-50"
               >
                 <div className="px-4 py-2 text-white font-semibold">
                   {user.nombre}

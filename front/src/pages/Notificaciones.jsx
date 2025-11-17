@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-  import { useAuth } from "../context/AuthContext"; 
 import { API_BASE_URL } from '../config/api';
 
 const Notificaciones = () => {
@@ -11,7 +10,7 @@ const Notificaciones = () => {
 
 
   const getUserIdFromToken = () => {
-      const { token } = useAuth();
+const token = localStorage.getItem("jwtToken");
     
     if (!token) return null;
     try {
@@ -75,13 +74,13 @@ const Notificaciones = () => {
   if (error) return <div className="p-4 text-red-600">Error: {error}</div>;
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="bg-[var(--body)]">
       <h1 className="text-3xl font-bold text-[var(--dorado)] text-center my-10 border-b-1">Notificaciones</h1>
 
       {notificaciones.length === 0 ? (
-        <div className="text-gray-300 text-center text-3xl animate-pulse">No tienes notificaciones</div>
+        <div className="text-white text-center text-3xl animate-pulse">No tienes notificaciones</div>
       ) : (
-        <ul className="space-y-3 px-10">
+        <ul className="space-y-3 pb-10 w-[70vw] mx-auto">
           {notificaciones.map(({ id, mensaje, fecha_creacion, leida }) => (
             <li
               key={id}

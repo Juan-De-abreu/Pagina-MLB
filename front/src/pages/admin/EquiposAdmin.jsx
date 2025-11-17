@@ -130,7 +130,7 @@ const EquiposAdmin = () => {
     return <div className="text-center mt-10">Cargando equipos...</div>;
 
   return (
-    <div className="lg:p-6 w-full max-w-full">
+    <div className="lg:p-6 w-full max-w-full bg-[var(--body)] min-h-full">
       <h2 className="text-2xl lg:text-4xl font-semibold mt-20 lg:my-10 text-center text-[var(--dorado)]">
         Lista de equipos
       </h2>

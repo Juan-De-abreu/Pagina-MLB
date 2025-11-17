@@ -6,57 +6,33 @@ const API_JUGADORES = `${API_BASE_URL}/jugadores`;
 
 const Mapa = () => {
   const [showModal, setShowModal] = useState(false);
-
-  const handleOpenList = (lugarNacimiento) => {
-    const lista = getJugadoresPorCiudad(lugarNacimiento);
-    setJugadoresPorCiudad(lista);
-    setCiudadSeleccionada(lugarNacimiento);
-    setShowModal(true); // abrir modal
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
+  const [jugadoresPorCiudad, setJugadoresPorCiudad] = useState([]);
+  const [ciudadSeleccionada, setCiudadSeleccionada] = useState(null);
 
   const [ciudades, setCiudades] = useState([]);
   const [jugadores, setJugadores] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  // Estado para el modal de lista
-  const [jugadoresPorCiudad, setJugadoresPorCiudad] = useState([]);
-  const [ciudadSeleccionada, setCiudadSeleccionada] = useState(null);
 
   const getDatos = async () => {
     try {
-      // Hacer ambas peticiones en paralelo
       const [resCiudades, resJugadores] = await Promise.all([
-        // Petición 1: Ciudades
         fetch(API_MAPA),
-        // Petición 2: Jugadores
         fetch(API_JUGADORES),
       ]);
 
-      // Verificar si ambas respuestas son exitosas
       if (!resCiudades.ok) {
-        throw new Error(
-          `Error en ciudades: ${resCiudades.status} ${resCiudades.statusText}`
-        );
+        throw new Error(`Error en ciudades: ${resCiudades.status} ${resCiudades.statusText}`);
       }
       if (!resJugadores.ok) {
-        throw new Error(
-          `Error en jugadores: ${resJugadores.status} ${resJugadores.statusText}`
-        );
+        throw new Error(`Error en jugadores: ${resJugadores.status} ${resJugadores.statusText}`);
       }
 
-      // Convertir a JSON
       const dataCiudades = await resCiudades.json();
       const dataJugadores = await resJugadores.json();
 
-      // Guardar en el estado
       setCiudades(dataCiudades);
       setJugadores(dataJugadores);
-
-      // Terminar carga
       setLoading(false);
     } catch (err) {
       console.error("Error en getDatos:", err);
@@ -64,20 +40,30 @@ const Mapa = () => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     getDatos();
   }, []);
 
-  // Obtener jugadores por ciudad
   const getJugadoresPorCiudad = (lugarNacimiento) => {
     return jugadores
       .filter((j) => j.lugar_nacimiento === lugarNacimiento)
-      .sort((a, b) => (b.war || 0) - (a.war || 0)); // Ordenar por WAR
+      .sort((a, b) => (b.war || 0) - (a.war || 0));
   };
 
-  // Obtener el objeto del jugador destacado para usar en el modal
   const getJugadorById = (id) => {
     return jugadores.find((j) => j.id === id) || null;
+  };
+
+  const handleOpenList = (lugarNacimiento) => {
+    const lista = getJugadoresPorCiudad(lugarNacimiento);
+    setJugadoresPorCiudad(lista);
+    setCiudadSeleccionada(lugarNacimiento);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   if (loading) {
@@ -99,10 +85,14 @@ const Mapa = () => {
     );
   }
 
+  // Ordenar ciudades por total_jugadores descendente para mostrar principales automáticamente
+  const ciudadesOrdenadas = [...ciudades].sort((a, b) => b.total_jugadores - a.total_jugadores);
+  const ciudad1 = ciudadesOrdenadas[0];
+  const ciudad2 = ciudadesOrdenadas[1];
+
   return (
-    // Dentro del return del componente Mapa (solo JSX transformado)
     <div className="bg-[var(--body)]">
-      <div className="container mx-auto my-20 px-4 bg-[var(--body)] ">
+      <div className="container mx-auto my-20 px-4 bg-[var(--body)]">
         <div className="text-center mb-10">
           <h3 className="font-bold text-3xl">🗺️ Mapa del Talento Venezolano</h3>
           <p className="text-[var(--blanco-hielo)] text-lg max-w-xl mx-auto mt-2">
@@ -117,7 +107,7 @@ const Mapa = () => {
             const jugador = getJugadorById(ciudad.id);
             return (
               <div
-                className="bg-[var(--gris-claro)] border-1 border-[#8c80187c] shadow-md rounded-xl flex flex-col h-full shadow-[#838a0d56]"
+                className="hover:scale-105 hover:shadow-lg transition-all duration-200 bg-[var(--gris-claro)] border-1 border-[#8c80187c] shadow-md rounded-xl flex flex-col h-full shadow-[#838a0d56]"
                 key={`${ciudad.lugar_nacimiento}-${ciudad.id}`}
               >
                 {/* Bandera o título */}
@@ -152,19 +142,19 @@ const Mapa = () => {
                     </h5>
                     <p className=" text-sm">{ciudad.lugar_nacimiento}</p>
                   </div>
-                  
-                    <div className="mt-3 border-b border-[var(--dorado)]">
-                      <p>
-                        <strong>Jugadores:</strong>{" "}
-                        <span className="inline-block bg-[var(--dorado)] text-black rounded-full px-3 py-1 text-sm">
-                          {ciudad.total_jugadores}
-                        </span>
-                      </p>
-                      <p>
-                        <strong>WAR:</strong>{" "}
-                        {parseFloat(ciudad.war_del_destacado).toFixed(1)}
-                      </p>
-                    </div>
+
+                  <div className="mt-3 border-b border-[var(--dorado)]">
+                    <p>
+                      <strong>Jugadores:</strong>{" "}
+                      <span className="inline-block bg-[var(--dorado)] text-black rounded-full px-3 py-1 text-sm">
+                        {ciudad.total_jugadores}
+                      </span>
+                    </p>
+                    <p>
+                      <strong>WAR:</strong>{" "}
+                      {parseFloat(ciudad.war_del_destacado).toFixed(1)}
+                    </p>
+                  </div>
 
                   <div className="mt-4">
                     {jugador ? (
@@ -191,7 +181,6 @@ const Mapa = () => {
           })}
         </div>
 
-        {/* Modal: Lista de jugadores por ciudad */}
         {/* Modal: Lista de jugadores por ciudad */}
         {showModal && (
           <div
@@ -305,14 +294,14 @@ const Mapa = () => {
           </div>
         )}
 
-        {/* Estadística destacada */}
-        <div className="bg-white rounded-lg p-6 mt-20 text-center shadow">
-          <h4 className="text-xl font-semibold mb-3">📊 Datos Clave</h4>
-          <p className="text-gray-700 max-w-xl mx-auto">
-            <strong>Caracas</strong> lidera con{" "}
-            <strong>{ciudades[0]?.total_jugadores || 0}</strong> peloteros en
-            MLB, seguida por <strong>Maracay</strong> con{" "}
-            <strong>{ciudades[1]?.total_jugadores || 0}</strong>.
+        {/* Estadística destacada automática */}
+        <div className="bg-[var(--gris-claro)] rounded-lg p-6 mt-20 text-center">
+          <h4 className="text-2xl font-semibold mb-5 border-b-1 border-[var(--dorado)]">📊 Datos Clave</h4>
+          <p className=" max-w-xl mx-auto">
+            <strong>{ciudad1?.lugar_nacimiento.split(",")[0] || "Desconocido"}</strong> lidera con{" "}
+            <strong>{ciudad1?.total_jugadores || 0}</strong> peloteros en MLB,
+            seguida por <strong>{ciudad2?.lugar_nacimiento.split(",")[0] || "Desconocido"}</strong> con{" "}
+            <strong>{ciudad2?.total_jugadores || 0}</strong>.
           </p>
         </div>
       </div>
