@@ -3,9 +3,6 @@
 
 Este proyecto es una aplicación web para gestionar y visualizar estadísticas de jugadores de béisbol de las Grandes Ligas (MLB), con enfoque especial en jugadores venezolanos, incluyendo funcionalidades backend y frontend.
 
-## Observaciones
-- **Hay una limitacion lo cual no se puede evitar en el hosting gratuito lo cual es el bloqueo de corns al modificar o eliminar informacion ya existente en la base de datos, fuera de ello todo funciona de maravilla
-
 
 ## Descripción
 
