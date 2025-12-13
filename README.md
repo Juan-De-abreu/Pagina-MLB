@@ -3,8 +3,8 @@
 
 Este proyecto es una aplicación web para gestionar y visualizar estadísticas de jugadores de béisbol de las Grandes Ligas (MLB), con enfoque especial en jugadores venezolanos, incluyendo funcionalidades backend y frontend.
 
-## Futuras Actualizaciones
-- **Creacion de datos en base de datos** Los perfiles con el cargo de "administracion" tendran permitido crear modificar y eliminar datos en la base de datos
+## Observaciones
+- **Hay una limitacion lo cual no se puede evitar en el hosting gratuito lo cual es el bloqueo de corns al modificar o eliminar informacion ya existente en la base de datos, fuera de ello todo funciona de maravilla
 
 
 ## Descripción
@@ -25,7 +25,7 @@ La aplicación permite crear, consultar y mantener información detallada de jug
 
 - PHP para backend (con PDO para conexión segura a base de datos).
 - MySQL como sistema de gestión de base de datos.
-- HTML, CSS, JavaScript para frontend.
+- HTML, CSS(Tailwind), JavaScript para frontend.
 - Git para control de versiones con ramas específicas.
 - Herramientas de desarrollo y despliegue integradas en entorno local y GitHub.
 
