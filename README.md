@@ -1,45 +1,22 @@
-<<<<<<<
-# Página MLB
+# MLB Venezuela – Frontend
 
-Este proyecto es una aplicación web para gestionar y visualizar estadísticas de jugadores de béisbol de las Grandes Ligas (MLB), con enfoque especial en jugadores venezolanos, incluyendo funcionalidades backend y frontend.
+Interfaz web para una aplicación deportiva enfocada en equipos venezolanos de la MLB, construida con **React**, **Tailwind CSS** y **Vite**. El objetivo del frontend es mostrar estadísticas, equipos y manejo de favoritos con una experiencia moderna, rápida y responsive.
 
-## Descripción
+## Características de la interfaz
 
-La aplicación permite crear, consultar y mantener información detallada de jugadores de la MLB, incluyendo estadísticas individuales, datos biográficos, y rendimiento en temporadas. Está diseñada para ser una herramienta útil para seguir la carrera de jugadores históricos y actuales.
+- Diseño responsive optimizado para **móvil, tablet y escritorio** usando Tailwind CSS.
+- Navegación por secciones: inicio, equipos, favoritos y detalles de cada equipo/jugador.
+- Gestión visual de **equipos favoritos** (añadir/quitar) con estados claros en botones y tarjetas.
+- Componentes reutilizables para cards de equipos, listas y encabezados.
+- Transiciones suaves y hover states para mejorar la experiencia del usuario.
+- Integración con API mediante llamadas HTTP desde el frontend (solo consumo, sin lógica de backend en este repo).
 
-## Características principales
+## Tecnologías usadas (frontend)
 
-- **Gestión de jugadores:** Registro completo con validación de datos, asegurando consistencia lógica entre estadísticas y fechas.
-- **Validación de datos:** Control para que si un jugador no ha jugado partidos, no se registren estadísticas erróneas.
-- **Base de datos:** Almacenamiento en MySQL con campos detallados que reflejan métricas reales de béisbol.
-- **Control de versiones:** Uso de Git organizado con ramas separadas para backend y frontend.
-- **API básica:** Función para crear jugadores vía API REST con manejo de errores y estados HTTP.
-- **Interfaz web:** Frontend adaptado para mostrar, insertar y editar datos de jugadores (implementado con HTML, CSS y JavaScript).
-- **Integración:** Capacidad para importar/exportar datos en formato JSON para facilitar análisis y respaldo.
+- **React** con componentes funcionales y hooks.
+- **Vite** como bundler para desarrollo rápido y build ligero.
+- **Tailwind CSS** para estilos utilitarios y maquetación responsive.
+- **JavaScript** (ES6+) para lógica de interfaz y comunicación con la API.
 
-## Tecnologías utilizadas
+## Estructura principal del proyecto
 
-- PHP para backend (con PDO para conexión segura a base de datos).
-- MySQL como sistema de gestión de base de datos.
-- HTML, CSS, JavaScript para frontend.
-- Git para control de versiones con ramas específicas.
-- Herramientas de desarrollo y despliegue integradas en entorno local y GitHub.
-- axios para control de inicio de sesion  y comunicacion con la base de datos
-
-## Futuras actualizaciones
-- Visualizacion distinta dependiendo del usuario, si es visitante este solamente tendra acceso a ver la pagina sin poder hacer ningun ajuste en ella, si se registra sera cliente y este podra tener su sesion para poder guardar equipos y jugadores favoritos y se veran en la pagina de su perfil y si es admin podra borrar cuentas ademas de anadir contenido nuevo a la pagina web desde un apartado visual agradable y sencillo
-
-
-### Frontend
-
-- Acceder a las páginas web diseñadas para visualizar y editar datos de jugadores.
-- Navegar y filtrar jugadores por nombre, posición, años en MLB, etc.
-
-### Git
-
-- Trabajar en ramas separadas (`back` para backend, `front` para frontend).
-- Antes de hacer push, siempre realizar pull para evitar conflictos.
-- Hacer push a ramas correspondientes usando: git push origin front
-=======
-
-b21c7c9a11b53eadd127ee1c5769c6635456d52b>>>>>>> 
