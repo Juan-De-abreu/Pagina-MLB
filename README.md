@@ -5,6 +5,8 @@ Este proyecto es una aplicación web para gestionar y visualizar estadísticas d
 ## Descripción
 
 La aplicación permite crear, consultar y mantener información detallada de jugadores de la MLB, incluyendo estadísticas individuales, datos biográficos, y rendimiento en temporadas. Está diseñada para ser una herramienta útil para seguir la carrera de jugadores históricos y actuales.
+## Observaciones
+- **Hay una limitacion lo cual no se puede evitar en el hosting gratuito lo cual es el bloqueo de corns al modificar o eliminar informacion ya existente en la base de datos,unicas soluciones:Cambiar de hosting u obtener la version premiun del mismo.Fuera de este unico inconveniente si funciona correcto todo el codigo
 
 ## Características principales
 
@@ -20,7 +22,7 @@ La aplicación permite crear, consultar y mantener información detallada de jug
 
 - PHP para backend (con PDO para conexión segura a base de datos).
 - MySQL como sistema de gestión de base de datos.
-- HTML, CSS, JavaScript para frontend.
+- HTML, CSS(Tailwind), JavaScript para frontend.
 - Git para control de versiones con ramas específicas.
 - Herramientas de desarrollo y despliegue integradas en entorno local y GitHub.
 
