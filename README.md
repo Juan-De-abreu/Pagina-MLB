@@ -1,46 +1,57 @@
-<<<<<<<
-# Página MLB
+# MLB Venezuela – Backend (API)
 
-Este proyecto es una aplicación web para gestionar y visualizar estadísticas de jugadores de béisbol de las Grandes Ligas (MLB), con enfoque especial en jugadores venezolanos, incluyendo funcionalidades backend y frontend.
+API REST construida en **PHP** con **MySQL** y autenticación **JWT**, consumida por el frontend de la app MLB Venezuela. Este backend expone endpoints para autenticación, gestión de usuarios, equipos venezolanos y favoritos.
 
+## Tecnologías
 
-## Descripción
+- **PHP 8+**
+- **MySQL**
+- **JSON Web Tokens (JWT)** para autenticación basada en tokens. [web:115][web:117]
+- Estilo REST con respuestas en **JSON**.
 
-La aplicación permite crear, consultar y mantener información detallada de jugadores de la MLB, incluyendo estadísticas individuales, datos biográficos, y rendimiento en temporadas. Está diseñada para ser una herramienta útil para seguir la carrera de jugadores históricos y actuales.
+## Endpoints principales
 
-## Características principales
+> Las rutas pueden variar según tu estructura (por ejemplo, `/api/...`), aquí se muestra la idea general.
 
-- **Gestión de jugadores:** Registro completo con validación de datos, asegurando consistencia lógica entre estadísticas y fechas.
-- **Validación de datos:** Control para que si un jugador no ha jugado partidos, no se registren estadísticas erróneas.
-- **Base de datos:** Almacenamiento en MySQL con campos detallados que reflejan métricas reales de béisbol.
-- **Control de versiones:** Uso de Git organizado con ramas separadas para backend y frontend.
-- **API básica:** Función para crear jugadores vía API REST con manejo de errores y estados HTTP.
-- **Interfaz web:** Frontend adaptado para mostrar, insertar y editar datos de jugadores (implementado con HTML, CSS y JavaScript).
-- **Integración:** Capacidad para importar/exportar datos en formato JSON para facilitar análisis y respaldo.
+### Autenticación
 
-## Tecnologías utilizadas
+- `POST /auth/login`  
+  - Body: `{ "email": string, "password": string }`  
+  - Respuesta: `{ "token": "JWT_TOKEN", "user": { ... } }`  
+  - Genera un JWT si las credenciales son correctas.
 
-- PHP para backend (con PDO para conexión segura a base de datos).
-- MySQL como sistema de gestión de base de datos.
-- HTML, CSS(Tailwind), JavaScript para frontend.
-- Git para control de versiones con ramas específicas.
-- Herramientas de desarrollo y despliegue integradas en entorno local y GitHub.
+- `POST /auth/register` (opcional)  
+  - Body: datos básicos de usuario.  
+  - Crea un nuevo usuario en la base de datos.
 
-## Instrucciones de uso
+### Usuario actual
 
-### Backend
+- `GET /auth/me`  
+  - Header: `Authorization: Bearer <JWT_TOKEN>`  
+  - Devuelve la información del usuario autenticado.
 
-1. Configurar conexión a base de datos en el archivo PHP.
-2. Importar la base de datos con la estructura y datos necesarios.
-3. Usar el endpoint API `/create` para agregar jugadores asegurando enviar datos validados.
-4. Controlar errores que indican formatos incorrectos o datos inconsistentes.
+### Equipos
 
+- `GET /teams`  
+  - Devuelve el listado de equipos venezolanos disponibles.
 
-### Git
+- `GET /teams/{id}`  
+  - Devuelve el detalle de un equipo específico.
 
-- Trabajar en ramas separadas (`back` para backend, `front` para frontend).
-- Antes de hacer push, siempre realizar pull para evitar conflictos.
-- Hacer push a ramas correspondientes usando:
-=======
+### Favoritos
 
-b21c7c9a11b53eadd127ee1c5769c6635456d52b>>>>>>> 
+- `GET /favorites`  
+  - Header: `Authorization: Bearer <JWT_TOKEN>`  
+  - Lista los equipos marcados como favoritos por el usuario.
+
+- `POST /favorites`  
+  - Header: `Authorization: Bearer <JWT_TOKEN>`  
+  - Body: `{ "team_id": number }`  
+  - Añade un equipo a favoritos.
+
+- `DELETE /favorites/{team_id}`  
+  - Header: `Authorization: Bearer <JWT_TOKEN>`  
+  - Elimina un equipo de favoritos.
+
+## Estructura del proyecto
+
